@@ -1,4 +1,4 @@
-index.wpy<style lang="less">
+<style lang="less">
   .userinfo {
     display: flex;
     flex-direction: column;
