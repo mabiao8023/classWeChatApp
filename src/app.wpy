@@ -16,9 +16,12 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index1',
-      'pages/index2',
-      'pages/index3'
+      'pages/index',
+      'pages/class',
+      'pages/classDetail',
+      'pages/airticle',
+      'pages/me',
+      'pages/meClass'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -33,25 +36,24 @@ export default class extends wepy.app {
       borderStyle:'#e2e2e2',
       list:[
           {
-             pagePath:'pages/index1',
+             pagePath:'pages/index',
              text:'首页',
-             iconPath:'',
-             selectedIconPath:''
+             iconPath:'./images/class.png',
+             selectedIconPath:'./images/class-active.png'
           },
           {
-             pagePath:'pages/index2',
-             text:'首页',
-             iconPath:'',
-             selectedIconPath:''
+             pagePath:'pages/meClass',
+             text:'课程',
+             iconPath:'./images/f-learn.png',
+             selectedIconPath:'./images/f-learn-active.png'
           },
           {
-             pagePath:'pages/index3',
-             text:'首页',
-             iconPath:'',
-             selectedIconPath:''
+             pagePath:'pages/me',
+             text:'我的',
+             iconPath:'./images/me.png',
+             selectedIconPath:'./images/me-active.png'
           }
       ],
-
     }
   }
 
