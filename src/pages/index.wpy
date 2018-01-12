@@ -14,10 +14,29 @@
   .userinfo-nickname {
     color: #aaa;
   }
+  .swiper-container{
+    width:100%;
+  }
 </style>
 <template>
   <view class="container">
-      我是首页
+      <view>
+          <button class="contact" open-type="contact">领取福利</button>
+      </view> 
+      <swiper class="swiper-container" indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" 
+        duration="{{duration}}">
+        <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image" width="355" height="150"/>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="class-list">
+          <view class="class-item">
+              
+          </view>  
+      </view>
   </view>
 </template>
 
@@ -29,11 +48,13 @@
   import Group from '../components/group'
   import Toast from 'wepy-com-toast'
   import testMixin from '../mixins/test'
+  import apiPath from '../config/config'
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'test'
     }
+
     components = {
       panel: Panel,
       counter1: Counter,
@@ -46,7 +67,15 @@
     mixins = [testMixin]
 
     data = {
-     
+      imgUrls: [
+        'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      ],
+      indicatorDots: true,
+      autoplay: true,
+      interval: 5000,
+      duration: 1000
     }
 
     computed = {
@@ -64,8 +93,27 @@
       }
     }
 
+    // 获取banners列表
+    
+    getBanners(){
+      wepy.request(apiPath.bannerList)
+        .then( res => {
+            console.log(res.data);
+        })
+    }
+
+    // 获取课程列表
+    
+    getClassList(){
+      wepy.request(apiPath.classList)
+        .then( res => {
+            console.log(res.data);
+        })
+    }
+
     onLoad() {
-     
+      this.getBanners();
+      this.getClassList();
     }
   }
 </script>
