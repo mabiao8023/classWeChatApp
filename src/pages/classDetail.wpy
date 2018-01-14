@@ -1,4 +1,5 @@
 <style lang="less">
+  @mainColor:#2cbd6c;
   .userinfo {
     display: flex;
     flex-direction: column;
@@ -14,10 +15,55 @@
   .userinfo-nickname {
     color: #aaa;
   }
+
+   .class-nav{
+      position:fixed;
+      background:#fff;
+      top:0;
+      left:0;
+      right:0;
+      z-index:10;
+      display:flex;
+      line-height:80rpx;
+      border-bottom:1rpx solid #eee;
+            .nav-list{
+                flex:auto;
+                text-align:center;
+                color:#151515;
+                span{
+                    display:inline-block;
+                    padding:0 20rpx;
+                    line-height:80rpx;
+                    font-size:36rpx;
+                }
+                &.active .text{
+                    color:@mainColor;
+                    border-bottom:8rpx solid @mainColor;
+                }
+            }
+        }
 </style>
 <template>
   <view class="container">
-      我是课程详情页面
+      <view class="class-nav boxShadow">
+            <view class="nav-list active">
+                <view class="text">课程特色</view>
+            </view>
+            <view class="nav-list">
+                <view class="text">课程试看</view>
+            </view>
+      </view>
+      <!-- 视频和图片展示区域 -->
+        <view class="banner">
+            <image wx-if="{{1}}" src="http://120.78.193.207/upload/5a9d2aabb9dc5d66acbdbe69a464310d.png"/>
+            <view class="video-container">
+              <video class="view-cover"
+                   autoplay="autoplay"
+                   src="http://v3.mukewang.com/shizhan/59636a8db3fee3e20c8b45f0/H.mp4"
+                   controls>
+              </video>
+            </view>
+        </view>
   </view>
 </template>
 
@@ -28,7 +74,7 @@
   import Counter from 'counter' // alias example
   import Group from '../components/group'
   import Toast from 'wepy-com-toast'
-  import testMixin from '../mixins/test'
+  import myMixin from '../mixins/test'
 
   export default class Index extends wepy.page {
     config = {
@@ -43,7 +89,7 @@
       toast: Toast
     }
 
-    mixins = [testMixin]
+    mixins = [myMixin]
 
     data = {
      
@@ -58,10 +104,7 @@
     }
 
     events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
+  
     }
 
     onLoad() {

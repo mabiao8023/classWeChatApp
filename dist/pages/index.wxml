@@ -1,18 +1,37 @@
 
   <view class="container">
       <view>
-          <button class="contact" open-type="contact">领取福利</button>
+          <button class="contact" open-type="contact">
+          关注“夜猫足球”
+          <view>公众号</view>
+          </button>
       </view> 
       <swiper class="swiper-container" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block  wx:for="{{imgUrls}}" wx:key="{{index}}">
+        <block  wx:for="{{banners}}" wx:key="{{index}}">
           <swiper-item>
-            <image src="{{item}}" class="slide-image" width="355" height="150"/>
+            <image src="{{item.img_url}}" class="slide-image"/>
           </swiper-item>
         </block>
       </swiper>
       <view class="class-list">
-          <view class="class-item">
-              
+          <view class="class-item"  wx:for="{{classList}}" wx:key="{{index}}" bindtap="gotoClassIndex" data-wpygotoclassindex-a="{{item.id}}">
+              <view class="class-info-container">
+                  <image class="class-info-img" src="{{item.img_url}}"/>
+                  <view class="classed-nums">
+                    {{item.sold}}人学习
+                  </view>
+                  <view class="class-tag" wx-if="{{item.tag}}">
+                      {{item.tag}}
+                  </view>
+              </view>
+              <view class="class-info-text">
+                  <view class="class-name">
+                      {{item.title}}
+                  </view>
+                  <view class="class-money">
+                      ￥{{item.price}}/{{item.expire_month}}
+                  </view>
+              </view>  
           </view>  
       </view>
   </view>

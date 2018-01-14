@@ -1,4 +1,19 @@
 
   <view class="container">
-      我是课程详情页面
+      <view class="class-nav boxShadow">
+            <view class="nav-list active">
+                <view class="text">课程特色</view>
+            </view>
+            <view class="nav-list">
+                <view class="text">课程试看</view>
+            </view>
+      </view>
+      <!-- 视频和图片展示区域 -->
+        <view class="banner">
+            <image wx-if="{{1}}" src="http://120.78.193.207/upload/5a9d2aabb9dc5d66acbdbe69a464310d.png"/>
+            <view class="video-container">
+              <video class="view-cover" autoplay src="http://v3.mukewang.com/shizhan/59636a8db3fee3e20c8b45f0/H.mp4" controls>
+              </video>
+            </view>
+        </view>
   </view>

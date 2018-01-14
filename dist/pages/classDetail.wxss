@@ -4,4 +4,4 @@
 @import "./../components/counter.wxss";
 @import "./../components/counter.wxss";
 @import "./../components/panel.wxss";
-.userinfo{display:flex;flex-direction:column;align-items:center}.userinfo-avatar{width:80rpx;height:80rpx;border-radius:50%}.userinfo-nickname{color:#aaa}
+.userinfo{display:flex;flex-direction:column;align-items:center}.userinfo-avatar{width:80rpx;height:80rpx;border-radius:50%}.userinfo-nickname{color:#aaa}.class-nav{position:fixed;background:#fff;top:0;left:0;right:0;z-index:10;display:flex;line-height:80rpx;border-bottom:1rpx solid #eee}.class-nav .nav-list{flex:auto;text-align:center;color:#151515}.class-nav .nav-list span{display:inline-block;padding:0 20rpx;line-height:80rpx;font-size:36rpx}.class-nav .nav-list.active .text{color:#2cbd6c;border-bottom:8rpx solid #2cbd6c}
