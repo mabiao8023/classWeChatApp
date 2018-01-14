@@ -42,27 +42,369 @@
                 }
             }
         }
+
+        .banner{
+          width:100%;
+          padding-top:80rpx;
+          image{
+            width:100%;
+            height:374rpx;
+          }
+          .video-container{
+            .view-cover{
+              width:100%;
+              height:480rpx;
+            }
+          }
+        }
+        .class-info-text{
+          width:100%;
+          display:flex;
+          align-items:center;
+          padding:20rpx;
+          font-size:38rpx;
+          justify-content: space-between;
+          border-bottom:1rpx solid #e2e2e2;
+          .class-money{
+             color: red;
+             margin-right:20rpx;
+          }
+          .class-name{
+            margin-left:20rpx;
+          }
+        }
+        .class-detail-list{
+          padding-bottom:102rpx;
+          width:100%;
+          font-size:0;
+          .c-title{
+            font-size: 40rpx;
+            padding: 20rpx;
+            color: #333;
+            font-weight: 700;
+            text-align: center;
+          }
+          .c-desc{
+            font-size: 36rpx;
+            padding: 0 20rpx;
+            text-align: center;
+            color: #999;
+            padding-bottom: 20rpx;
+          }
+          .c-img{
+            width:100%;
+            image{
+              width:100%;
+            }
+          }
+        }
+
+         .pay-footer{
+            position:fixed;
+            bottom:0;
+            left:0;
+            right:0;
+            line-height:100rpx;
+            background:#fff;
+            border-top:1rpx solid #e2e2e2;
+            font-size:38rpx;
+            .pay-footer-content{
+                display:flex;
+                text-align:center;
+                justify-content:space-between;
+                .pay-btn{
+                  padding:0 40rpx;
+                  color:#fff;
+                  background: @mainColor;
+                }
+                .zixun{
+                  padding:0 20rpx;
+                  display:flex;
+                  align-items: center;
+                  flex-direction: column;
+                  justify-content: center;
+                  border-left:1rpx solid #ccc;
+                  .icon{
+                    display:block;
+
+                    width:60rpx;
+                    height:60rpx;
+                    image{
+                      width:100%;
+                      height:100%;
+                    }
+                  }
+                  }
+                  .pay-nums{
+                    flex:1;
+                  }
+        }
+      }
+
+      .class-try-list{
+        padding-bottom:102rpx;
+        width:100%;
+        .try-title{
+          padding:20rpx;
+            display:flex;
+            justify-content: flex-start;
+            border-bottom:1rpx solid #e2e2e2;
+            position:relative;
+            .icon{
+              margin-right:20rpx;
+              image{
+                width:48rpx;
+                height:48rpx;
+              }
+            }
+            .desc{
+              color:#666;
+              font-size:36rpx;
+              margin-left:20rpx;
+            }
+            .arrow{
+              position:absolute;
+              right:20rpx;
+              image{
+                width:56rpx;
+                height:56rpx;
+              }
+            }
+        }
+      }
+
+      .try-list{
+          .try-item{
+              display:flex;
+              padding:30rpx 20rpx;
+              border-bottom:1rpx solid #e2e2e2;
+              .try-item-img{
+                width:236rpx;
+                height:140rpx;
+                margin-right:20rpx;
+                position:relative;
+                image{
+                   width:236rpx;
+                   height:140rpx;
+                }
+                .try-tag{
+                  position:absolute;
+                  top:0;
+                  left:10rpx;
+                  background:@mainColor;
+                  color:#fff;
+                  font-size:32rpx;
+                  padding:5rpx 10rpx;
+                  border-bottom-left-radius:5rpx;
+                  border-bottom-right-radius:5rpx;
+                }
+                .mask-box{
+                  position:absolute;
+                  top:0;
+                  left:0;
+                  right:0;
+                  bottom:0;
+                  background:rgba(0,0,0,.5);
+                  display:flex;
+                  justify-content:center;
+                  align-items:center;
+                  image{
+                    width:80rpx;
+                    height:80rpx;
+                  }
+                }
+              }
+              .try-item-content{
+
+                .try-item-desc{
+                  color:#666;
+                  font-size:34rpx;
+                }
+                .try-item-time{
+                  display:flex;
+                  color:#666;
+                  font-size:34rpx;
+                  align-items:center;
+                  icon{
+                    margin-right:20rpx;
+                  }
+                }
+              }
+          }
+      }
 </style>
 <template>
   <view class="container">
       <view class="class-nav boxShadow">
-            <view class="nav-list active">
+            <view  class="{{ navType == 1 ? 'nav-list active' : 'nav-list' }}" @tap="navtag(1)">
                 <view class="text">课程特色</view>
             </view>
-            <view class="nav-list">
+            <view class="{{ navType == 2 ? 'nav-list active' : 'nav-list' }}" @tap="navtag(2)">
                 <view class="text">课程试看</view>
             </view>
       </view>
       <!-- 视频和图片展示区域 -->
         <view class="banner">
-            <image wx-if="{{1}}" src="http://120.78.193.207/upload/5a9d2aabb9dc5d66acbdbe69a464310d.png"/>
-            <view class="video-container">
+            <image class="class-info" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
+            <view class="video-container" wx-if="{{isHasVideo}}">
               <video class="view-cover"
                    autoplay="autoplay"
                    src="http://v3.mukewang.com/shizhan/59636a8db3fee3e20c8b45f0/H.mp4"
                    controls>
               </video>
             </view>
+        </view>
+        <view class="class-info-text">
+          <view class="class-name">
+              {{classInfo.title}}
+          </view>
+          <view class="class-money">
+              ￥{{classInfo.price}}/{{classInfo.expire_month}}
+          </view>
+        </view>
+        <view class="class-detail-list" wx:if="{{navType == 1}}">
+            <view wx:for="{{classInfo.introduce}}" wx:key="{{index}}" class="class-detail-item">
+                <view class="c-title" wx-if="{{item.title}}">
+                    {{ item.title }}
+                </view>
+                <view class="c-desc" wx-if="{{item.content}}">
+                    {{ item.content }}
+                </view>
+                <view class="c-img">
+                    <image src="{{item.img_url}}"/> 
+                </view>
+            </view>
+        </view>
+
+        <view class="class-try-list" wx:if="{{navType == 2}}">
+            <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/free-icon.png" />
+                    </view>
+                    <view class="title">
+                        试看列表
+                    </view>
+                </view>
+            </view>
+            <view class="try-list">
+                <view class="try-item"> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
+                        <view class="try-tag">阅读课程</view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                    </view>
+                </view>
+
+                <view class="try-item" @tap="playVideo()"> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
+                        <view class="try-tag">正在播放</view>
+                        <view class="mask-box">
+                            <image src="../images/play.png" />
+                        </view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                        <view class="try-item-time">
+                            <icon type="waiting" size="16" color="#999"/>03:38
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!-- 章节列表 -->
+            <view class="class-chapter">
+                <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/pay-icon.png" />
+                    </view>
+                    <view class="title">
+                        购买后可观看更多内容
+                    </view>
+                </view>
+            </view>
+
+            <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/class-list-icon.png" />
+                    </view>
+                    <view class="title">
+                        第一章
+                    </view>
+                    <view class="desc">
+                        第一章的内容
+                    </view>
+                    <view class="arrow">
+                        <image wx:if="{{1}}" src="../images/arrow-right.png"/>
+                        <image wx:else src="../images/arrow-down.png"/>
+                    </view>
+                </view>
+            </view>
+
+            <view class="try-list">
+                <view class="try-item"> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
+                        <view class="try-tag">阅读课程</view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                    </view>
+                </view>
+
+                <view class="try-item" @tap="playVideo()"> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
+                        <view class="try-tag">正在播放</view>
+                        <view class="mask-box">
+                            <image src="../images/play.png" />
+                        </view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                        <view class="try-item-time">
+                            <icon type="waiting" size="16" color="#999"/>03:38
+                        </view>
+                    </view>
+                </view>
+            </view>
+            </view>
+        </view>
+
+         <view class="pay-footer">
+            <view class="pay-footer-content">
+              <view class="pay-nums">{{classInfo.sold}}已卖</view>
+              <view class="pay-btn"
+                        @tap="gotoPay"
+                       wx:if="{{!isPayed}}">购买课程(￥{{classInfo.price}}/{{classInfo.expire_month}})</view>
+                       <view class="pay-btn"
+                        @tap="gotoClassIndex"
+                       wx:if="{{isPayed}}">您已购买此课程</view>
+              </view>
         </view>
   </view>
 </template>
@@ -75,7 +417,7 @@
   import Group from '../components/group'
   import Toast from 'wepy-com-toast'
   import myMixin from '../mixins/test'
-
+  import apiPath from '../config/config'
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'test'
@@ -92,7 +434,10 @@
     mixins = [myMixin]
 
     data = {
-     
+        isHasVideo:false,
+        classInfo:{},
+        navType:2,
+        isPayed:false,
     }
 
     computed = {
@@ -100,15 +445,44 @@
     }
 
     methods = {
-      
+      navtag(type){
+        this.navType = type;
+      },
+      playVideo(){
+        this.isHasVideo = true;
+
+      }
     }
 
     events = {
   
     }
 
+    // 获得课程的信息
+    getClassInfo(){
+        wepy.request({
+            url:apiPath.classInfo,
+            method:"GET",
+            data:{
+              class_id:8
+            },
+            header: {
+              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+            }
+         } ).then(res => {
+          this.classInfo = res.data.data;
+          this.classInfo.price = this.formateMoney(this.classInfo.price);
+          this.classInfo.expire_month = this.formateMonth(this.classInfo.expire_month);
+          this.$apply();
+          console.log(res.data);
+        })
+    }
+
     onLoad() {
-     
+      this.getClassInfo();
+      // header: {
+      //   'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+      // }
     }
   }
 </script>

@@ -1,19 +1,167 @@
 
   <view class="container">
       <view class="class-nav boxShadow">
-            <view class="nav-list active">
+            <view class="{{ navType == 1 ? 'nav-list active' : 'nav-list' }}" bindtap="navtag" data-wpynavtag-a="1">
                 <view class="text">课程特色</view>
             </view>
-            <view class="nav-list">
+            <view class="{{ navType == 2 ? 'nav-list active' : 'nav-list' }}" bindtap="navtag" data-wpynavtag-a="2">
                 <view class="text">课程试看</view>
             </view>
       </view>
       <!-- 视频和图片展示区域 -->
         <view class="banner">
-            <image wx-if="{{1}}" src="http://120.78.193.207/upload/5a9d2aabb9dc5d66acbdbe69a464310d.png"/>
-            <view class="video-container">
+            <image class="class-info" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
+            <view class="video-container" wx-if="{{isHasVideo}}">
               <video class="view-cover" autoplay src="http://v3.mukewang.com/shizhan/59636a8db3fee3e20c8b45f0/H.mp4" controls>
               </video>
             </view>
+        </view>
+        <view class="class-info-text">
+          <view class="class-name">
+              {{classInfo.title}}
+          </view>
+          <view class="class-money">
+              ￥{{classInfo.price}}/{{classInfo.expire_month}}
+          </view>
+        </view>
+        <view class="class-detail-list"  wx:if="{{navType == 1}}">
+            <view wx:for="{{classInfo.introduce}}" wx:key="{{index}}" class="class-detail-item">
+                <view class="c-title" wx-if="{{item.title}}">
+                    {{ item.title }}
+                </view>
+                <view class="c-desc" wx-if="{{item.content}}">
+                    {{ item.content }}
+                </view>
+                <view class="c-img">
+                    <image src="{{item.img_url}}"/> 
+                </view>
+            </view>
+        </view>
+
+        <view class="class-try-list"  wx:if="{{navType == 2}}">
+            <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/free-icon.png"/>
+                    </view>
+                    <view class="title">
+                        试看列表
+                    </view>
+                </view>
+            </view>
+            <view class="try-list">
+                <view class="try-item"> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg"/>
+                        <view class="try-tag">阅读课程</view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                    </view>
+                </view>
+
+                <view class="try-item" bindtap="playVideo" data-wpyplayvideo-a=""> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg"/>
+                        <view class="try-tag">正在播放</view>
+                        <view class="mask-box">
+                            <image src="../images/play.png"/>
+                        </view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                        <view class="try-item-time">
+                            <icon type="waiting" size="16" color="#999"/>03:38
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!-- 章节列表 -->
+            <view class="class-chapter">
+                <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/pay-icon.png"/>
+                    </view>
+                    <view class="title">
+                        购买后可观看更多内容
+                    </view>
+                </view>
+            </view>
+
+            <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/class-list-icon.png"/>
+                    </view>
+                    <view class="title">
+                        第一章
+                    </view>
+                    <view class="desc">
+                        第一章的内容
+                    </view>
+                    <view class="arrow">
+                        <image wx:if="{{1}}" src="../images/arrow-right.png"/>
+                        <image wx:else src="../images/arrow-down.png"/>
+                    </view>
+                </view>
+            </view>
+
+            <view class="try-list">
+                <view class="try-item"> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg"/>
+                        <view class="try-tag">阅读课程</view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                    </view>
+                </view>
+
+                <view class="try-item" bindtap="playVideo" data-wpyplayvideo-a=""> 
+                    <view class="try-item-img">
+                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg"/>
+                        <view class="try-tag">正在播放</view>
+                        <view class="mask-box">
+                            <image src="../images/play.png"/>
+                        </view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            课程文章
+                        </view>
+                        <view class="try-item-desc">
+                            课程的一些描述
+                        </view>
+                        <view class="try-item-time">
+                            <icon type="waiting" size="16" color="#999"/>03:38
+                        </view>
+                    </view>
+                </view>
+            </view>
+            </view>
+        </view>
+
+         <view class="pay-footer">
+            <view class="pay-footer-content">
+              <view class="pay-nums">{{classInfo.sold}}已卖</view>
+              <view class="pay-btn" bindtap="gotoPay" wx:if="{{!isPayed}}">购买课程(￥{{classInfo.price}}/{{classInfo.expire_month}})</view>
+                       <view class="pay-btn" bindtap="gotoClassIndex" wx:if="{{isPayed}}">您已购买此课程</view>
+              </view>
         </view>
   </view>
