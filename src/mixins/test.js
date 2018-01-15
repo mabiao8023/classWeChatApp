@@ -28,6 +28,14 @@ export default class testMixin extends wepy.mixin {
       return prizeStr.replace(/^(\d+)\.0+$/,"$1");
     }
     
+    secondsFormate(seconds){
+      return [
+                parseInt(seconds / 60 / 60),
+                parseInt(seconds / 60 % 60),
+                parseInt(seconds % 60)
+            ].join(":").replace(/\b(\d)\b/g, "0$1");
+    }
+    
   onShow() {
     console.log('mixin onShow')
   }

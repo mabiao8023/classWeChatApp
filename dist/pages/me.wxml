@@ -1,4 +1,19 @@
 
   <view class="container">
-      我是个人中心
+     <view class="user-info boxShadow">
+      <view class="user-avatar">
+        <image src="{{user.headimgurl}}"/>
+      </view>
+      <view class="user-name">
+        {{ user.nickname }}
+      </view>
+    </view>
+    <view class="me-list boxShadow">
+      <view class="me-list-item" bindtap="gotoMeClassList" data-wpygotomeclasslist-a="">
+        <view>
+          我的课程
+        </view>
+        <image class="arrow" src="../images/arrow-right.png"/>
+      </view>
+    </view>
   </view>

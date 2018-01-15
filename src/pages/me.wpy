@@ -14,39 +14,120 @@
   .userinfo-nickname {
     color: #aaa;
   }
+
+  .container{
+    .c-xq{
+      font-size:0;
+      width:100%;
+    }
+    .p20{
+      padding:20rpx;
+    }
+    .b-title{
+      font-size:36rpx;
+      color:#151515;
+    }
+    .m-title{
+      font-size:34rpx;
+      color:#151515;
+    }
+    .b-desc{
+      font-size:30rpx;
+      color:#666;
+    }
+    .m-desc{
+      font-size:28rpx;
+      color:#666;
+    }
+    .user-info{
+      background:#fff;
+      width:100%;
+      display:flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding:28rpx;
+      .user-avatar{
+        width:100rpx;
+        height:100rpx;
+        border:1rpx solid #ccc;
+        border-radius:4rpx;
+        overflow: hidden;
+        margin-left:20rpx;
+        image{
+          width:100rpx;
+          height:100rpx;
+        }
+      }
+      .user-name{
+        font-size:42rpx;
+        color:#151515;
+        margin-left:30rpx;
+      }
+    }
+    .me-list{
+      width:100%;
+      margin-top:20rpx;
+      background:#fff;
+      .me-list-item{
+        padding:20rpx 28rpx;
+        color:#151515;
+        font-size:38rpx;
+        border-top:1rpx solid #e2e2e2;
+        display:flex;
+        justify-content:space-between;
+        &:last-child{
+          border-bottom:1rpx solid #e2e2e2;
+        }
+        .arrow{
+          width:48rpx;
+          height:48rpx;
+        }
+      }
+    }
+    }
 </style>
 <template>
   <view class="container">
-      我是个人中心
+     <view class="user-info boxShadow">
+      <view class="user-avatar">
+        <image src="{{user.headimgurl}}">
+      </view>
+      <view class="user-name">
+        {{ user.nickname }}
+      </view>
+    </view>
+    <view class="me-list boxShadow">
+      <view class="me-list-item" @tap="gotoMeClassList()">
+        <view>
+          我的课程
+        </view>
+        <image class="arrow" src="../images/arrow-right.png"/>
+      </view>
+    </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-  import List from '../components/list'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import Group from '../components/group'
-  import Toast from 'wepy-com-toast'
   import testMixin from '../mixins/test'
+  import apiPath from '../config/config'
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'test'
     }
+
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
-      toast: Toast
+
     }
 
     mixins = [testMixin]
 
     data = {
-     
+      user:{
+        headimgurl:'',
+        nickname:''
+      }
     }
 
     computed = {
@@ -54,7 +135,11 @@
     }
 
     methods = {
-      
+      gotoMeClassList(){
+        wx.switchTab({
+          url: '/pages/meClass'
+        })
+      }
     }
 
     events = {
@@ -64,9 +149,21 @@
       }
     }
 
-    onLoad() {
-     
+    getPerson(){
+          wepy.request({
+            url:apiPath.getPerson,
+            method:"GET",
+            header: {
+              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+            }
+         } ).then( res => {
+              this.user = res.data.data;
+              this.$apply();
+           } )
+    }
 
+    onLoad() {
+      this.getPerson();
     }
   }
 </script>

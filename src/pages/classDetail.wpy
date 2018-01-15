@@ -249,7 +249,8 @@
             <view class="video-container" wx-if="{{isHasVideo}}">
               <video class="view-cover"
                    autoplay="autoplay"
-                   src="http://v3.mukewang.com/shizhan/59636a8db3fee3e20c8b45f0/H.mp4"
+                   wx:if="{{video.src}}"
+                   src="{{video.src}}"
                    controls>
               </video>
             </view>
@@ -287,39 +288,41 @@
                     </view>
                 </view>
             </view>
-            <view class="try-list">
-                <view class="try-item"> 
+            <view class="try-list" 
+            wx:if="{{ freeClassList.length > 0 }}"
+            wx:for="{{ freeClassList }}"> 
+                <view class="try-item" wx:if="{{ item.resource_type == 1 }}"> 
                     <view class="try-item-img">
-                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
+                        <image src="{{item.img_url}}">
                         <view class="try-tag">阅读课程</view>
                     </view>
                     <view class="try-item-content">
                         <view class="try-item-title">
-                            课程文章
+                            {{ item.title }}
                         </view>
                         <view class="try-item-desc">
-                            课程的一些描述
+                            {{ item.desc }}
                         </view>
                     </view>
                 </view>
 
-                <view class="try-item" @tap="playVideo()"> 
+                <view class="try-item" wx:if="{{ item.resource_type == 2 }}" @tap="playVideo({{item}})"> 
                     <view class="try-item-img">
-                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
-                        <view class="try-tag">正在播放</view>
+                        <image src="{{ item.img_url }}">
+                        <view class="try-tag" wx:if="{{item.resource.playing}}" >正在播放</view>
                         <view class="mask-box">
                             <image src="../images/play.png" />
                         </view>
                     </view>
                     <view class="try-item-content">
                         <view class="try-item-title">
-                            课程文章
+                            {{ item.title }}
                         </view>
                         <view class="try-item-desc">
-                            课程的一些描述
+                            {{ item.desc }}
                         </view>
-                        <view class="try-item-time">
-                            <icon type="waiting" size="16" color="#999"/>03:38
+                        <view class="try-item-time" wx:if="{{item.resource.media_time}}">
+                            <icon type="waiting" size="16" color="#999"/>{{secondsFormate(item.resource.media_time)}}
                         </view>
                     </view>
                 </view>
@@ -336,66 +339,76 @@
                     </view>
                 </view>
             </view>
-
-            <view class="try-container">
+            <!-- 章节列表 -->
+            <block wx:for="{{chapterList}}" wx:key="{{index}}" >
+                 <view class="try-container" @tap="paytip()">
                 <view class="try-title">
                     <view class="icon">
                         <image src="../images/class-list-icon.png" />
                     </view>
                     <view class="title">
-                        第一章
+                        {{ item.title }}
                     </view>
                     <view class="desc">
-                        第一章的内容
+                       {{ item.desc }}
                     </view>
-                    <view class="arrow">
-                        <image wx:if="{{1}}" src="../images/arrow-right.png"/>
+                 <!--    <view class="arrow">
+                        <image wx:if="{{item.slide}}" src="../images/arrow-right.png"/>
                         <image wx:else src="../images/arrow-down.png"/>
-                    </view>
+                    </view> -->
                 </view>
             </view>
-
-            <view class="try-list">
-                <view class="try-item"> 
+            
+            <view class="try-list" hidden="{{item.slide}}" 
+            wx:if="{{item.lesson.length > 0}}" 
+            wx:for="{{item.lesson}}"
+              wx:for-index="idx"
+              wx:for-item="lesson"
+              wx:key="{{idx}}"
+              @tap="paytip()"
+              >
+                <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}"> 
                     <view class="try-item-img">
-                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
+                        <image src="{{lesson.img_url}}">
                         <view class="try-tag">阅读课程</view>
                     </view>
                     <view class="try-item-content">
                         <view class="try-item-title">
-                            课程文章
+                            {{ lesson.title }}
                         </view>
                         <view class="try-item-desc">
-                            课程的一些描述
+                            {{ lesson.desc }}
                         </view>
                     </view>
                 </view>
 
-                <view class="try-item" @tap="playVideo()"> 
+                 <view class="try-item" wx:if="{{ lesson.resource_type == 2 }}"> 
                     <view class="try-item-img">
-                        <image src="http://120.78.193.207/upload/0fa189126aac20b6007daa4cdcc2571c.jpg">
-                        <view class="try-tag">正在播放</view>
+                        <image src="{{ lesson.img_url }}">
+                        <view class="try-tag" wx:if="{{lesson.resource.playing}}" >正在播放</view>
                         <view class="mask-box">
                             <image src="../images/play.png" />
                         </view>
                     </view>
                     <view class="try-item-content">
                         <view class="try-item-title">
-                            课程文章
+                            {{ lesson.title }}
                         </view>
                         <view class="try-item-desc">
-                            课程的一些描述
+                            {{ lesson.desc }}
                         </view>
-                        <view class="try-item-time">
-                            <icon type="waiting" size="16" color="#999"/>03:38
+                        <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
+                            <icon type="waiting" size="16" color="#999"/>{{secondsFormate(lesson.resource.media_time)}}
                         </view>
                     </view>
                 </view>
             </view>
+            </block>  
+           
             </view>
         </view>
 
-         <view class="pay-footer">
+        <view class="pay-footer">
             <view class="pay-footer-content">
               <view class="pay-nums">{{classInfo.sold}}已卖</view>
               <view class="pay-btn"
@@ -411,11 +424,6 @@
 
 <script>
   import wepy from 'wepy'
-  import List from '../components/list'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import Group from '../components/group'
-  import Toast from 'wepy-com-toast'
   import myMixin from '../mixins/test'
   import apiPath from '../config/config'
   export default class Index extends wepy.page {
@@ -423,12 +431,7 @@
       navigationBarTitleText: 'test'
     }
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
-      toast: Toast
+
     }
 
     mixins = [myMixin]
@@ -438,6 +441,12 @@
         classInfo:{},
         navType:2,
         isPayed:false,
+        classId:8,
+        freeClassList:[],
+        chapterList:[],
+        video:{
+          src:''
+        }
     }
 
     computed = {
@@ -450,12 +459,51 @@
       },
       playVideo(){
         this.isHasVideo = true;
+        this.freeClassList.forEach( val => {
+          val.resource.playing = false;
+        } );
+        item.resource.playing = true;
+        this.video.src = item.resource.media_url;
+      },
+      paytip(){
+       wx.showToast({
+          title: '请先购买课程',
+          icon: 'success',
+          duration: 1500
+        })
+      },
 
-      }
+      gotoPay(){
+        wx.showLoading({
+          title: '支付中...',
+        })
+        wepy.request({
+            url:apiPath.classPay,
+            method:"POST",
+            data:{
+              class_id:this.classId
+            },
+            header: {
+              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+            }
+         } ).then( res => {
+            // todo:调微信支付
+            // if(res.jsapiConfig){
+            // let wxConfig = res.jsapiConfig;
+            // commonFn.wxPay({
+            //   wxPayConf:wxConfig,
+            //   successCb:this.wxPaySuc.bind(this,wxConfig),
+            //   failCb:this.layer.bind(this,'支付失败，请重试'),
+            //   cancelCb:this.layer.bind(this,'支付失败，请重试'),
+            // });
+        } );
+        wx.hideLoading();
+      },
+
     }
 
     events = {
-  
+    
     }
 
     // 获得课程的信息
@@ -464,7 +512,7 @@
             url:apiPath.classInfo,
             method:"GET",
             data:{
-              class_id:8
+              class_id:this.classId
             },
             header: {
               'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
@@ -478,11 +526,88 @@
         })
     }
 
+    // 获得免费试听列表
+    getTryList(){
+      wepy.request({
+            url:apiPath.classTry,
+            method:"GET",
+            data:{
+              class_id:this.classId
+            },
+            header: {
+              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+            }
+         } ).then(res => {
+          let data = res.data.data;
+          if( data.length ){
+              data.forEach(val => {
+                val.playing = false;
+              })
+              this.freeClassList = data;
+              this.$apply();
+          }else{
+
+          }
+          
+        })
+    }
+
+    // 获取章节列表
+    getChapterList(){
+      wepy.request({
+            url:apiPath.classChapter,
+            method:"GET",
+            data:{
+              class_id:this.classId
+            },
+            header: {
+              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+            }
+         } ).then(res => {
+          let data = res.data.data;
+          if( data.length ){
+              data.forEach( (val,i) => {
+                val.slide = i === 0 ?  false : true;
+                val.lesson && val.lesson.forEach( val2 => {
+                  val2.resource.playing = false;
+                })
+              });
+              this.chapterList = data;
+              this.$apply();
+          }else{
+
+          } 
+        })
+    }
+
+    // 获取是否已经购买过该课程
+    getIsPayed(){
+        wepy.request({
+            url:apiPath.classPay,
+            method:"POST",
+            data:{
+              class_id:this.classId
+            },
+            header: {
+              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+            }
+         } ).then( res => {
+          if( res.data.msg == '您已购买此课程'){
+            this.isPayed = true;
+          }else{
+            this.isPayed = false;
+          }
+        }).catch(e => {
+          console.log(e);
+        })
+    }
+
+
     onLoad() {
       this.getClassInfo();
-      // header: {
-      //   'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
-      // }
+      this.getTryList();
+      this.getChapterList();
+      this.getIsPayed();
     }
   }
 </script>
