@@ -1,4 +1,9 @@
 
   <view class="container">
-      我是文章页面
+      <view class="banner">
+          <image class="class-info" mode="widthFix" src="{{article.img_url}}"/>
+      </view>
+      <view class="content">
+          {{article.content}}
+      </view>
   </view>

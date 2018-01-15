@@ -291,7 +291,7 @@
             <view class="try-list" 
             wx:if="{{ freeClassList.length > 0 }}"
             wx:for="{{ freeClassList }}"> 
-                <view class="try-item" wx:if="{{ item.resource_type == 1 }}"> 
+                <view class="try-item" @tap="gotoAircle({{item.resource_id}})" wx:if="{{ item.resource_type == 1 }}"> 
                     <view class="try-item-img">
                         <image src="{{item.img_url}}">
                         <view class="try-tag">阅读课程</view>
@@ -439,7 +439,7 @@
     data = {
         isHasVideo:false,
         classInfo:{},
-        navType:2,
+        navType:1,
         isPayed:false,
         classId:8,
         freeClassList:[],
@@ -499,7 +499,11 @@
         } );
         wx.hideLoading();
       },
-
+      gotoAircle(id){
+          wx.navigateTo({
+            url: `/pages/airticle?id=${id}`
+          })
+      }
     }
 
     events = {

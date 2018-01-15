@@ -18,25 +18,19 @@
 
 
     .container{
-      
-    .class-list{
-      padding-top:82rpx;
       .c-fl-children-list{
-        margin:20rpx;
+        width:100%;
       }
       .pay-tip{
-        position:fixed;
-        top:0;
-        left:0;
-        right:0;
         background:#fff;
         text-align:center;
         color:#151515;
+        width:100%;
         padding:20rpx;
-        font-size:30rpx;
+        font-size:40rpx;
         border-bottom:1rpx solid #eee;
       }
-    }
+
     .preson-center{
       position:fixed;
       bottom:150rpx;
@@ -59,15 +53,15 @@
       color:#151515;
     }
     .m-title{
-      font-size:26rpx;
+      font-size:36rpx;
       color:#151515;
     }
     .b-desc{
-      font-size:24rpx;
+      font-size:36rpx;
       color:#666;
     }
     .m-desc{
-      font-size:24rpx;
+      font-size:32rpx;
       color:#666;
     }
     .empty-list{
@@ -93,68 +87,56 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    padding:20rpx;
+    padding:30rpx;
     margin-bottom:0;
     background:#fff;
-    border-bottom:1rpx solid #eee;
+    border-bottom:1rpx solid #e2e2e2;
     .c-info-img{
-      width:200rpx;
-      height:120rpx;
+      width:250rpx;
+      height:180rpx;
       overflow: hidden;
       position:relative;
-      .playing{
-        position:absolute;
-        top:0;
-        left:8rpx;
-        color:#fff;
-        background:@mainColor;
-        padding:6rpx 10rpx;
-        font-size:24rpx;
-        border-bottom-left-radius: 8rpx;
-        border-bottom-right-radius: 8rpx;
+      image{
+        width:250rpx;
+        height:180rpx;
       }
-      .model-box{
-        position:absolute;
-        left:0;
-        top:0;
-        bottom:0;
-        right:0;
-        background:rgba(0,0,0,.5);
-        img{
-          width:60rpx;
-          height:60rpx;
-          position:absolute;
-          top:50%;
-          left:50%;
-          margin-left:-30rpx;
-          margin-top:-30rpx;
-        }
-      }
+      
     }
     .c-info-content{
       flex:1;
-      height:120rpx;
-      display:flex;
-      align-items: stretch;
-      flex-wrap: wrap;
       margin-left:20rpx;
       position:relative;
       .c-info-tag{
         position:absolute;
-        right:20rpx;
+        right:10rpx;
         top:0px;
-        padding:4rpx 10px;
+        padding:10rpx;
         color:#fff;
         background:@mainColor;
-        font-size:24rpx;
-        border-radius:4rpx;
+        font-size:30rpx;
+        border-radius:8rpx;
       }
       .m-desc{
         width:100%;
         text-align:justify;
         overflow: hidden;
+        margin:20rpx 0;
         text-overflow:ellipsis;
         white-space: nowrap;
+      }
+      .progress-container{
+        display:flex;
+        align-items:center;
+        .progress-show{
+          color:#999;
+          font-size:30rpx;
+          margin-left:10rpx;
+        }
+      }
+      .progress{
+        width:60%;
+        border-radius:10rpx;
+        overflow:hidden;
       }
     }
   }
@@ -162,6 +144,7 @@
 <template>
   <view class="container">
       <view class="pay-tip boxShadow">您学习的课程列表</view>
+
       <view class="c-fl-children-list" wx:if="{{classList.length}}">
           <view class="c-fl-children-item"
            wx:for="{{classList}}"
@@ -175,13 +158,14 @@
               <view class="m-desc">
                 {{ item.desc }}
               </view>
-              <view class="progress">
-                  
+              <view class="progress-container">
+                  <progress class="progress" percent="{{item.learn_percent}}" stroke-width="10" />
+                  <view class="progress-show">已学习{{item.learn_percent}}%</view>
               </view>
             </view>
           </view>
       </view>
-      <view v-else class="empty-list">
+      <view wx:else class="empty-list">
         <image src="../images/empty.png" alt="">
       </view>
   </view>
