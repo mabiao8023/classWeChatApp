@@ -39,6 +39,8 @@
             position:relative;
             .icon{
               margin-right:30rpx;
+              width:48rpx;
+              height:48rpx;
               image{
                 width:48rpx;
                 height:48rpx;
@@ -110,6 +112,7 @@
                   color:#666;
                   font-size:32rpx;
                   align-items:center;
+                  margin-top:10rpx;
                   icon{
                     margin-right:20rpx;
                   }
@@ -177,15 +180,12 @@
                 </view>
             </view>
             
-            <view class="try-list" hidden="{{item.slide}}" 
-            wx:if="{{item.lesson.length > 0}}" 
-            wx:for="{{item.lesson}}"
+            <block wx:for="{{item.lesson}}"
               wx:for-index="idx"
               wx:for-item="lesson"
-              wx:key="{{idx}}"
-              @tap="paytip()"
-              >
-                <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}" @tap="gotoAircle({{lesson.id}})"> 
+               wx:key="{{idx}}">
+            <view class="try-list">
+                <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}" @tap="gotoAircle({{lesson.resource_id}})"> 
                     <view class="try-item-img">
                         <image src="{{lesson.img_url}}">
                         <view class="try-tag">阅读课程</view>
@@ -200,11 +200,11 @@
                     </view>
                 </view>
 
-                 <view class="try-item" wx:if="{{ lesson.resource_type == 2 }}"> 
+                 <view class="try-item" wx:if="{{ lesson.resource_type == 0 }}" @tap="playVideo({{lesson}})"> 
                     <view class="try-item-img">
                         <image src="{{ lesson.img_url }}">
                         <view class="try-tag" wx:if="{{lesson.resource.playing}}" >正在播放</view>
-                        <view class="mask-box">
+                        <view class="mask-box" wx:else>
                             <image src="../images/play.png" />
                         </view>
                     </view>
@@ -216,11 +216,13 @@
                             {{ lesson.desc }}
                         </view>
                         <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
-                            <icon type="waiting" size="16" color="#999"/>{{secondsFormate(lesson.resource.media_time)}}
+                            <icon type="waiting" size="16" color="#999"/>{{lesson.resource.media_time}}
                         </view>
                     </view>
                 </view>
+
             </view>
+              </block>
           </block>  
         </view> 
   </view>
@@ -258,8 +260,17 @@
     methods = {
       gotoAircle(airtcleId){
         this.setProgress( airtcleId );
+        wx.navigateTo({
+            url: `/pages/airticle?id=${airtcleId}`
+        })
+      },
+      playVideo(lesson){
+        this.isHasVideo = true;
+        lesson.resource.playing = true;
+        this.setProgress( lesson.resource_id );
+        this.video.src = lesson.resource.media_url;
+        this.$apply();
       }
-      
     }
 
     events = {
@@ -284,13 +295,14 @@
             let data = res.data.data;
               if( data.chapter.length ){
                   data.chapter.forEach( (val,i) => {
-                val.slide = i === 0 ?  false : true;
                 val.lesson.forEach( val2 => {
                   val2.resource.playing = false;
+                  val2.resource.media_time = val2.resource.media_time && this.secondsFormate(val2.resource.media_time);
                   this.lessonLength++;
                 })
               });
               this.chapterList = data.chapter;
+              console.log(this.chapterList)
             }
             this.classInfo = data;
             this.$apply();
@@ -340,7 +352,8 @@
 
     // 设置当前进度的页面数据
 
-    onLoad() {
+    onLoad(options) {
+      this.classId = options.id;
       this.getClassChapter();
     }
   }
