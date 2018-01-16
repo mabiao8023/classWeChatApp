@@ -546,7 +546,7 @@
               this.freeClassList = data;
               this.$apply();
           }else{
-
+              
           }
           
         })
