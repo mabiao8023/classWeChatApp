@@ -71,7 +71,7 @@ export default class extends wepy.app {
   }
 
   onLaunch() {
-      
+    this.login();  
   }
 
   getUserInfo(cb) {
@@ -82,6 +82,36 @@ export default class extends wepy.app {
         this.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
     } )
+  }
+
+  // 登录
+  login(){
+    wx.checkSession({
+        success: function(){
+          console.log('已登录')
+          //session 未过期，并且在本生命周期一直有效
+        },
+        fail: function(){
+          //登录态过期
+          wepy.login().then( res => {
+              if (res.code) {
+                console.log(res.code);
+                  //发起网络请求
+                  // wepy.request({
+                  //   url: 'http://10.1.70.99/wxapp/login',
+                  //   method:'POST',
+                  //   data: {
+                  //     code: res.code
+                  //   }
+                  // }).then( res => {
+                  //   console.log(res);
+                  // } )
+                } else {
+                  console.log('获取用户登录态失败！' + res.errMsg)
+                }
+            } )
+        }
+    })
   }
 }
 </script>

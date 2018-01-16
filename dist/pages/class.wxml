@@ -1,4 +1,79 @@
 
   <view class="container">
-      我是课程中心
+      <view class="banner">
+            <image class="class-info" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
+            <view class="video-container" wx-if="{{isHasVideo}}">
+              <video class="view-cover" autoplay  wx:if="{{video.src}}" src="{{video.src}}" controls>
+              </video>
+            </view>
+      </view>
+      <view class="class-info-text">
+          <view class="class-name">
+              {{classInfo.title}}
+          </view>
+          <view class="progress-container">
+             <progress class="progress" percent="{{classInfo.learn_percent}}" stroke-width="8"/>
+          </view>
+          <view class="progress-tip">已学习{{classInfo.learn_percent}}%</view> 
+      </view> 
+      <!-- 章节列表 -->
+      <view class="chapeter-container">
+            <block  wx:for="{{chapterList}}" wx:key="{{index}}">  
+              <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/class-list-icon.png"/>
+                    </view>
+                    <view class="title">
+                        {{ item.title }}
+                    </view>
+                    <view class="desc">
+                       {{ item.desc }}
+                    </view>
+                 <!--    <view class="arrow">
+                        <image wx:if="{{item.slide}}" src="../images/arrow-right.png"/>
+                        <image wx:else src="../images/arrow-down.png"/>
+                    </view> -->
+                </view>
+            </view>
+            
+            <view class="try-list" hidden="{{item.slide}}" wx:if="{{item.lesson.length > 0}}" wx:for="{{item.lesson}}" wx:for-index="idx" wx:for-item="lesson" wx:key="{{idx}}" bindtap="paytip" data-wpypaytip-a="">
+                <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}" bindtap="gotoAircle" data-wpygotoaircle-a="{{lesson.id}}"> 
+                    <view class="try-item-img">
+                        <image src="{{lesson.img_url}}"/>
+                        <view class="try-tag">阅读课程</view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            {{ lesson.title }}
+                        </view>
+                        <view class="try-item-desc">
+                            {{ lesson.desc }}
+                        </view>
+                    </view>
+                </view>
+
+                 <view class="try-item" wx:if="{{ lesson.resource_type == 2 }}"> 
+                    <view class="try-item-img">
+                        <image src="{{ lesson.img_url }}"/>
+                        <view class="try-tag" wx:if="{{lesson.resource.playing}}">正在播放</view>
+                        <view class="mask-box">
+                            <image src="../images/play.png"/>
+                        </view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            {{ lesson.title }}
+                        </view>
+                        <view class="try-item-desc">
+                            {{ lesson.desc }}
+                        </view>
+                        <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
+                            <icon type="waiting" size="16" color="#999"/>{{secondsFormate(lesson.resource.media_time)}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+          </block>  
+        </view> 
   </view>
