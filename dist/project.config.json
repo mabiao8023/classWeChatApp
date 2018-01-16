@@ -25,13 +25,25 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
 					"id": -1,
 					"name": "课程详情页面",
 					"pathName": "pages/classDetail",
 					"query": "id=1"
+				},
+				{
+					"id": -1,
+					"name": "已购买课程列表",
+					"pathName": "pages/meClass",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "文章页面",
+					"pathName": "pages/airticle",
+					"query": "id=22"
 				}
 			]
 		}

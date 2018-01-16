@@ -1,52 +1,50 @@
 <style lang="less">
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .content{
+    padding:30rpx;
+    width:100%;
+    font-size:36rpx;
+        color:#666;
+        text-indent: 2em;
+        text-align: justify;
+        line-height:1.5;
   }
-
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
-  }
-
-  .userinfo-nickname {
-    color: #aaa;
+  .banner{
+    width:100%;
+    border-bottom:1rpx solid #e2e2e2;
+    image{
+      width:100%;
+      max-height:800rpx;
+    }
   }
 </style>
 <template>
   <view class="container">
-      我是文章页面
+      <view class="banner">
+          <image class="class-info" mode="widthFix" src="{{article.img_url}}"/>
+      </view>
+      <view class="content">
+          {{article.content}}
+      </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-  import List from '../components/list'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import Group from '../components/group'
-  import Toast from 'wepy-com-toast'
   import testMixin from '../mixins/test'
+  import apiPath from '../config/config'
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'test'
     }
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
-      toast: Toast
     }
 
     mixins = [testMixin]
 
     data = {
-     
+      articleId:22,
+      article:{}
     }
 
     computed = {
@@ -58,14 +56,29 @@
     }
 
     events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
+
     }
 
-    onLoad() {
-     
+    getMeClassList(){
+        wepy.request({
+            url:apiPath.userArticle,
+            method:"GET",
+            data:{
+              resource_id:this.articleId
+            },
+            header: {
+              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+            }
+         } ).then( res => {
+            this.article = res.data.data;
+            this.$apply();
+         } );
+    }
+
+    onLoad(options) {
+      console.log(options);
+      this.articleId = options.id;
+      this.getMeClassList();
     }
   }
 </script>

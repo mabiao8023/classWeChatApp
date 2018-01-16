@@ -50,7 +50,7 @@
                 </view>
             </view>
             <view class="try-list" wx:if="{{ freeClassList.length > 0 }}" wx:for="{{ freeClassList }}"> 
-                <view class="try-item" wx:if="{{ item.resource_type == 1 }}"> 
+                <view class="try-item" bindtap="gotoAircle" wx:if="{{ item.resource_type == 1 }}" data-wpygotoaircle-a="{{item.resource_id}}"> 
                     <view class="try-item-img">
                         <image src="{{item.img_url}}"/>
                         <view class="try-tag">阅读课程</view>

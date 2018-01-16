@@ -1,6 +1,7 @@
 
   <view class="container">
       <view class="pay-tip boxShadow">您学习的课程列表</view>
+
       <view class="c-fl-children-list"  wx:if="{{classList.length}}">
           <view class="c-fl-children-item" wx:for="{{classList}}" bindtap="gotoClassIndex" data-wpygotoclassindex-a="{{item.id}}">
             <view class="c-info-img">
@@ -12,13 +13,14 @@
               <view class="m-desc">
                 {{ item.desc }}
               </view>
-              <view class="progress">
-                  
+              <view class="progress-container">
+                  <progress class="progress" percent="{{item.learn_percent}}" stroke-width="10"/>
+                  <view class="progress-show">已学习{{item.learn_percent}}%</view>
               </view>
             </view>
           </view>
       </view>
-      <view v-else="v-else" class="empty-list">
+      <view  wx:else class="empty-list">
         <image src="../images/empty.png" alt=""/>
       </view>
   </view>
