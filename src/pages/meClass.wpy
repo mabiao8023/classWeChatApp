@@ -205,6 +205,9 @@
     }
 
     getMeClassList(){
+        wx.showLoading({
+          title: '获取中...',
+        })
         wepy.request({
             url:apiPath.userClass,
             method:"GET",
@@ -212,9 +215,10 @@
               'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
             }
          } ).then( res => {
+            wx.hideLoading();
             this.classList = res.data.data;
             this.$apply();
-          } ).catch( e => {this.layer(e)} );
+          } );
     }
 
     onLoad() {

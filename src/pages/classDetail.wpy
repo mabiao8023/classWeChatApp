@@ -487,6 +487,7 @@
               'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
             }
          } ).then( res => {
+           wx.hideLoading();
             // todo:调微信支付
             // if(res.jsapiConfig){
             // let wxConfig = res.jsapiConfig;
@@ -497,7 +498,7 @@
             //   cancelCb:this.layer.bind(this,'支付失败，请重试'),
             // });
         } );
-        wx.hideLoading();
+       
       },
       gotoAircle(id){
           wx.navigateTo({
@@ -512,6 +513,9 @@
 
     // 获得课程的信息
     getClassInfo(){
+        wx.showLoading({
+          title: '获取中...',
+        })
         wepy.request({
             url:apiPath.classInfo,
             method:"GET",
@@ -522,12 +526,15 @@
               'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
             }
          } ).then(res => {
+          wx.hideLoading();
           this.classInfo = res.data.data;
           this.classInfo.price = this.formateMoney(this.classInfo.price);
           this.classInfo.expire_month = this.formateMonth(this.classInfo.expire_month);
           this.$apply();
           console.log(res.data);
         })
+
+        
     }
 
     // 获得免费试听列表

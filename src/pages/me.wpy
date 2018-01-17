@@ -150,6 +150,9 @@
     }
 
     getPerson(){
+      wx.showLoading({
+          title: '获取中...',
+        })
           wepy.request({
             url:apiPath.getPerson,
             method:"GET",
@@ -157,6 +160,7 @@
               'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
             }
          } ).then( res => {
+              wx.hideLoading();
               this.user = res.data.data;
               this.$apply();
            } )
