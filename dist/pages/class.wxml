@@ -37,8 +37,9 @@
                 </view>
             </view>
             
-            <view class="try-list" hidden="{{item.slide}}" wx:if="{{item.lesson.length > 0}}" wx:for="{{item.lesson}}" wx:for-index="idx" wx:for-item="lesson" wx:key="{{idx}}" bindtap="paytip" data-wpypaytip-a="">
-                <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}" bindtap="gotoAircle" data-wpygotoaircle-a="{{lesson.id}}"> 
+            <block wx:for="{{item.lesson}}" wx:for-index="idx" wx:for-item="lesson" wx:key="{{idx}}">
+            <view class="try-list">
+                <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}" bindtap="gotoAircle" data-wpygotoaircle-a="{{lesson.resource_id}}"> 
                     <view class="try-item-img">
                         <image src="{{lesson.img_url}}"/>
                         <view class="try-tag">阅读课程</view>
@@ -53,11 +54,11 @@
                     </view>
                 </view>
 
-                 <view class="try-item" wx:if="{{ lesson.resource_type == 2 }}"> 
+                 <view class="try-item" wx:if="{{ lesson.resource_type == 0 }}" bindtap="playVideo" data-wpyplayvideo-a="{{lesson}}"> 
                     <view class="try-item-img">
                         <image src="{{ lesson.img_url }}"/>
                         <view class="try-tag" wx:if="{{lesson.resource.playing}}">正在播放</view>
-                        <view class="mask-box">
+                        <view class="mask-box" wx:else>
                             <image src="../images/play.png"/>
                         </view>
                     </view>
@@ -69,11 +70,13 @@
                             {{ lesson.desc }}
                         </view>
                         <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
-                            <icon type="waiting" size="16" color="#999"/>{{secondsFormate(lesson.resource.media_time)}}
+                            <icon type="waiting" size="16" color="#999"/>{{lesson.resource.media_time}}
                         </view>
                     </view>
                 </view>
+
             </view>
+              </block>
           </block>  
         </view> 
   </view>

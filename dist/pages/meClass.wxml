@@ -14,7 +14,7 @@
                 {{ item.desc }}
               </view>
               <view class="progress-container">
-                  <progress class="progress" percent="{{item.learn_percent}}" stroke-width="10"/>
+                  <progress class="progress" percent="{{item.learn_percent}}" stroke-width="8"/>
                   <view class="progress-show">已学习{{item.learn_percent}}%</view>
               </view>
             </view>

@@ -93,8 +93,11 @@
                     <view class="icon">
                         <image src="../images/pay-icon.png"/>
                     </view>
-                    <view class="title">
+                    <view wx:if="{{ !isPayed }}" class="title">
                         购买后可观看更多内容
+                    </view>
+                    <view wx:if="{{ isPayed }}" class="title">
+                        您已购买，请点击观看更多内容
                     </view>
                 </view>
             </view>
