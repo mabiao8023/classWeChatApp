@@ -225,19 +225,21 @@
               </block>
           </block>  
         </view> 
+        <contact></contact>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
+  import Contact from '@/components/contact' // alias example
   import testMixin from '../mixins/test'
   import apiPath from '../config/config'
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '夜猫足球--课程首页'
     }
     components = {
-
+      contact:Contact
     }
 
     mixins = [testMixin]
@@ -292,7 +294,7 @@
               class_id:this.classId
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
             wx.hideLoading();
@@ -347,7 +349,7 @@
               percent:precent
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
         } )

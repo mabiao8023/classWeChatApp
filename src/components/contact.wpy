@@ -1,0 +1,52 @@
+<style lang="less">
+  @mainColor:#2cbd6c;
+  .contact{
+    position:fixed; 
+    right:0;
+    line-hegiht:50rpx;
+    bottom:120rpx; 
+    font-size:32rpx;
+    border-radius:0;
+    color:#fff;
+    padding-right:10rpx;
+    padding-left:20rpx;
+    border-bottom-left-radius:50rpx;
+    border-top-left-radius:50rpx;
+    background:@mainColor;
+    box-shadow:0 2rpx 10rpx rgba(0,0,0,.5);    
+    border-right:0;
+    image{
+      margin-top:15rpx;
+      width:48rpx;
+      height:48rpx;
+      vertical-align:top;
+    }
+  }
+</style>
+<template>
+  <view>
+    <button class="contact" open-type="contact">
+          <image  src="../images/addFocus.png"/> 
+          关注我们
+          </button>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  // import abc from 'abc'
+
+  export default class Contact extends wepy.component {
+
+    data = {
+
+    }
+
+    events = {
+  
+    }
+
+    methods = {
+     
+    }
+  }
+</script>

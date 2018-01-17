@@ -165,9 +165,17 @@
 
         <view class="pay-footer">
             <view class="pay-footer-content">
-              <view class="pay-nums">{{classInfo.sold}}已卖</view>
-              <view class="pay-btn" bindtap="gotoPay" wx:if="{{!isPayed}}">购买课程(￥{{classInfo.price}}/{{classInfo.expire_month}})</view>
+              <view class="pay-nums">{{classInfo.sold}}人已学习</view>
+              <view class="pay-btn" bindtap="gotoPay" wx:if="{{!isPayed}}">购买课程</view>
                        <view class="pay-btn" bindtap="gotoClassIndex" wx:if="{{isPayed}}">您已购买此课程</view>
               </view>
         </view>
+        
+  <view>
+    <button class="contact" open-type="contact">
+          <image src="../images/addFocus.png"/> 
+          关注我们
+          </button>
+  </view>
+
   </view>

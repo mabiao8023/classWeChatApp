@@ -97,12 +97,7 @@
 </style>
 <template>
   <view class="container">
-      <view>  
-          <button class="contact" open-type="contact">
-          <image  src="../images/addFocus.png"/> 
-          关注我们
-          </button>
-      </view> 
+      <contact></contact>
       <swiper class="swiper-container" indicator-dots="{{indicatorDots}}"
         autoplay="{{autoplay}}" interval="{{interval}}" 
         duration="{{duration}}">
@@ -138,26 +133,17 @@
 
 <script>
   import wepy from 'wepy'
-  import List from '../components/list'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import Group from '../components/group'
-  import Toast from 'wepy-com-toast'
+  import Contact from '@/components/contact' // alias example
   import myMixin from '../mixins/test'
   import apiPath from '../config/config'
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '夜猫足球--首页'
     }
 
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
-      toast: Toast
+      contact:Contact
     }
 
     mixins = [myMixin]

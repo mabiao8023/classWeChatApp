@@ -28,9 +28,9 @@ export default class extends wepy.app {
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#2cbd6c',
       navigationBarTitleText: '夜猫足球',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: ''
     },
     tabBar:{
       color:'#333',
@@ -61,7 +61,8 @@ export default class extends wepy.app {
   }
 
   globalData = {
-    userInfo: null
+    userInfo: null,
+    sessionID:'7ogj9tedkmk7nn2nmg9pgntgu5',
   }
 
   constructor () {

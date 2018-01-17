@@ -23,4 +23,12 @@
       <view  wx:else class="empty-list">
         <image src="../images/empty.png" alt=""/>
       </view>
+      
+  <view>
+    <button class="contact" open-type="contact">
+          <image src="../images/addFocus.png"/> 
+          关注我们
+          </button>
+  </view>
+
   </view>

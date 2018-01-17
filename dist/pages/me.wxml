@@ -16,4 +16,12 @@
         <image class="arrow" src="../images/arrow-right.png"/>
       </view>
     </view>
+     
+  <view>
+    <button class="contact" open-type="contact">
+          <image src="../images/addFocus.png"/> 
+          关注我们
+          </button>
+  </view>
+
   </view>

@@ -95,28 +95,28 @@
             bottom:0;
             left:0;
             right:0;
-            line-height:100rpx;
+            line-height:88rpx;
             background:#fff;
             border-top:1rpx solid #e2e2e2;
-            font-size:38rpx;
+            font-size:36rpx;
             .pay-footer-content{
                 display:flex;
                 text-align:center;
                 justify-content:space-between;
                 .pay-btn{
-                  padding:0 40rpx;
+                  padding:0 30rpx;
                   color:#fff;
                   background: @mainColor;
                 }
                 .zixun{
-                  padding:0 20rpx;
+                  padding:0 40rpx;
                   display:flex;
                   align-items: center;
                   flex-direction: column;
                   justify-content: center;
                   border-left:1rpx solid #ccc;
                   .icon{
-                    display:block;
+                     display:block;
 
                     width:60rpx;
                     height:60rpx;
@@ -409,28 +409,30 @@
 
         <view class="pay-footer">
             <view class="pay-footer-content">
-              <view class="pay-nums">{{classInfo.sold}}已卖</view>
+              <view class="pay-nums">{{classInfo.sold}}人已学习</view>
               <view class="pay-btn"
                         @tap="gotoPay"
-                       wx:if="{{!isPayed}}">购买课程(￥{{classInfo.price}}/{{classInfo.expire_month}})</view>
+                       wx:if="{{!isPayed}}">购买课程</view>
                        <view class="pay-btn"
                         @tap="gotoClassIndex"
                       wx:if="{{isPayed}}">您已购买此课程</view>
               </view>
         </view>
+        <contact></contact>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
+  import Contact from '@/components/contact' // alias example
   import myMixin from '../mixins/test'
   import apiPath from '../config/config'
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      //navigationBarTitleText: 'test'
     }
     components = {
-
+      contact:Contact
     }
 
     mixins = [myMixin]
@@ -489,7 +491,7 @@
               class_id:this.classId
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
            wx.hideLoading();
@@ -528,7 +530,7 @@
               class_id:this.classId
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then(res => {
           wx.hideLoading();
@@ -551,7 +553,7 @@
               class_id:this.classId
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then(res => {
           let data = res.data.data;
@@ -577,7 +579,7 @@
               class_id:this.classId
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then(res => {
           let data = res.data.data;
@@ -605,7 +607,7 @@
               class_id:this.classId
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
           console.log(res);

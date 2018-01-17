@@ -1,11 +1,13 @@
 
   <view class="container">
-      <view>  
-          <button class="contact" open-type="contact">
+      
+  <view>
+    <button class="contact" open-type="contact">
           <image src="../images/addFocus.png"/> 
           关注我们
           </button>
-      </view> 
+  </view>
+
       <swiper class="swiper-container" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
         <block  wx:for="{{banners}}" wx:key="{{index}}">
           <swiper-item>

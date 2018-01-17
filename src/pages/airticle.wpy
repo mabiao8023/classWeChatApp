@@ -35,7 +35,7 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '夜猫足球--阅读文章'
     }
     components = {
     }
@@ -67,7 +67,7 @@
               resource_id:this.articleId
             },
             header: {
-              'cookie': 'PHPSESSID=7ogj9tedkmk7nn2nmg9pgntgu5'
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
             this.article = res.data.data;
