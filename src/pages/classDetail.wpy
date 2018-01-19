@@ -488,7 +488,8 @@
             url:apiPath.classPay,
             method:"POST",
             data:{
-              class_id:this.classId
+              class_id:Number(this.classId),
+              paysource:1
             },
             header: {
               'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
@@ -604,7 +605,8 @@
             url:apiPath.classPay,
             method:"POST",
             data:{
-              class_id:this.classId
+              class_id:Number(this.classId),
+              paysource:1
             },
             header: {
               'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
