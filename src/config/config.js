@@ -17,6 +17,7 @@ let apiPath = {
 	getTestAsk:`${Host}/test/get_ask`, // 获取测试的问题
 	getRandAnswer:`${Host}/test/get_answer`, // 获取随机问题
 	login:`${Host}/wxapp/login`, // 登录接口
+	updateUserInfo:`${Host}/wxapp/user/update`, // 更新用户信息
 }
 
 
