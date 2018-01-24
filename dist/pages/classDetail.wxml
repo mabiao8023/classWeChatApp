@@ -165,8 +165,8 @@
 
         <view class="pay-footer">
             <view class="pay-footer-content">
-              <view class="pay-nums">{{classInfo.sold}}人已学习</view>
-              <view class="pay-btn" bindtap="gotoPay" wx:if="{{!isPayed}}">购买课程</view>
+              <!-- <view class="pay-nums">{{classInfo.sold}}人已学习</view> -->
+              <view class="pay-btn" bindtap="gotoPay" wx:if="{{!isPayed}}">购买课程({{classInfo.sold}}人已学习)</view>
                        <view class="pay-btn" bindtap="gotoClassIndex" wx:if="{{isPayed}}">您已购买此课程</view>
               </view>
         </view>

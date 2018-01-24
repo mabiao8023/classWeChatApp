@@ -4,7 +4,7 @@
     position:fixed; 
     right:0;
     line-hegiht:50rpx;
-    bottom:120rpx; 
+    bottom:200rpx; 
     font-size:32rpx;
     border-radius:0;
     color:#fff;
