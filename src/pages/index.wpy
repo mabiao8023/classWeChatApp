@@ -56,7 +56,6 @@
         border-radius:10rpx;
         position:relative;
         overflow: hidden;
-        font-size:36rpx;
         .class-info-img{
           width:700rpx;
           height:350rpx;
