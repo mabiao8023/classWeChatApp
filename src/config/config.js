@@ -1,5 +1,5 @@
 const aipCommonPath = '/home/apiEntry/api/';
-const Host = `https://zucaib.com`;
+const Host = `https://a.ym8800.com`;
 
 let apiPath = {
     bannerList:`${Host}/index/banner`, // banner图
@@ -19,6 +19,5 @@ let apiPath = {
 	login:`${Host}/wxapp/login`, // 登录接口
 	updateUserInfo:`${Host}/wxapp/user/update`, // 更新用户信息
 }
-
 
 export default apiPath

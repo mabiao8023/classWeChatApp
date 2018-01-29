@@ -445,7 +445,7 @@
         isHasVideo:false,
         classInfo:{},
         navType:1,
-        isPayed:true,
+        isPayed:false,
         classId:8,
         freeClassList:[],
         chapterList:[],
