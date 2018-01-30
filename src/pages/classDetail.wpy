@@ -93,7 +93,7 @@
             bottom:0;
             left:0;
             right:0;
-            line-height:90rpx;
+            line-height:88rpx;
             background:#fff;
             border-top:1rpx solid #e2e2e2;
             font-size:36rpx;
@@ -101,13 +101,10 @@
                 display:flex;
                 text-align:center;
                 justify-content:space-between;
-                background:rgba(0,0,0,.5);
-                padding:20rpx 30rpx;
                 .pay-btn{
                   flex:1;
                   padding:0 30rpx;
                   color:#fff;
-                  border-radius:10rpx;
                   background: @mainColor;
                   font-size:36rpx;
                 }
@@ -131,6 +128,7 @@
                   }
                   .pay-nums{
                     flex:1;
+                    color:#666;
                   }
         }
       }
@@ -355,7 +353,7 @@
                     <view class="desc">
                        {{ item.desc }}
                     </view>
-                 <!--    <view class="arrow">
+                    <!--    <view class="arrow">
                         <image wx:if="{{item.slide}}" src="../images/arrow-right.png"/>
                         <image wx:else src="../images/arrow-down.png"/>
                     </view> -->
@@ -413,13 +411,13 @@
 
         <view class="pay-footer">
             <view class="pay-footer-content">
-              <!-- <view class="pay-nums">{{classInfo.sold}}人已学习</view> -->
+              <view class="pay-nums">{{classInfo.sold}}人已学习</view>
               <view class="pay-btn"
                         @tap="gotoPay"
-                       wx:if="{{!isPayed}}">购买课程({{classInfo.sold}}人已学习)</view>
+                       wx:if="{{!isPayed}}">立即购买</view>
                        <view class="pay-btn"
-                        @tap="gotoClassIndex"
-                      wx:if="{{isPayed}}">您已购买此课程</view>
+                        @tap="gotoClassIndex()"
+                      wx:if="{{isPayed}}">学习课程</view>
               </view>
         </view>
         <contact></contact>
@@ -470,6 +468,11 @@
         item.resource.playing = true;
         this.video.src = item.resource.media_url;
       },
+      gotoClassIndex(){
+         wx.navigateTo({
+             url: `/pages/class?id=${this.classId}`
+          })
+      },
       paytip(){
         if(this.isPayed){
           wx.navigateTo({
@@ -499,16 +502,30 @@
               'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
-           wx.hideLoading();
-            // todo:调微信支付
-            // if(res.jsapiConfig){
-            // let wxConfig = res.jsapiConfig;
-            // commonFn.wxPay({
-            //   wxPayConf:wxConfig,
-            //   successCb:this.wxPaySuc.bind(this,wxConfig),
-            //   failCb:this.layer.bind(this,'支付失败，请重试'),
-            //   cancelCb:this.layer.bind(this,'支付失败，请重试'),
-            // });
+            let jsApiConfig = {};
+            let data = res.data.data; 
+            try{
+              jsApiConfig = JSON.parse(data.jsapiConfig);
+            }catch (e){
+              console.error(e)
+            }
+            wx.hideLoading();
+            wx.requestPayment({
+               'timeStamp': jsApiConfig.timeStamp,
+               'nonceStr': jsApiConfig.nonceStr,
+               'package': jsApiConfig.package,
+               'signType': 'MD5',
+               'paySign': jsApiConfig.paySign,
+               'success':function(res){
+                  // 支付成功
+                  wx.navigateTo({
+                     url: `/pages/class?id=${this.classId}`
+                  })
+               },
+               'fail':function(res){
+                  // 支付失败
+               }
+            })
         } );
        
       },
@@ -545,8 +562,6 @@
           this.$apply();
           console.log(res.data);
         })
-
-        
     }
 
     // 获得免费试听列表

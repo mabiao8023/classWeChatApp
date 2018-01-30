@@ -96,6 +96,8 @@
         position:absolute;
         right:10rpx;
         top:0px;
+        max-width:120rpx;
+        overflow:hidden;
         padding:10rpx;
         color:#fff;
         background:@mainColor;
