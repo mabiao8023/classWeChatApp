@@ -348,6 +348,7 @@
               percent:precent
             },
             header: {
+              'content-type': 'application/x-www-form-urlencoded',
               'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
