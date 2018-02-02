@@ -243,7 +243,7 @@
       </view>
       <!-- 视频和图片展示区域 -->
         <view class="banner">
-            <image class="class-info" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
+            <image class="class-info" mode="widthFix" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
             <view class="video-container" wx-if="{{isHasVideo}}">
               <video class="view-cover"
                    autoplay="autoplay"
@@ -270,7 +270,7 @@
                     {{ item.content }}
                 </view>
                 <view class="c-img">
-                    <image src="{{item.img_url}}"/> 
+                    <image mode="widthFix" wx:if="{{item.img_url}}" src="{{item.img_url}}"/> 
                 </view>
             </view>
         </view>
@@ -291,7 +291,7 @@
             wx:for="{{ freeClassList }}"> 
                 <view class="try-item" @tap="gotoAircle({{item.resource_id}})" wx:if="{{ item.resource_type == 1 }}"> 
                     <view class="try-item-img">
-                        <image src="{{item.img_url}}">
+                        <image  src="{{item.img_url}}">
                         <view class="try-tag">阅读课程</view>
                     </view>
                     <view class="try-item-content">
@@ -303,7 +303,7 @@
                         </view>
                     </view>
                 </view>
-
+                
                 <view class="try-item" wx:if="{{ item.resource_type == 2 }}" @tap="playVideo({{item}})"> 
                     <view class="try-item-img">
                         <image src="{{ item.img_url }}">

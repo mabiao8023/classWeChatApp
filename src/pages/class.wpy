@@ -139,7 +139,7 @@
 <template>
   <view class="container">
       <view class="banner">
-            <image class="class-info" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
+            <image class="class-info" mode="widthFix" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
             <view class="video-container" wx-if="{{isHasVideo}}">
               <video class="view-cover"
                    autoplay="autoplay"
