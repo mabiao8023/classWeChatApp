@@ -209,9 +209,8 @@
     onShareAppMessage() {
       return {
       title: '足彩课程',
-      path: '/pages/index',
-      imageUrl:'/images/icon.png',
-      success:function(res) {
+      path: '/page/index?id=123',
+      success: function(res) {
         // 转发成功
       },
       fail: function(res) {

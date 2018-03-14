@@ -22,14 +22,22 @@
       height:48rpx;
       vertical-align:top;
     }
+    &.share{
+     bottom:250rpx; 
+    }
   }
+
 </style>
 <template>
   <view>
+    <button class="contact share" open-type="share">
+          <image  src="../images/share.png"/> 
+          分享好友
+    </button>
     <button class="contact" open-type="contact">
           <image  src="../images/addFocus.png"/> 
           关注我们
-          </button>
+    </button>
   </view>
 </template>
 <script>
