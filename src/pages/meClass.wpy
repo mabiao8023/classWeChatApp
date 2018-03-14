@@ -96,7 +96,7 @@
         position:absolute;
         right:10rpx;
         top:0px;
-        max-width:120rpx;
+        max-width:140rpx;
         overflow:hidden;
         padding:10rpx;
         color:#fff;
@@ -107,10 +107,7 @@
       .m-desc{
         width:100%;
         text-align:justify;
-        overflow: hidden;
         margin:20rpx 0;
-        text-overflow:ellipsis;
-        white-space: nowrap;
       }
       .progress-container{
         display:flex;
