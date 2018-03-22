@@ -96,7 +96,7 @@
         position:absolute;
         right:10rpx;
         top:0px;
-        max-width:120rpx;
+        max-width:140rpx;
         overflow:hidden;
         padding:10rpx;
         color:#fff;
@@ -107,10 +107,7 @@
       .m-desc{
         width:100%;
         text-align:justify;
-        overflow: hidden;
         margin:20rpx 0;
-        text-overflow:ellipsis;
-        white-space: nowrap;
       }
       .progress-container{
         display:flex;
@@ -219,5 +216,19 @@
     onLoad() {
         this.getMeClassList();
     } 
+
+    onShareAppMessage() {
+      return {
+      title: '夜猫足彩课程',
+      path: '/pages/index',
+      imageUrl:'/images/share_img.jpg',
+      success:function(res) {
+        // 转发成功
+      },
+      fail: function(res) {
+        // 转发失败
+      }
+    }
+    }
   }
 </script>

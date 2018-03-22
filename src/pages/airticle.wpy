@@ -25,6 +25,7 @@
       <view class="content">
           {{article.content}}
       </view>
+      <contact></contact>
   </view>
 </template>
 
@@ -32,12 +33,14 @@
   import wepy from 'wepy'
   import testMixin from '../mixins/test'
   import apiPath from '../config/config'
+  import Contact from '@/components/contact' // alias example
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '夜猫足球--阅读文章'
     }
     components = {
+      contact:Contact
     }
 
     mixins = [testMixin]
@@ -80,5 +83,20 @@
       this.articleId = options.id;
       this.getMeClassList();
     }
+
+    onShareAppMessage() {
+          return {
+          title: '夜猫足彩课程',
+          path: '/pages/index',
+          imageUrl:'/images/share_img.jpg',
+          success:function(res) {
+            // 转发成功
+          },
+          fail: function(res) {
+            // 转发失败
+          }
+        }
+        }
+
   }
 </script>

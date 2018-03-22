@@ -158,6 +158,20 @@
     onLoad() {
       this.getPerson();
     }
+
+    onShareAppMessage() {
+      return {
+      title: '夜猫足彩课程',
+      path: '/pages/index',
+      imageUrl:'/images/share_img.jpg',
+      success:function(res) {
+        // 转发成功
+      },
+      fail: function(res) {
+        // 转发失败
+      }
+    }
+    }
   }
 </script>
 

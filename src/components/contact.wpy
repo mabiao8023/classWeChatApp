@@ -5,7 +5,7 @@
     right:0;
     z-index:1000;
     line-hegiht:50rpx;
-    bottom:200rpx; 
+    bottom:60rpx; 
     font-size:32rpx;
     border-radius:0;
     color:#fff;
@@ -23,7 +23,7 @@
       vertical-align:top;
     }
     &.share{
-     bottom:250rpx; 
+     bottom:180rpx; 
     }
   }
 

@@ -23,28 +23,6 @@
       height:374rpx;
     }
   }
-  .contact{
-    position:fixed; 
-    right:0;
-    line-hegiht:50rpx;
-    bottom:60rpx; 
-    font-size:32rpx;
-    border-radius:0;
-    color:#fff;
-    padding-right:10rpx;
-    padding-left:20rpx;
-    border-bottom-left-radius:50rpx;
-    border-top-left-radius:50rpx;
-    background:@mainColor;
-    box-shadow:0 2rpx 10rpx rgba(0,0,0,.5);    
-    border-right:0;
-    image{
-      margin-top:15rpx;
-      width:48rpx;
-      height:48rpx;
-      vertical-align:top;
-    }
-  }
   .class-list{
     width:100%;
     .class-item{
@@ -208,9 +186,9 @@
 
     onShareAppMessage() {
       return {
-      title: '足彩课程',
+      title: '夜猫足彩课程',
       path: '/pages/index',
-      imageUrl:'/images/icon.png',
+      imageUrl:'/images/share_img.jpg',
       success:function(res) {
         // 转发成功
       },
