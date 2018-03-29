@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "vue-fancybox": "^1.0.3",
-    "wepy": "^1.6.0",
+    "wepy": "^1.7.1",
     "wepy-async-function": "^1.4.4",
     "wepy-com-toast": "^1.0.2"
   },
