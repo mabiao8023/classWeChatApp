@@ -1,5 +1,8 @@
 {
 	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
 		"urlCheck": false,
 		"es6": false,
@@ -9,18 +12,24 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.7.2",
-	"appid": "wxc4fabdb6250928a2",
-	"projectname": "%E4%BD%93%E8%82%B2%E6%AF%94%E8%B5%9Bi",
+	"appid": "wxeebf4ed549cf121f",
+	"projectname": "%E8%B6%B3%E5%BD%A9%E8%AF%BE%E7%A8%8B",
 	"svr": "",
 	"client": "",
 	"qcloudRoot": "",
 	"miniprogramRoot": "",
+	"pluginRoot": "",
+	"scripts": {},
 	"condition": {
 		"search": {
 			"current": -1,
 			"list": []
 		},
 		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
 			"current": -1,
 			"list": []
 		},

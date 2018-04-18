@@ -214,17 +214,22 @@
               }
               .try-item-content{
                   font-size:34rpx;
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-content: space-between;
                 .try-item-desc{
+                  width: 100%;
                   color:#666;
                   font-size:34rpx;
                 }
                 .try-item-time{
+                  width: 100%;
                   display:flex;
                   color:#666;
                   font-size:32rpx;
                   align-items:center;
                   icon{
-                    margin-right:20rpx;
+                    margin-right:16rpx;
                   }
                 }
               }
@@ -249,7 +254,8 @@
                    autoplay="autoplay"
                    wx:if="{{video.src}}"
                    src="{{video.src}}"
-                   controls>
+                   controls
+                   poster="{{classInfo.img_url}}">
               </video>
             </view>
         </view>
@@ -291,24 +297,24 @@
             wx:for="{{ freeClassList }}"> 
                 <view class="try-item" @tap="gotoAircle({{item.resource_id}})" wx:if="{{ item.resource_type == 1 }}"> 
                     <view class="try-item-img">
-                        <image  src="{{item.img_url}}">
+                        <image  src="{{item.img_url || classInfo.img_url}}">
                         <view class="try-tag">阅读课程</view>
                     </view>
                     <view class="try-item-content">
                         <view class="try-item-title">
                             {{ item.title }}
                         </view>
-                        <view class="try-item-desc">
+                      <!--   <view class="try-item-desc">
                             {{ item.desc }}
-                        </view>
+                        </view> -->
                     </view>
                 </view>
                 
-                <view class="try-item" wx:if="{{ item.resource_type == 2 }}" @tap="playVideo({{item}})"> 
+                <view class="try-item" wx:if="{{ item.resource_type == 0 }}" @tap="playVideo({{item}},{{index}})"> 
                     <view class="try-item-img">
-                        <image src="{{ item.img_url }}">
-                        <view class="try-tag" wx:if="{{item.resource.playing}}" >正在播放</view>
-                        <view class="mask-box">
+                        <image src="{{ item.img_url || classInfo.img_url }}">
+                        <view class="try-tag" wx:if="{{item.resource.playing}}">正在播放</view>
+                        <view class="mask-box" wx:else>
                             <image src="../images/play.png" />
                         </view>
                     </view>
@@ -316,11 +322,11 @@
                         <view class="try-item-title">
                             {{ item.title }}
                         </view>
-                        <view class="try-item-desc">
+                       <!--  <view class="try-item-desc">
                             {{ item.desc }}
-                        </view>
+                        </view> -->
                         <view class="try-item-time" wx:if="{{item.resource.media_time}}">
-                            <icon type="waiting" size="16" color="#999"/>{{secondsFormate(item.resource.media_time)}}
+                            <icon type="waiting" size="12" color="#999"/>{{item.resource.media_time}}
                         </view>
                     </view>
                 </view>
@@ -343,67 +349,67 @@
             <!-- 章节列表 -->
             <block wx:for="{{chapterList}}" wx:key="{{index}}" >
                  <view class="try-container" @tap="paytip()">
-                <view class="try-title">
-                    <view class="icon">
-                        <image src="../images/class-list-icon.png" />
-                    </view>
-                    <view class="title">
-                        {{ item.title }}
-                    </view>
-                    <view class="desc">
-                       {{ item.desc }}
-                    </view>
-                    <!--    <view class="arrow">
-                        <image wx:if="{{item.slide}}" src="../images/arrow-right.png"/>
-                        <image wx:else src="../images/arrow-down.png"/>
-                    </view> -->
-                </view>
-            </view>
+                  <view class="try-title">
+                      <view class="icon">
+                          <image src="../images/class-list-icon.png" />
+                      </view>
+                      <view class="title">
+                          {{ item.title }}
+                      </view>
+                     <!--  <view class="desc">
+                         {{ item.desc }}
+                      </view> -->
+                      <!--    <view class="arrow">
+                          <image wx:if="{{item.slide}}" src="../images/arrow-right.png"/>
+                          <image wx:else src="../images/arrow-down.png"/>
+                      </view> -->
+                  </view>
+              </view>
             
-            <view class="try-list" hidden="{{item.slide}}" 
-            wx:if="{{item.lesson.length > 0}}" 
-            wx:for="{{item.lesson}}"
-              wx:for-index="idx"
-              wx:for-item="lesson"
-              wx:key="{{idx}}"
-              @tap="paytip()"
-              >
+            <view class="try-list" 
+             wx:if="{{item.lesson.length > 0}}" 
+             wx:for="{{item.lesson}}"
+             wx:for-index="idx"
+             wx:for-item="lesson"
+             wx:key="{{idx}}"
+             @tap="paytip()"
+             >
                 <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}"> 
-                    <view class="try-item-img">
-                        <image src="{{lesson.img_url}}">
-                        <view class="try-tag">阅读课程</view>
-                    </view>
-                    <view class="try-item-content">
-                        <view class="try-item-title">
-                            {{ lesson.title }}
-                        </view>
-                        <view class="try-item-desc">
-                            {{ lesson.desc }}
-                        </view>
-                    </view>
-                </view>
-
-                 <view class="try-item" wx:if="{{ lesson.resource_type == 2 }}"> 
-                    <view class="try-item-img">
-                        <image src="{{ lesson.img_url }}">
-                        <view class="try-tag" wx:if="{{lesson.resource.playing}}" >正在播放</view>
-                        <view class="mask-box">
-                            <image src="../images/play.png" />
-                        </view>
-                    </view>
-                    <view class="try-item-content">
-                        <view class="try-item-title">
-                            {{ lesson.title }}
-                        </view>
-                        <view class="try-item-desc">
-                            {{ lesson.desc }}
-                        </view>
-                        <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
-                            <icon type="waiting" size="16" color="#999"/>{{secondsFormate(lesson.resource.media_time)}}
-                        </view>
-                    </view>
-                </view>
-            </view>
+                   <view class="try-item-img">
+                       <image src="{{lesson.img_url || classInfo.img_url}}">
+                       <view class="try-tag">阅读课程</view>
+                   </view>
+                   <view class="try-item-content">
+                       <view class="try-item-title">
+                           {{ lesson.title }}
+                       </view>
+                      <!-- <view class="try-item-desc">
+                           {{ lesson.desc }}
+                       </view> -->
+                   </view>
+               </view>
+           
+               <view class="try-item" wx:if="{{ lesson.resource_type == 0 }}"> 
+                   <view class="try-item-img">
+                       <image src="{{ lesson.img_url || classInfo.img_url }}">
+                       <view class="try-tag" wx:if="{{lesson.resource.playing}}" >正在播放</view>
+                       <view class="mask-box">
+                           <image src="../images/play.png" />
+                       </view>
+                   </view>
+                   <view class="try-item-content">
+                       <view class="try-item-title">
+                           {{ lesson.title }}
+                       </view>
+                     <!--  <view class="try-item-desc">
+                           {{ lesson.desc }}
+                       </view> -->
+                       <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
+                           <icon type="waiting" size="12" color="#999"/>{{lesson.resource.media_time}}
+                       </view>
+                   </view>
+               </view>
+           </view>
             </block>  
            
             </view>
@@ -460,12 +466,16 @@
       navtag(type){
         this.navType = type;
       },
-      playVideo(){
+      playVideo(item,index){
         this.isHasVideo = true;
-        this.freeClassList.forEach( val => {
-          val.resource.playing = false;
+        this.freeClassList.forEach( (val,idx) => {
+          if( idx == index ){
+            val.resource.playing = true;
+          }else{
+            val.resource.playing = false;
+          }
         } );
-        item.resource.playing = true;
+        
         this.video.src = item.resource.media_url;
       },
       gotoClassIndex(){
@@ -580,6 +590,7 @@
           if( data.length ){
               data.forEach(val => {
                 val.playing = false;
+                val.resource.media_time = val.resource.media_time && this.secondsFormate(val.resource.media_time);
               })
               this.freeClassList = data;
               this.$apply();
@@ -608,6 +619,7 @@
                 val.slide = i === 0 ?  false : true;
                 val.lesson && val.lesson.forEach( val2 => {
                   val2.resource.playing = false;
+                  val2.resource.media_time = val2.resource.media_time && this.secondsFormate(val2.resource.media_time);
                 })
               });
               this.chapterList = data;
@@ -642,7 +654,7 @@
 
 
     onLoad(options) {
-      this.classId = options.id;
+      this.classId = options.id || 6;
       this.getClassInfo();
       this.getTryList();
       this.getChapterList();

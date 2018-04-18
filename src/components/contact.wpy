@@ -4,13 +4,14 @@
     position:fixed; 
     right:0;
     z-index:1000;
-    line-hegiht:50rpx;
+    line-height:68rpx;
+
     bottom:100rpx; 
-    font-size:32rpx;
+    font-size:30rpx;
     border-radius:0;
     color:#fff;
-    padding-right:10rpx;
-    padding-left:20rpx;
+    padding-right:8rpx;
+    padding-left:10rpx;
     border-bottom-left-radius:50rpx;
     border-top-left-radius:50rpx;
     background:@mainColor;
@@ -18,8 +19,8 @@
     border-right:0;
     image{
       margin-top:15rpx;
-      width:48rpx;
-      height:48rpx;
+      width:40rpx;
+      height:40rpx;
       vertical-align:top;
     }
     &.share{
@@ -32,11 +33,11 @@
   <view>
     <button class="contact share" open-type="share">
           <image  src="../images/share.png"/> 
-          分享好友
+          分享
     </button>
     <button class="contact" open-type="contact">
           <image  src="../images/addFocus.png"/> 
-          关注我们
+          关注
     </button>
   </view>
 </template>

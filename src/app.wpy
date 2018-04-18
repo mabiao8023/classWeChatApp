@@ -13,6 +13,7 @@ view{
 </style>
 
 <script>
+import aldstat from './config/ald-stat.js'
 import wepy from 'wepy'
 import 'wepy-async-function'
 import apiPath from './config/config'

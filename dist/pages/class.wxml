@@ -3,18 +3,21 @@
       <view class="banner">
             <image class="class-info" mode="widthFix" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
             <view class="video-container" wx-if="{{isHasVideo}}">
-              <video class="view-cover" autoplay  wx:if="{{video.src}}" src="{{video.src}}" controls>
+              <video class="view-cover" autoplay  wx:if="{{video.src}}" src="{{video.src}}" controls poster="{{classInfo.img_url}}">
               </video>
             </view>
       </view>
       <view class="class-info-text">
           <view class="class-name">
-              {{classInfo.title}}
+              <view>{{classInfo.title}}</view>
+              <view class="class-tag">{{classInfo.tag}}</view>
           </view>
-          <view class="progress-container">
-             <progress class="progress" percent="{{classInfo.learn_percent}}" stroke-width="8"/>
+          <view class="class-progress">
+            <view class="progress-container">
+               <progress class="progress" percent="{{classInfo.learn_percent}}" stroke-width="6"/>
+            </view>
+            <view class="progress-tip">已学习{{classInfo.learn_percent}}%</view> 
           </view>
-          <view class="progress-tip">已学习{{classInfo.learn_percent}}%</view> 
       </view> 
       <!-- 章节列表 -->
       <view class="chapeter-container">
@@ -27,10 +30,10 @@
                     <view class="title">
                         {{ item.title }}
                     </view>
-                    <view class="desc">
+                    <!-- <view class="desc">
                        {{ item.desc }}
-                    </view>
-                 <!--    <view class="arrow">
+                    </view> -->
+                    <!-- <view class="arrow">
                         <image wx:if="{{item.slide}}" src="../images/arrow-right.png"/>
                         <image wx:else src="../images/arrow-down.png"/>
                     </view> -->
@@ -41,22 +44,22 @@
             <view class="try-list">
                 <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}" bindtap="gotoAircle" data-wpygotoaircle-a="{{lesson.resource_id}}"> 
                     <view class="try-item-img">
-                        <image src="{{lesson.img_url}}"/>
+                        <image src="{{lesson.img_url || classInfo.img_url}}"/>
                         <view class="try-tag">阅读课程</view>
                     </view>
                     <view class="try-item-content">
                         <view class="try-item-title">
                             {{ lesson.title }}
                         </view>
-                        <view class="try-item-desc">
+                        <!-- <view class="try-item-desc">
                             {{ lesson.desc }}
-                        </view>
+                        </view> -->
                     </view>
                 </view>
 
-                 <view class="try-item" wx:if="{{ lesson.resource_type == 0 }}" bindtap="playVideo" data-wpyplayvideo-a="{{lesson}}"> 
+                 <view class="try-item" wx:if="{{ lesson.resource_type == 0 }}" bindtap="playVideo" data-wpyplayvideo-a="{{lesson}}" data-wpyplayvideo-b="{{index}}" data-wpyplayvideo-c="{{idx}}"> 
                     <view class="try-item-img">
-                        <image src="{{ lesson.img_url }}"/>
+                        <image src="{{ lesson.img_url || classInfo.img_url}}"/>
                         <view class="try-tag" wx:if="{{lesson.resource.playing}}">正在播放</view>
                         <view class="mask-box" wx:else>
                             <image src="../images/play.png"/>
@@ -66,11 +69,11 @@
                         <view class="try-item-title">
                             {{ lesson.title }}
                         </view>
-                        <view class="try-item-desc">
+                        <!-- <view class="try-item-desc">
                             {{ lesson.desc }}
-                        </view>
+                        </view> -->
                         <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
-                            <icon type="waiting" size="16" color="#999"/>{{lesson.resource.media_time}}
+                            <icon type="waiting" size="12" color="#999"/>{{lesson.resource.media_time}}
                         </view>
                     </view>
                 </view>
@@ -83,11 +86,11 @@
   <view>
     <button class="contact share" open-type="share">
           <image src="../images/share.png"/> 
-          分享好友
+          分享
     </button>
     <button class="contact" open-type="contact">
           <image src="../images/addFocus.png"/> 
-          关注我们
+          关注
     </button>
   </view>
 

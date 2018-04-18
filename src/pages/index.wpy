@@ -72,6 +72,19 @@
       }
     }
   }
+  .gotoMini{
+    padding: 20rpx 0;
+    width: 100%;
+    display: flex;
+    align-items:space-between;
+  }
+  .more{
+    width: 100%;
+    padding: 24rpx;
+    font-size: 36rpx;
+    color: #999;
+    text-align: center;
+  }
 </style>
 <template>
   <view class="container">
@@ -81,7 +94,7 @@
         duration="{{duration}}">
         <block wx:for="{{banners}}" wx:key="{{index}}">
           <swiper-item>
-            <image src="{{item.img_url}}" mode="widthFix" class="slide-image"/>
+            <image src="{{item.img_url}}" mode="widthFix" class="slide-image" @tap="banneGotoClassIndex({{item.url}})"/>
           </swiper-item>
         </block>
       </swiper>
@@ -106,6 +119,15 @@
               </view>  
           </view>  
       </view>
+      <!-- 跳转小程序 -->
+
+    <!--   <view class="more">
+        更多咨询
+    </view>
+    <view class="gotoMini">
+        <button type="primary" bindtap="openMini1">比赛</button>
+        <button type="primary"  bindtap="openMini2">情报</button>
+    </view> -->
   </view>
 </template>
 
@@ -140,11 +162,53 @@
     }
 
     methods = {
+        banneGotoClassIndex(url){
+            let id = 6;
+            try{
+              id = url.split('?')[1].split('=')[1]  
+            }catch(e){
+                
+            }
+            wx.navigateTo({
+              url: `/pages/classDetail?id=${id}`
+            })
+        },
+          
         gotoClassIndex(id){
           wx.navigateTo({
             url: `/pages/classDetail?id=${id}`
           })
+        },
+        /* 打开足球比赛 */
+        openMini1(){
+          wx.navigateToMiniProgram({
+            appId: 'wxe0a4c5b9f85f9cf5',
+            path: 'pages/index',
+            extraData: {
+              foo: 'bar'
+            },
+            envVersion: 'release',
+            success(res) {
+              // 打开成功
+            }
+          })
+        },
+
+        /* 世界杯足球情报 */
+        openMini2(){
+           wx.navigateToMiniProgram({
+            appId: 'wx0c2d51b7b4337c3a',
+            path: 'pages/index',
+            extraData: {
+              foo: 'bar'
+            },
+            envVersion: 'release',
+            success(res) {
+              // 打开成功
+            }
+          })
         }
+
     }
 
     events = {
