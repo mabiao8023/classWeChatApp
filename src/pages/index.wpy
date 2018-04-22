@@ -1,136 +1,183 @@
 <style lang="less">
-@mainColor:#2cbd6c;
-  .userinfo {
+  @mainColor: #FF741F;
+  page{
+    background: #eee;
+  }
+  .container{
+    background: #eee;
+    padding-top: 80rpx;
+  }
+  .nav{
+    position: fixed;
+    top: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
-  }
-
-  .userinfo-nickname {
-    color: #aaa;
-  }
-  .swiper-container{
-    width:100%;
-    height:374rpx;
-    .slide-image{
-      width:100%;
-      height:374rpx;
-    }
-  }
-  .class-list{
-    width:100%;
-    .class-item{
-      padding:24rpx;
-      border-bottom:1rpx solid #e2e2e2;
-      .class-info-container{
-        width:700rpx;
-        height:350rpx;
-        border-radius:10rpx;
-        position:relative;
-        overflow: hidden;
-        .class-info-img{
-          width:700rpx;
-          height:350rpx;
-        }
-        .classed-nums{
-            position:absolute; 
-            top: 0;
-            left: 20rpx;
-            color: #fff;
-            padding: 10rpx 20rpx;
-            background: #2cbd6c;
-            text-align: right;
-            font-size: 30rpx;
-            border-bottom-left-radius: 6rpx;
-            border-bottom-right-radius: 6rpx;
-        }
-        .class-tag{
-          position: absolute;
-          bottom: 20rpx;
-          right: 20rpx;
-          color: #fff;
-          background: red;
-          font-size: 30rpx;
-          padding: 4px 10rpx;
-          border-radius: 6rpx;
-        }
-      }
-      .class-info-text{
-        display:flex;
-        align-items:center;
-        justify-content: space-between;
-        padding-top:20rpx;
-        .class-money{
-           color: red
-        }
-      }
-    }
-  }
-  .gotoMini{
-    padding: 20rpx 0;
     width: 100%;
-    display: flex;
-    align-items:space-between;
+    border-bottom: 2rpx solid #eaeaea;
+    background: #fff;
+    .nav-item{
+      width: 25%;
+      text-align: center;
+      line-height: 80rpx;
+      color: #333;
+      font-size: 30rpx;
+      &.active{
+        color: @mainColor;
+        border-bottom: 4rpx solid @mainColor;
+      }
+    }
   }
-  .more{
+  .game-list{
+    width: 100%;
+  }
+  .game-item{
+    display: flex;
+    align-items: center;
     width: 100%;
     padding: 24rpx;
-    font-size: 36rpx;
-    color: #999;
-    text-align: center;
+    background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
+    border-bottom: 1px solid #CBCBCB;
+    .game-item-sc{
+      width: 100rpx;
+    }
+    .game-item-content{
+      flex: 1;
+    }
+    .game-item-con-info{
+      display: flex;
+      font-size: 28rpx;
+      margin-bottom: 10rpx;
+      .game-ls{
+        width: 40%;
+        text-align: right;
+
+      }
+      .game-time{
+        margin: 0 20rpx;
+        color: #999;
+        width: 80rpx;
+        text-align: center;
+      }
+      .game-minutes{
+        color: @mainColor;
+      }
+    }
+    .game-name{
+      display: flex;
+      font-size: 30rpx;
+    }
+    .home{
+      display: flex;
+      width: 40%;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .other{
+      display: flex;
+    }
+    .score{
+      margin: 0 20rpx;
+      width: 80rpx;
+      text-align: center;
+      color: @mainColor;
+      font-size: 32rpx;
+    }
+    .red{
+      background: red;
+      color: #fff; 
+      padding: 2rpx 5rpx;
+      border-radius: 6rpx; 
+      overflow: hidden;
+      margin: 0 5rpx;
+    }
+    .yellow{
+      background: yellow;
+      color: #333;  
+      padding: 2rpx 5rpx;
+      border-radius: 6rpx; 
+      overflow: hidden;
+      margin: 0 5rpx;
+    }
+  }
+  .collect{
+    width: 60rpx;
+    height: 55rpx;
+    vertical-align: middle;
   }
 </style>
 <template>
   <view class="container">
-      <contact></contact>
-      <swiper class="swiper-container" indicator-dots="{{indicatorDots}}"
-        autoplay="{{autoplay}}" interval="{{interval}}" 
-        duration="{{duration}}">
-        <block wx:for="{{banners}}" wx:key="{{index}}">
-          <swiper-item>
-            <image src="{{item.img_url}}" mode="widthFix" class="slide-image" @tap="banneGotoClassIndex({{item.url}})"/>
-          </swiper-item>
-        </block>
-      </swiper>
-      <view class="class-list">
-          <view class="class-item" wx:for="{{classList}}" wx:key="{{index}}"  @tap="gotoClassIndex({{item.id}})">
-              <view class="class-info-container">
-                  <image class="class-info-img" src="{{item.img_url}}"></image>
-                  <view class="classed-nums">
-                    {{item.sold}}人学习
-                  </view>
-                  <view class="class-tag" wx-if="{{item.tag}}">
-                      {{item.tag}}
-                  </view>
+    <!-- <contact></contact> -->
+    <view class="nav">
+        <view class="nav-item active">即时</view>
+        <view class="nav-item">赛果</view>
+        <view class="nav-item">赛程</view>
+        <view class="nav-item">关注</view>
+    </view> 
+    <view class="game-list">
+        <view class="game-item">
+           <view class="game-item-sc">
+              <image wx:if="{{true}}" class="collect" src="../images/collect_not.png"></image>
+              <image wx:else class="collect" src="../images/collect.png"></image>
+           </view>
+           <view class="game-item-content">
+              <view class="game-item-con-info">
+                  <view class="game-ls">西甲</view>
+                  <view class="game-time">18:00</view>
+                  <view class="game-minutes">50'</view>
               </view>
-              <view class="class-info-text">
-                  <view class="class-name">
-                      {{item.title}}
-                  </view>
-                  <view class="class-money">
-                      ￥{{item.price}}/{{item.expire_month}}
-                  </view>
-              </view>  
-          </view>  
-      </view>
-      <!-- 跳转小程序 -->
+              <view class="game-name">
+                 <view class="home">
+                    <view class="red">1</view>
+                    <view class="yellow">2</view>
+                    <view class="name">皇家马德里</view>
+                 </view>
+                 <view class="score">3:4</view>
+                 <view class="other">
+                    <view class="name">西班牙</view>
+               
+                    <view class="yellow">2</view> 
+                    <view class="red">1</view>
+                 </view>
+              </view>
+           </view> 
+        </view>
 
-    <!--   <view class="more">
-        更多咨询
-    </view>
-    <view class="gotoMini">
-        <button type="primary" bindtap="openMini1">比赛</button>
-        <button type="primary"  bindtap="openMini2">情报</button>
-    </view> -->
+          <view class="game-item">
+           <view class="game-item-sc">
+              <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"></image>
+              <image wx:else class="collect" src="../images/collect.png"></image>
+           </view>
+           <view class="game-item-content">
+              <view class="game-item-con-info">
+                  <view class="game-ls">西甲</view>
+                  <view class="game-time">18:00</view>
+                  <view class="game-minutes">50'</view>
+              </view>
+              <view class="game-name">
+                 <view class="home">
+                    <view class="red">1</view>
+                    <view class="yellow">2</view>
+                    <view class="name">皇家马德里</view>
+                 </view>
+                 <view class="score">3:4</view>
+                 <view class="other">
+                    <view class="name">西班牙</view>
+                   
+                    <view class="yellow">2</view> 
+                     <view class="red">1</view>
+                 </view>
+              </view>
+           </view> 
+        </view>
+    </view>  
+   <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+       <switch name="switch"/>
+       <input name="input" placeholder="please input here" />
+       <button class="sc-btn" formType="submit">提交</button>
+    </form> -->
   </view>
 </template>
-
+  
 <script>
   import wepy from 'wepy'
   import Contact from '@/components/contact' // alias example
@@ -139,7 +186,7 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '夜猫足球--首页'
+      navigationBarTitleText: '夜猫足球实时比分'
     }
 
     components = {
@@ -207,7 +254,12 @@
               // 打开成功
             }
           })
-        }
+        },
+        formSubmit: function(e) {
+            // console.log(e);
+            console.log(e.detail.formId);
+            console.log('form发生了submit事件，携带数据为：', e.detail.value)
+        },
 
     }
 

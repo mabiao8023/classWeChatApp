@@ -1,52 +1,72 @@
 
   <view class="container">
-      
-  <view>
-    <button class="contact share" open-type="share">
-          <image src="../images/share.png"/> 
-          分享
-    </button>
-    <button class="contact" open-type="contact">
-          <image src="../images/addFocus.png"/> 
-          关注
-    </button>
-  </view>
-
-      <swiper class="swiper-container" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block  wx:for="{{banners}}" wx:key="{{index}}">
-          <swiper-item>
-            <image src="{{item.img_url}}" mode="widthFix" class="slide-image" bindtap="banneGotoClassIndex" data-wpybannegotoclassindex-a="{{item.url}}"/>
-          </swiper-item>
-        </block>
-      </swiper>
-      <view class="class-list">
-          <view class="class-item"  wx:for="{{classList}}" wx:key="{{index}}" bindtap="gotoClassIndex" data-wpygotoclassindex-a="{{item.id}}">
-              <view class="class-info-container">
-                  <image class="class-info-img" src="{{item.img_url}}"/>
-                  <view class="classed-nums">
-                    {{item.sold}}人学习
-                  </view>
-                  <view class="class-tag" wx-if="{{item.tag}}">
-                      {{item.tag}}
-                  </view>
+    <!-- <contact></contact> -->
+    <view class="nav">
+        <view class="nav-item active">即时</view>
+        <view class="nav-item">赛果</view>
+        <view class="nav-item">赛程</view>
+        <view class="nav-item">关注</view>
+    </view> 
+    <view class="game-list">
+        <view class="game-item">
+           <view class="game-item-sc">
+              <image  wx:if="{{true}}" class="collect" src="../images/collect_not.png"/>
+              <image  wx:else class="collect" src="../images/collect.png"/>
+           </view>
+           <view class="game-item-content">
+              <view class="game-item-con-info">
+                  <view class="game-ls">西甲</view>
+                  <view class="game-time">18:00</view>
+                  <view class="game-minutes">50'</view>
               </view>
-              <view class="class-info-text">
-                  <view class="class-name">
-                      {{item.title}}
-                  </view>
-                  <view class="class-money">
-                      ￥{{item.price}}/{{item.expire_month}}
-                  </view>
-              </view>  
-          </view>  
-      </view>
-      <!-- 跳转小程序 -->
+              <view class="game-name">
+                 <view class="home">
+                    <view class="red">1</view>
+                    <view class="yellow">2</view>
+                    <view class="name">皇家马德里</view>
+                 </view>
+                 <view class="score">3:4</view>
+                 <view class="other">
+                    <view class="name">西班牙</view>
+               
+                    <view class="yellow">2</view> 
+                    <view class="red">1</view>
+                 </view>
+              </view>
+           </view> 
+        </view>
 
-    <!--   <view class="more">
-        更多咨询
-    </view>
-    <view class="gotoMini">
-        <button type="primary" bindtap="openMini1">比赛</button>
-        <button type="primary"  bindtap="openMini2">情报</button>
-    </view> -->
+          <view class="game-item">
+           <view class="game-item-sc">
+              <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"/>
+              <image wx:else class="collect" src="../images/collect.png"/>
+           </view>
+           <view class="game-item-content">
+              <view class="game-item-con-info">
+                  <view class="game-ls">西甲</view>
+                  <view class="game-time">18:00</view>
+                  <view class="game-minutes">50'</view>
+              </view>
+              <view class="game-name">
+                 <view class="home">
+                    <view class="red">1</view>
+                    <view class="yellow">2</view>
+                    <view class="name">皇家马德里</view>
+                 </view>
+                 <view class="score">3:4</view>
+                 <view class="other">
+                    <view class="name">西班牙</view>
+                   
+                    <view class="yellow">2</view> 
+                     <view class="red">1</view>
+                 </view>
+              </view>
+           </view> 
+        </view>
+    </view>  
+   <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+       <switch name="switch"/>
+       <input name="input" placeholder="please input here" />
+       <button class="sc-btn" formType="submit">提交</button>
+    </form> -->
   </view>

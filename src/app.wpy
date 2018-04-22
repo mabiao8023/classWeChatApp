@@ -21,19 +21,15 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
-      'pages/class',
-      'pages/classDetail',
-      'pages/airticle',
-      'pages/me',
-      'pages/meClass'
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#2cbd6c',
-      navigationBarTitleText: '夜猫足球',
-      navigationBarTextStyle: ''
+      navigationBarBackgroundColor: '#FF741F',
+      navigationBarTitleText: '夜猫足球实时比分',
+      navigationBarTextStyle: '',
+      enablePullDownRefresh: true,
     },
-    tabBar:{
+   /* tabBar:{
       color:'#333',
       selectedColor:'#2cbd6c',
       backgroundColor:'#fff',
@@ -58,7 +54,7 @@ export default class extends wepy.app {
              selectedIconPath:'./images/me-active.png'
           }
       ],
-    }
+    }*/
   }
 
   globalData = {
