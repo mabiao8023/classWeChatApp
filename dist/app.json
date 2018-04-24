@@ -1,1 +1,1 @@
-{"pages":["pages/index"],"window":{"backgroundTextStyle":"light","navigationBarBackgroundColor":"#FF741F","navigationBarTitleText":"夜猫足球实时比分","navigationBarTextStyle":"","enablePullDownRefresh":true}}
+{"pages":["pages/index","pages/result","pages/feature","pages/shaixuan"],"window":{"backgroundTextStyle":"light","navigationBarBackgroundColor":"#FF741F","navigationBarTitleText":"夜猫足球实时比分","navigationBarTextStyle":"","enablePullDownRefresh":true}}

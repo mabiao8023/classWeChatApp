@@ -21,6 +21,9 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
+      'pages/result',
+      'pages/feature',
+      'pages/shaixuan'
     ],
     window: {
       backgroundTextStyle: 'light',

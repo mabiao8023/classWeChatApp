@@ -2,10 +2,10 @@
   @mainColor: #FF741F;
   page{
     background: #eee;
+     padding-top: 80rpx;
   }
   .container{
     background: #eee;
-    padding-top: 80rpx;
   }
   .nav{
     position: fixed;
@@ -33,11 +33,13 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 24rpx;
+    padding: 30rpx 24rpx;
     background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
     border-bottom: 1px solid #CBCBCB;
+    border-left: 8rpx solid @mainColor;
+    margin: 10rpx 0;
     .game-item-sc{
-      width: 100rpx;
+      width: 40rpx;
     }
     .game-item-content{
       flex: 1;
@@ -47,9 +49,9 @@
       font-size: 28rpx;
       margin-bottom: 10rpx;
       .game-ls{
-        width: 40%;
+        width: 38%;
         text-align: right;
-
+        color: #999;
       }
       .game-time{
         margin: 0 20rpx;
@@ -64,15 +66,17 @@
     .game-name{
       display: flex;
       font-size: 30rpx;
+      color: #333;
     }
     .home{
       display: flex;
-      width: 40%;
+      width: 38%;
       justify-content: flex-end;
       align-items: center;
     }
     .other{
       display: flex;
+      align-items: center;
     }
     .score{
       margin: 0 20rpx;
@@ -82,35 +86,43 @@
       font-size: 32rpx;
     }
     .red{
-      background: red;
+      background: #e41c36;
       color: #fff; 
-      padding: 2rpx 5rpx;
+      width: 30rpx;
+      height: 36rpx;
+      line-height: 36rpx;
       border-radius: 6rpx; 
+      text-align: center;
       overflow: hidden;
       margin: 0 5rpx;
+      font-size: 28rpx;
     }
     .yellow{
-      background: yellow;
-      color: #333;  
-      padding: 2rpx 5rpx;
+      background: #f6c151;
+      color: #fff;  
+      width: 30rpx;
+      height: 36rpx;
+      line-height: 36rpx;
       border-radius: 6rpx; 
+      text-align: center;
       overflow: hidden;
+      font-size: 28rpx;
       margin: 0 5rpx;
     }
   }
   .collect{
-    width: 60rpx;
-    height: 55rpx;
+    width: 48rpx;
+    height: 44rpx;
     vertical-align: middle;
   }
 </style>
 <template>
   <view class="container">
-    <!-- <contact></contact> -->
+    <contact></contact>
     <view class="nav">
         <view class="nav-item active">即时</view>
-        <view class="nav-item">赛果</view>
-        <view class="nav-item">赛程</view>
+        <view class="nav-item" bindtap="gotoResult">赛果</view>
+        <view class="nav-item" bindtap="gotoFeture">赛程</view>
         <view class="nav-item">关注</view>
     </view> 
     <view class="game-list">
@@ -131,10 +143,9 @@
                     <view class="yellow">2</view>
                     <view class="name">皇家马德里</view>
                  </view>
-                 <view class="score">3:4</view>
+                 <view class="score">3-4</view>
                  <view class="other">
-                    <view class="name">西班牙</view>
-               
+                    <view class="name">西班牙三杀</view>
                     <view class="yellow">2</view> 
                     <view class="red">1</view>
                  </view>
@@ -157,9 +168,9 @@
                  <view class="home">
                     <view class="red">1</view>
                     <view class="yellow">2</view>
-                    <view class="name">皇家马德里</view>
+                    <view class="name">马德里</view>
                  </view>
-                 <view class="score">3:4</view>
+                 <view class="score">3-4</view>
                  <view class="other">
                     <view class="name">西班牙</view>
                    
@@ -220,7 +231,16 @@
               url: `/pages/classDetail?id=${id}`
             })
         },
-          
+        gotoResult(){
+          wx.navigateTo({
+            url: `/pages/result`
+          })
+        },
+        gotoFeture(){
+          wx.navigateTo({
+            url: `/pages/feature`
+          })
+        },
         gotoClassIndex(id){
           wx.navigateTo({
             url: `/pages/classDetail?id=${id}`

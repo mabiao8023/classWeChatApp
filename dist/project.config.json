@@ -63,6 +63,12 @@
 					"name": "课程首页",
 					"pathName": "pages/class",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "文章页面",
+					"pathName": "pages/result",
+					"query": "id=22"
 				}
 			]
 		}

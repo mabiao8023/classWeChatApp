@@ -1,26 +1,14 @@
 
   <view class="container">
-    
-  <view>
-    <!-- <button class="contact share" open-type="share">
-          <image  src="../images/share.png"/> 
-          分享
-    </button>
-    <button class="contact" open-type="contact">
-          <image  src="../images/addFocus.png"/> 
-          关注
-    </button> -->
-    <view class="shaixuan" bindtap="$contact$gotosx">
-        <image src="../images/sx.png"/>
-    </view>
-  </view>
-
+    <!-- <contact></contact> -->
+    <picker class="my-picker" mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
     <view class="nav">
-        <view class="nav-item active">即时</view>
-        <view class="nav-item" bindtap="gotoResult">赛果</view>
-        <view class="nav-item" bindtap="gotoFeture">赛程</view>
-        <view class="nav-item">关注</view>
-    </view> 
+      <image class="date-choice" src="../images/date.png"/>
+        <view>今天 2018/07/12 共32场</view>
+        <image src="../images/arrow.png" class="arrow-right"/>
+    </view>
+        
+    </picker>
     <view class="game-list">
         <view class="game-item">
            <view class="game-item-sc">
@@ -31,19 +19,15 @@
               <view class="game-item-con-info">
                   <view class="game-ls">西甲</view>
                   <view class="game-time">18:00</view>
-                  <view class="game-minutes">50'</view>
+                  <view class="game-minutes">未</view>
               </view>
               <view class="game-name">
                  <view class="home">
-                    <view class="red">1</view>
-                    <view class="yellow">2</view>
                     <view class="name">皇家马德里</view>
                  </view>
-                 <view class="score">3-4</view>
+                 <view class="score">vs</view>
                  <view class="other">
                     <view class="name">西班牙三杀</view>
-                    <view class="yellow">2</view> 
-                    <view class="red">1</view>
                  </view>
               </view>
            </view> 
@@ -58,25 +42,20 @@
               <view class="game-item-con-info">
                   <view class="game-ls">西甲</view>
                   <view class="game-time">18:00</view>
-                  <view class="game-minutes">50'</view>
+                  <view class="game-minutes">未</view>
               </view>
               <view class="game-name">
                  <view class="home">
-                    <view class="red">1</view>
-                    <view class="yellow">2</view>
                     <view class="name">马德里</view>
                  </view>
-                 <view class="score">3-4</view>
+                 <view class="score">vs</view>
                  <view class="other">
                     <view class="name">西班牙</view>
-                   
-                    <view class="yellow">2</view> 
-                     <view class="red">1</view>
                  </view>
               </view>
            </view> 
         </view>
-    </view>  
+    </view> 
    <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
        <switch name="switch"/>
        <input name="input" placeholder="please input here" />

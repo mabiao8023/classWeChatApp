@@ -1,1 +1,328 @@
-feature.wpy
+<style lang="less">
+  @mainColor: #FF741F;
+  page{
+    background: #eee;
+     padding-top: 80rpx;
+  }
+  .container{
+    background: #eee;
+  }
+  .my-picker{
+    width: 100%;
+  }
+  .nav{
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: 100%;
+    border-bottom: 2rpx solid #eaeaea;
+    background: #fff;
+    text-align: center;
+      line-height: 80rpx;
+      color: #333;
+      font-size: 30rpx;
+      padding: 0 30rpx;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .date-choice{
+        width: 48rpx;
+        height: 48rpx;
+      }
+      .arrow-right{
+        width: 40rpx;
+        height: 40rpx;
+      }
+  }
+  .game-list{
+    width: 100%;
+  }
+  .game-item{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 30rpx 24rpx;
+    background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
+    border-bottom: 1px solid #CBCBCB;
+    border-left: 8rpx solid @mainColor;
+    margin: 10rpx 0;
+    .game-item-sc{
+      width: 40rpx;
+    }
+    .game-item-content{
+      flex: 1;
+    }
+    .game-item-con-info{
+      display: flex;
+      font-size: 28rpx;
+      margin-bottom: 10rpx;
+      .game-ls{
+        width: 38%;
+        text-align: right;
+        color: #999;
+      }
+      .game-time{
+        margin: 0 20rpx;
+        color: #999;
+        width: 80rpx;
+        text-align: center;
+      }
+      .game-minutes{
+        color: @mainColor;
+      }
+    }
+    .game-name{
+      display: flex;
+      font-size: 30rpx;
+      color: #333;
+    }
+    .home{
+      display: flex;
+      width: 38%;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .other{
+      display: flex;
+    }
+    .score{
+      margin: 0 20rpx;
+      width: 80rpx;
+      text-align: center;
+      color: #999;
+      font-size: 32rpx;
+    }
+    .red{
+      background: #e41c36;
+      color: #fff; 
+      width: 30rpx;
+      height: 36rpx;
+      line-height: 36rpx;
+      border-radius: 6rpx; 
+      text-align: center;
+      overflow: hidden;
+      margin: 0 5rpx;
+      font-size: 28rpx;
+    }
+    .yellow{
+      background: #f6c151;
+      color: #fff;  
+      width: 30rpx;
+      height: 36rpx;
+      line-height: 36rpx;
+      border-radius: 6rpx; 
+      text-align: center;
+      overflow: hidden;
+      font-size: 28rpx;
+      margin: 0 5rpx;
+    }
+  }
+  .collect{
+    width: 48rpx;
+    height: 44rpx;
+    vertical-align: middle;
+  }
+</style>
+<template>
+  <view class="container">
+    <!-- <contact></contact> -->
+    <picker class="my-picker"  mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+    <view class="nav">
+      <image class="date-choice" src="../images/date.png"></image>
+        <view>今天 2018/07/12 共32场</view>
+        <image src="../images/arrow.png" class="arrow-right"></image>
+    </view>
+        
+    </picker>
+    <view class="game-list">
+        <view class="game-item">
+           <view class="game-item-sc">
+              <image wx:if="{{true}}" class="collect" src="../images/collect_not.png"></image>
+              <image wx:else class="collect" src="../images/collect.png"></image>
+           </view>
+           <view class="game-item-content">
+              <view class="game-item-con-info">
+                  <view class="game-ls">西甲</view>
+                  <view class="game-time">18:00</view>
+                  <view class="game-minutes">未</view>
+              </view>
+              <view class="game-name">
+                 <view class="home">
+                    <view class="name">皇家马德里</view>
+                 </view>
+                 <view class="score">vs</view>
+                 <view class="other">
+                    <view class="name">西班牙三杀</view>
+                 </view>
+              </view>
+           </view> 
+        </view>
+
+          <view class="game-item">
+           <view class="game-item-sc">
+              <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"></image>
+              <image wx:else class="collect" src="../images/collect.png"></image>
+           </view>
+           <view class="game-item-content">
+              <view class="game-item-con-info">
+                  <view class="game-ls">西甲</view>
+                  <view class="game-time">18:00</view>
+                  <view class="game-minutes">未</view>
+              </view>
+              <view class="game-name">
+                 <view class="home">
+                    <view class="name">马德里</view>
+                 </view>
+                 <view class="score">vs</view>
+                 <view class="other">
+                    <view class="name">西班牙</view>
+                 </view>
+              </view>
+           </view> 
+        </view>
+    </view> 
+   <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
+       <switch name="switch"/>
+       <input name="input" placeholder="please input here" />
+       <button class="sc-btn" formType="submit">提交</button>
+    </form> -->
+  </view>
+</template>
+  
+<script>
+  import wepy from 'wepy'
+  import Contact from '@/components/contact' // alias example
+  import myMixin from '../mixins/test'
+  import apiPath from '../config/config'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '夜猫足球实时比分'
+    }
+
+    components = {
+      contact:Contact
+    }
+
+    mixins = [myMixin]
+
+    data = {
+      indicatorDots: true,
+      autoplay: true,
+      interval: 5000,
+      duration: 1000,
+      banners:[],
+      classList:[],
+    }
+
+    computed = {
+      
+    }
+
+    methods = {
+        banneGotoClassIndex(url){
+            let id = 6;
+            try{
+              id = url.split('?')[1].split('=')[1]  
+            }catch(e){
+                
+            }
+            wx.navigateTo({
+              url: `/pages/classDetail?id=${id}`
+            })
+        },
+          
+        gotoClassIndex(id){
+          wx.navigateTo({
+            url: `/pages/classDetail?id=${id}`
+          })
+        },
+        /* 打开足球比赛 */
+        openMini1(){
+          wx.navigateToMiniProgram({
+            appId: 'wxe0a4c5b9f85f9cf5',
+            path: 'pages/index',
+            extraData: {
+              foo: 'bar'
+            },
+            envVersion: 'release',
+            success(res) {
+              // 打开成功
+            }
+          })
+        },
+
+        /* 世界杯足球情报 */
+        openMini2(){
+           wx.navigateToMiniProgram({
+            appId: 'wx0c2d51b7b4337c3a',
+            path: 'pages/index',
+            extraData: {
+              foo: 'bar'
+            },
+            envVersion: 'release',
+            success(res) {
+              // 打开成功
+            }
+          })
+        },
+        formSubmit: function(e) {
+            // console.log(e);
+            console.log(e.detail.formId);
+            console.log('form发生了submit事件，携带数据为：', e.detail.value)
+        },
+
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    // 获取banners列表
+    
+    getBanners(){
+      wepy.request(apiPath.bannerList)
+        .then( res => {
+            console.log(res.data.data);
+            this.banners = res.data.data;
+            this.$apply();
+        })
+    }
+
+    // 获取课程列表
+    
+    getClassList(){
+      wepy.request(apiPath.classList)
+        .then( res => {
+            this.classList = res.data.data.list;
+            this.classList.forEach( val => {
+              val.price = this.formateMoney(val.price);
+              val.expire_month = this.formateMonth(val.expire_month);
+            } )
+            this.$apply();
+        })
+    }
+
+    onLoad() {
+      this.getBanners();
+      this.getClassList();
+    }
+
+    onShareAppMessage() {
+      return {
+      title: '夜猫足彩课程',
+      path: '/pages/index',
+      imageUrl:'/images/share_img.jpg',
+      success:function(res) {
+        // 转发成功
+      },
+      fail: function(res) {
+        // 转发失败
+      }
+    }
+    }
+  }
+</script>
