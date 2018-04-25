@@ -44,14 +44,14 @@
 </style>
 <template>
   <view>
-    <!-- <button class="contact share" open-type="share">
+    <button class="contact share" open-type="share">
           <image  src="../images/share.png"/> 
           分享
     </button>
     <button class="contact" open-type="contact">
           <image  src="../images/addFocus.png"/> 
           关注
-    </button> -->
+    </button>
     <view class="shaixuan" bindtap="gotosx">
         <image src="../images/sx.png"></image>
     </view>

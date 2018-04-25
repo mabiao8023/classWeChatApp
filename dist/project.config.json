@@ -69,6 +69,12 @@
 					"name": "文章页面",
 					"pathName": "pages/result",
 					"query": "id=22"
+				},
+				{
+					"id": -1,
+					"name": "筛选",
+					"pathName": "pages/shaixuan",
+					"query": ""
 				}
 			]
 		}

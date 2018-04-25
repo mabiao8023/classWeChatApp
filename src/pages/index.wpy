@@ -50,8 +50,11 @@
       margin-bottom: 10rpx;
       .game-ls{
         width: 38%;
-        text-align: right;
+        padding-left: 40rpx; 
+        text-align: left;
         color: #999;
+        display: flex;
+        justify-content: space-between;
       }
       .game-time{
         margin: 0 20rpx;
@@ -60,6 +63,9 @@
         text-align: center;
       }
       .game-minutes{
+        margin: 0 20rpx;
+        width: 60rpx;
+        text-align: center;
         color: @mainColor;
       }
     }
@@ -80,7 +86,7 @@
     }
     .score{
       margin: 0 20rpx;
-      width: 80rpx;
+      width: 60rpx;
       text-align: center;
       color: @mainColor;
       font-size: 32rpx;
@@ -88,25 +94,25 @@
     .red{
       background: #e41c36;
       color: #fff; 
-      width: 30rpx;
-      height: 36rpx;
-      line-height: 36rpx;
+      width: 26rpx;
+      height: 32rpx;
+      line-height: 32rpx;
       border-radius: 6rpx; 
       text-align: center;
       overflow: hidden;
       margin: 0 5rpx;
-      font-size: 28rpx;
+      font-size: 26rpx;
     }
     .yellow{
       background: #f6c151;
       color: #fff;  
-      width: 30rpx;
-      height: 36rpx;
-      line-height: 36rpx;
+      width: 26rpx;
+      height: 32rpx;
+      line-height: 32rpx;
       border-radius: 6rpx; 
       text-align: center;
       overflow: hidden;
-      font-size: 28rpx;
+      font-size: 26rpx;
       margin: 0 5rpx;
     }
   }
@@ -133,8 +139,10 @@
            </view>
            <view class="game-item-content">
               <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
+                  <view class="game-ls">
+                    <view>西甲</view>
+                    <view class="game-time">18:00</view>
+                  </view>
                   <view class="game-minutes">50'</view>
               </view>
               <view class="game-name">
@@ -158,24 +166,25 @@
               <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"></image>
               <image wx:else class="collect" src="../images/collect.png"></image>
            </view>
-           <view class="game-item-content">
+          <view class="game-item-content">
               <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
+                  <view class="game-ls">
+                    <view>西甲</view>
+                    <view class="game-time">18:00</view>
+                  </view>
                   <view class="game-minutes">50'</view>
               </view>
               <view class="game-name">
                  <view class="home">
                     <view class="red">1</view>
                     <view class="yellow">2</view>
-                    <view class="name">马德里</view>
+                    <view class="name">皇家马</view>
                  </view>
                  <view class="score">3-4</view>
                  <view class="other">
                     <view class="name">西班牙</view>
-                   
                     <view class="yellow">2</view> 
-                     <view class="red">1</view>
+                    <view class="red">1</view>
                  </view>
               </view>
            </view> 
@@ -322,7 +331,7 @@
 
     onShareAppMessage() {
       return {
-      title: '夜猫足彩课程',
+      title: '2018/03/24 18:00 西班牙国家队 3:4 巴西国家队',
       path: '/pages/index',
       imageUrl:'/images/share_img.jpg',
       success:function(res) {

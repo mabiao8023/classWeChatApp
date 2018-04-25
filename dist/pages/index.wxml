@@ -2,14 +2,14 @@
   <view class="container">
     
   <view>
-    <!-- <button class="contact share" open-type="share">
-          <image  src="../images/share.png"/> 
+    <button class="contact share" open-type="share">
+          <image src="../images/share.png"/> 
           分享
     </button>
     <button class="contact" open-type="contact">
-          <image  src="../images/addFocus.png"/> 
+          <image src="../images/addFocus.png"/> 
           关注
-    </button> -->
+    </button>
     <view class="shaixuan" bindtap="$contact$gotosx">
         <image src="../images/sx.png"/>
     </view>
@@ -29,8 +29,10 @@
            </view>
            <view class="game-item-content">
               <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
+                  <view class="game-ls">
+                    <view>西甲</view>
+                    <view class="game-time">18:00</view>
+                  </view>
                   <view class="game-minutes">50'</view>
               </view>
               <view class="game-name">
@@ -54,24 +56,25 @@
               <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"/>
               <image wx:else class="collect" src="../images/collect.png"/>
            </view>
-           <view class="game-item-content">
+          <view class="game-item-content">
               <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
+                  <view class="game-ls">
+                    <view>西甲</view>
+                    <view class="game-time">18:00</view>
+                  </view>
                   <view class="game-minutes">50'</view>
               </view>
               <view class="game-name">
                  <view class="home">
                     <view class="red">1</view>
                     <view class="yellow">2</view>
-                    <view class="name">马德里</view>
+                    <view class="name">皇家马</view>
                  </view>
                  <view class="score">3-4</view>
                  <view class="other">
                     <view class="name">西班牙</view>
-                   
                     <view class="yellow">2</view> 
-                     <view class="red">1</view>
+                    <view class="red">1</view>
                  </view>
               </view>
            </view> 

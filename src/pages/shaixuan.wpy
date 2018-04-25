@@ -1,195 +1,134 @@
 <style lang="less">
   @mainColor: #FF741F;
-  page{
-    background: #eee;
-     padding-top: 80rpx;
-  }
-  .container{
-    background: #eee;
-  }
-  .my-picker{
-    width: 100%;
-  }
-  .nav{
-    position: fixed;
-    top: 0;
-    display: flex;
-    width: 100%;
-    border-bottom: 2rpx solid #eaeaea;
-    background: #fff;
-    text-align: center;
-      line-height: 80rpx;
-      color: #333;
-      font-size: 30rpx;
-      padding: 0 30rpx;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .date-choice{
-        width: 48rpx;
-        height: 48rpx;
-      }
-      .arrow-right{
-        width: 40rpx;
-        height: 40rpx;
-      }
-  }
-  .game-list{
-    width: 100%;
-  }
-  .game-item{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 30rpx 24rpx;
-    background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
-    border-bottom: 1px solid #CBCBCB;
-    border-left: 8rpx solid @mainColor;
-    margin: 10rpx 0;
-    .game-item-sc{
-      width: 40rpx;
+    page{
+      background: #dee7f0;
+      padding-top: 80rpx;
+       padding-bottom: 200rpx;
     }
-    .game-item-content{
-      flex: 1;
+    .container{
+      background: #dee7f0;
     }
-    .game-item-con-info{
+    .ls-list{
       display: flex;
-      font-size: 28rpx;
-      margin-bottom: 10rpx;
-      .game-ls{
-        width: 38%;
-        text-align: right;
-        color: #999;
-      }
-      .game-time{
-        margin: 0 20rpx;
-        color: #999;
-        width: 80rpx;
+      flex-wrap: wrap;
+      padding: 5px;
+      .ls-item{
+        width: 25%;
         text-align: center;
+        font-size: 28rpx;
+        padding: 10rpx;
+
+        .ls-item-btn{
+            line-height: 60rpx;
+            background: #fff;
+            color: #999;
+            border: 2rpx solid #dddce1;
+            border-radius: 5rpx;
+            &.active{
+              background: #fde399;
+              color: #b14008;
+              border: 2rpx solid #ffa478;
+            }
+        }
       }
-      .game-minutes{
-        color: @mainColor;
+    }
+     .ls-nav{
+        font-size: 30rpx;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        background: #fff;
+        border-top: 2rpx solid #eaeaea;
+        border-bottom: 2rpx solid #eaeaea;
+        .ls-nav-item{
+          flex: 1;
+          text-align: center;
+          line-height: 80rpx;
+          
+          &.active{
+            background: @mainColor;
+            color: #fff;
+          }
+        }
       }
-    }
-    .game-name{
-      display: flex;
-      font-size: 30rpx;
-      color: #333;
-    }
-    .home{
-      display: flex;
-      width: 38%;
-      justify-content: flex-end;
-      align-items: center;
-    }
-    .other{
-      display: flex;
-    }
-    .score{
-      margin: 0 20rpx;
-      width: 80rpx;
-      text-align: center;
-      color: @mainColor;
-      font-size: 32rpx;
-    }
-    .red{
-      background: #e41c36;
-      color: #fff; 
-      width: 30rpx;
-      height: 36rpx;
-      line-height: 36rpx;
-      border-radius: 6rpx; 
-      text-align: center;
-      overflow: hidden;
-      margin: 0 5rpx;
-      font-size: 28rpx;
-    }
-    .yellow{
-      background: #f6c151;
-      color: #fff;  
-      width: 30rpx;
-      height: 36rpx;
-      line-height: 36rpx;
-      border-radius: 6rpx; 
-      text-align: center;
-      overflow: hidden;
-      font-size: 28rpx;
-      margin: 0 5rpx;
-    }
+  .choice{
+    color: #333;
+          font-size: 30rpx;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+     
+
+      .ls-btns{
+        display: flex;
+        background: #fff;
+        justify-content: space-between;
+        align-items:center;
+        border-top: 2rpx solid #eaeaea;
+        height: 160rpx;
+        padding: 24rpx;
+        color: #666;
+      }
+      
+      .choice-container{
+        display: flex;
+        align-items: center;
+      }
+      .choice-btn{
+         padding: 10rpx;
+         color: #333;
+         border-radius: 10rpx;
+         margin-right:20rpx;
+         background: #fff;
+         color: #999;
+         border: 2rpx solid #dddce1;
+         &.all-in{
+          background: #fde399;
+          color: #b14008;
+          border: 2rpx solid #ffa478;
+        }
+      }
+      .sure-btn{
+         padding: 20rpx 25px;
+         border-radius: 10rpx;
+         font-size: 32rpx;
+         background: #e74a5b;
+         color: #fff;
+      }
   }
-  .collect{
-    width: 48rpx;
-    height: 44rpx;
-    vertical-align: middle;
-  }
+
 </style>
 <template>
   <view class="container">
+      <view class="ls-nav">
+           <view class="ls-nav-item active">全部</view>
+           <view class="ls-nav-item">国家</view>
+           <view class="ls-nav-item">足彩</view>
+           <view class="ls-nav-item">竞彩</view>
+           <view class="ls-nav-item">单场</view>
+     </view>
     <!-- <contact></contact> -->
-    <picker class="my-picker"  mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-    <view class="nav">
-      <image class="date-choice" src="../images/date.png"></image>
-        <view>今天 2018/07/12 共32场</view>
-        <image src="../images/arrow.png" class="arrow-right"></image>
-    </view>
-        
-    </picker>
-    <view class="game-list">
-        <view class="game-item">
-           <!-- <view class="game-item-sc">
-              <image wx:if="{{true}}" class="collect" src="../images/collect_not.png"></image>
-              <image wx:else class="collect" src="../images/collect.png"></image>
-           </view> -->
-           <view class="game-item-content">
-              <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
-                  <view class="game-minutes">完</view>
-              </view>
-              <view class="game-name">
-                 <view class="home">
-                    <view class="red">1</view>
-                    <view class="yellow">2</view>
-                    <view class="name">皇家马德里</view>
-                 </view>
-                 <view class="score">3-4</view>
-                 <view class="other">
-                    <view class="name">西班牙三杀</view>
-                    <view class="yellow">2</view> 
-                    <view class="red">1</view>
-                 </view>
-              </view>
-           </view> 
-        </view>
-
-          <view class="game-item">
-          <!--  <view class="game-item-sc">
-              <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"></image>
-              <image wx:else class="collect" src="../images/collect.png"></image>
-           </view> -->
-           <view class="game-item-content">
-              <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
-                  <view class="game-minutes">完</view>
-              </view>
-              <view class="game-name">
-                 <view class="home">
-                    <view class="red">1</view>
-                    <view class="yellow">2</view>
-                    <view class="name">马德里</view>
-                 </view>
-                 <view class="score">3-4</view>
-                 <view class="other">
-                    <view class="name">西班牙</view>
-                   
-                    <view class="yellow">2</view> 
-                     <view class="red">1</view>
-                 </view>
-              </view>
-           </view> 
+    <view class="ls-list">
+        <view class="ls-item" wx:for="{{ls}}">
+          <view class="ls-item-btn">{{item}}</view>
         </view>
     </view> 
+    <view class="choice">
+        
+        <view class="ls-btns">
+            <view class="choice-container">
+               <view class="choice-btn all-in">全选</view>
+               <view class="choice-btn">全不选</view>
+               <view>选中105场</view>
+            </view>
+            <view class="sure-btn">
+               确定
+            </view>
+        </view>
+    </view>  
    <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
        <switch name="switch"/>
        <input name="input" placeholder="please input here" />
@@ -206,7 +145,11 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '夜猫足球实时比分'
+      navigationBarTitleText: '赛事筛选',
+      navigationBarBackgroundColor: '#ffffff',
+      enablePullDownRefresh: false,
+      navigationBarTextStyle: 'black'
+
     }
 
     components = {
@@ -222,6 +165,17 @@
       duration: 1000,
       banners:[],
       classList:[],
+      ls:[
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+        '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
+      ]
     }
 
     computed = {

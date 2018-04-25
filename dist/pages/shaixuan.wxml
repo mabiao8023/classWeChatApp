@@ -1,70 +1,31 @@
 
   <view class="container">
+      <view class="ls-nav">
+           <view class="ls-nav-item active">全部</view>
+           <view class="ls-nav-item">国家</view>
+           <view class="ls-nav-item">足彩</view>
+           <view class="ls-nav-item">竞彩</view>
+           <view class="ls-nav-item">单场</view>
+     </view>
     <!-- <contact></contact> -->
-    <picker class="my-picker" mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-    <view class="nav">
-      <image class="date-choice" src="../images/date.png"/>
-        <view>今天 2018/07/12 共32场</view>
-        <image src="../images/arrow.png" class="arrow-right"/>
-    </view>
-        
-    </picker>
-    <view class="game-list">
-        <view class="game-item">
-           <!-- <view class="game-item-sc">
-              <image wx:if="{{true}}" class="collect" src="../images/collect_not.png"></image>
-              <image wx:else class="collect" src="../images/collect.png"></image>
-           </view> -->
-           <view class="game-item-content">
-              <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
-                  <view class="game-minutes">完</view>
-              </view>
-              <view class="game-name">
-                 <view class="home">
-                    <view class="red">1</view>
-                    <view class="yellow">2</view>
-                    <view class="name">皇家马德里</view>
-                 </view>
-                 <view class="score">3-4</view>
-                 <view class="other">
-                    <view class="name">西班牙三杀</view>
-                    <view class="yellow">2</view> 
-                    <view class="red">1</view>
-                 </view>
-              </view>
-           </view> 
-        </view>
-
-          <view class="game-item">
-          <!--  <view class="game-item-sc">
-              <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"></image>
-              <image wx:else class="collect" src="../images/collect.png"></image>
-           </view> -->
-           <view class="game-item-content">
-              <view class="game-item-con-info">
-                  <view class="game-ls">西甲</view>
-                  <view class="game-time">18:00</view>
-                  <view class="game-minutes">完</view>
-              </view>
-              <view class="game-name">
-                 <view class="home">
-                    <view class="red">1</view>
-                    <view class="yellow">2</view>
-                    <view class="name">马德里</view>
-                 </view>
-                 <view class="score">3-4</view>
-                 <view class="other">
-                    <view class="name">西班牙</view>
-                   
-                    <view class="yellow">2</view> 
-                     <view class="red">1</view>
-                 </view>
-              </view>
-           </view> 
+    <view class="ls-list">
+        <view class="ls-item"  wx:for="{{ls}}">
+          <view class="ls-item-btn">{{item}}</view>
         </view>
     </view> 
+    <view class="choice">
+        
+        <view class="ls-btns">
+            <view class="choice-container">
+               <view class="choice-btn all-in">全选</view>
+               <view class="choice-btn">全不选</view>
+               <view>选中105场</view>
+            </view>
+            <view class="sure-btn">
+               确定
+            </view>
+        </view>
+    </view>  
    <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
        <switch name="switch"/>
        <input name="input" placeholder="please input here" />
