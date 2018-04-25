@@ -157,7 +157,7 @@
       <view wx:else class="empty-list">
         <image src="../images/empty.png" alt="">
       </view>
-      <contact></contact>
+      <!-- <contact></contact> -->
   </view>
 </template>
 <script>

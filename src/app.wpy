@@ -23,6 +23,7 @@ export default class extends wepy.app {
       'pages/index',
       'pages/class',
       'pages/classDetail',
+      'pages/classPlay',
       'pages/airticle',
       'pages/me',
       'pages/meClass'

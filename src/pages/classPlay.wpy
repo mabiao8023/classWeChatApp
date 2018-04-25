@@ -1,0 +1,585 @@
+<style lang="less">
+  @mainColor:#2cbd6c;
+  .container{
+    background:#eee;
+  }
+
+   .class-nav{
+      position:fixed;
+      background:#fff;
+      top:0;
+      left:0;
+      right:0;
+      z-index:10;
+      display:flex;
+      line-height:80rpx;
+      border-bottom:1rpx solid #eee;
+            .nav-list{
+                flex:auto;
+                text-align:center;
+                color:#151515;
+                .text{
+                    line-height:80rpx;
+                    font-size:36rpx;
+                }
+                &.active .text{
+                    color:@mainColor;
+                    border-bottom:8rpx solid @mainColor;
+                }
+            }
+        }
+
+        .banner{
+          width:100%;
+          padding-top:80rpx;
+          background:#fff;
+          image{
+            width:100%;
+            height:374rpx;
+          }
+          .video-container{
+            .view-cover{
+              width:100%;
+              height:480rpx;
+            }
+          }
+        }
+        .class-info-text{
+          background:#fff;
+          width:100%;
+          display:flex;
+          align-items:center;
+          padding:20rpx;
+          font-size:36rpx;
+          justify-content: space-between;
+          border-bottom:1rpx solid #e2e2e2;
+          .class-money{
+             color: red;
+             margin-right:20rpx;
+          }
+          .class-name{
+            margin-left:20rpx;
+          }
+        }
+        .class-detail-list{
+          background:#fff;
+          padding-bottom:102rpx;
+          width:100%;
+          font-size:0;
+          .c-title{
+            font-size: 34rpx;
+            padding: 20rpx;
+            color: #333;
+            font-weight: 700;
+            text-align: center;
+          }
+          .c-desc{
+            font-size: 32rpx;
+            padding: 0 20rpx;
+            text-align: center;
+            color: #999;
+            padding-bottom: 20rpx;
+          }
+          .c-img{
+            width:100%;
+            image{
+              width:100%;
+            }
+          }
+        }
+
+         .pay-footer{
+            position:fixed;
+            bottom:0;
+            left:0;
+            right:0;
+            line-height:88rpx;
+            background:#fff;
+            border-top:1rpx solid #e2e2e2;
+            font-size:36rpx;
+            .pay-footer-content{
+                display:flex;
+                text-align:center;
+                justify-content:space-between;
+                .pay-btn{
+                  flex:1;
+                  padding:0 30rpx;
+                  color:#fff;
+                  background: @mainColor;
+                  font-size:36rpx;
+                }
+                .zixun{
+                  padding:0 40rpx;
+                  display:flex;
+                  align-items: center;
+                  flex-direction: column;
+                  justify-content: center;
+                  border-left:1rpx solid #ccc;
+                  .icon{
+                     display:block;
+
+                    width:60rpx;
+                    height:60rpx;
+                    image{
+                      width:100%;
+                      height:100%;
+                    }
+                  }
+                  }
+                  .pay-nums{
+                    flex:1;
+                    color:#666;
+                  }
+        }
+      }
+
+      .class-try-list{
+        padding-bottom:140rpx;
+        background:#fff;
+        margin-top:20rpx;
+        width:100%;
+        .try-title{
+            padding:20rpx;
+            display:flex;
+            justify-content: flex-start;
+            align-items:center;
+            border-bottom:1rpx solid #e2e2e2;
+            position:relative;
+            font-size:34rpx;
+            .icon{
+              margin-right:20rpx;
+              width:48rpx;
+                height:48rpx;
+              image{
+                width:48rpx;
+                height:48rpx;
+              }
+            }
+            .desc{
+              color:#666;
+              font-size:32rpx;
+              margin-left:20rpx;
+            }
+            .arrow{
+              position:absolute;
+              right:20rpx;
+              image{
+                width:56rpx;
+                height:56rpx;
+              }
+            }
+        }
+      }
+
+      .try-list{
+          .try-item{
+              display:flex;
+              padding:30rpx 20rpx;
+              border-bottom:1rpx solid #e2e2e2;
+              .try-item-img{
+                width:236rpx;
+                height:140rpx;
+                margin-right:30rpx;
+                position:relative;
+                image{
+                   width:236rpx;
+                   height:140rpx;
+                }
+                .try-tag{
+                  position:absolute;
+                  top:0;
+                  left:10rpx;
+                  background:@mainColor;
+                  color:#fff;
+                  font-size:30rpx;
+                  padding:5rpx 10rpx;
+                  border-bottom-left-radius:5rpx;
+                  border-bottom-right-radius:5rpx;
+                }
+                .mask-box{
+                  position:absolute;
+                  top:0;
+                  left:0;
+                  right:0;
+                  bottom:0;
+                  background:rgba(0,0,0,.5);
+                  display:flex;
+                  justify-content:center;
+                  align-items:center;
+                  image{
+                    width:80rpx;
+                    height:80rpx;
+                  }
+                }
+              }
+              .try-item-content{
+                  font-size:34rpx;
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-content: space-between;
+                .try-item-desc{
+                  width: 100%;
+                  color:#666;
+                  font-size:34rpx;
+                }
+                .try-item-time{
+                  width: 100%;
+                  display:flex;
+                  color:#666;
+                  font-size:32rpx;
+                  align-items:center;
+                  icon{
+                    margin-right:16rpx;
+                  }
+                }
+              }
+          }
+      }
+</style>
+<template>
+  <view class="container">
+      <view class="class-nav boxShadow">
+            <view  class="{{ navType == 1 ? 'nav-list active' : 'nav-list' }}" @tap="navtag(1)">
+                <view class="text">课程特色</view>
+            </view>
+            <view class="{{ navType == 2 ? 'nav-list active' : 'nav-list' }}" @tap="navtag(2)">
+                <view class="text">课程详情</view>
+            </view>
+      </view>
+      <!-- 视频和图片展示区域 -->
+        <view class="banner">
+            <image class="class-info" mode="widthFix" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
+            <view class="video-container" wx-if="{{isHasVideo}}">
+              <video class="view-cover"
+                   autoplay="{{true}}"
+                   wx:if="{{video.src}}"
+                   src="{{video.src}}"
+                   controls
+                   poster="{{classInfo.img_url}}"
+                   custom-cache="{{false}}">
+              </video>
+            </view>
+        </view>
+        <view class="class-info-text">
+          <view class="class-name">
+              {{classInfo.title}}
+          </view>
+          <!-- <view class="class-money">
+              ￥{{classInfo.price}}/{{classInfo.expire_month}}
+          </view> -->
+        </view>
+        <view class="class-detail-list" wx:if="{{navType == 1}}">
+            <view wx:for="{{classInfo.introduce}}" wx:key="{{index}}" class="class-detail-item">
+                <view class="c-title" wx-if="{{item.title}}">
+                    {{ item.title }}
+                </view>
+                <view class="c-desc" wx-if="{{item.content}}">
+                    {{ item.content }}
+                </view>
+                <view class="c-img">
+                    <image mode="widthFix" wx:if="{{item.img_url}}" src="{{item.img_url}}"/> 
+                </view>
+            </view>
+        </view>
+
+        <view class="class-try-list" wx:if="{{navType == 2}}">
+            <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/free-icon.png" />
+                    </view>
+                    <view class="title">
+                        课程视频
+                    </view>
+                </view>
+            </view>
+            <view class="try-list" 
+            wx:if="{{ freeClassList.length > 0 }}"
+            wx:for="{{ freeClassList }}"> 
+                <view class="try-item" @tap="gotoAircle({{item.resource_id}})" wx:if="{{ item.resource_type == 1 }}"> 
+                    <view class="try-item-img">
+                        <image  src="{{item.img_url || classInfo.img_url}}">
+                        <view class="try-tag">阅读课程</view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            {{ item.title }}
+                        </view>
+                      <!--   <view class="try-item-desc">
+                            {{ item.desc }}
+                        </view> -->
+                    </view>
+                </view>
+                
+                <view class="try-item" wx:if="{{ item.resource_type == 0 }}" @tap="playVideo({{item}},{{index}})"> 
+                    <view class="try-item-img">
+                        <image src="{{ item.img_url || classInfo.img_url }}">
+                        <view class="try-tag" wx:if="{{item.resource.playing}}">正在播放</view>
+                        <view class="mask-box" wx:else>
+                            <image src="../images/play.png" />
+                        </view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            {{ item.title }}
+                        </view>
+                       <!--  <view class="try-item-desc">
+                            {{ item.desc }}
+                        </view> -->
+                        <view class="try-item-time" wx:if="{{item.resource.media_time}}">
+                            <icon type="waiting" size="12" color="#999"/>{{item.resource.media_time}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            </view>
+        </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Contact from '@/components/contact' // alias example
+  import myMixin from '../mixins/test'
+  import apiPath from '../config/config'
+  export default class Index extends wepy.page {
+    config = {
+      //navigationBarTitleText: 'test'
+    }
+    components = {
+      contact:Contact
+    }
+
+    mixins = [myMixin]
+
+    data = {
+        isHasVideo:false,
+        classInfo:{},
+        navType:1,
+        isPayed:false,
+        classId:8,
+        freeClassList:[],
+        chapterList:[],
+        video:{
+          src:''
+        }
+    }
+
+    computed = {
+      
+    }
+
+    methods = {
+      navtag(type){
+        this.navType = type;
+      },
+      playVideo(item,index){
+        this.isHasVideo = true;
+        this.freeClassList.forEach( (val,idx) => {
+          if( idx == index ){
+            val.resource.playing = true;
+          }else{
+            val.resource.playing = false;
+          }
+        } );
+        
+        this.video.src = item.resource.media_url;
+      },
+      gotoClassIndex(){
+         wx.navigateTo({
+             url: `/pages/class?id=${this.classId}`
+          })
+      },
+      paytip(){
+        if(this.isPayed){
+          wx.navigateTo({
+             url: `/pages/class?id=${this.classId}`
+          })
+          return;
+        }
+       wx.showToast({
+          title: '请先购买课程',
+          icon: 'success',
+          duration: 1500
+        })
+      },
+
+      gotoPay(){
+        wx.showLoading({
+          title: '支付中...',
+        })
+        wepy.request({
+            url:apiPath.classPay,
+            method:"POST",
+            data:{
+              class_id:Number(this.classId),
+              paysource:1
+            },
+            header: {
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
+            }
+         } ).then( res => {
+            let jsApiConfig = {};
+            let data = res.data.data; 
+            try{
+              jsApiConfig = JSON.parse(data.jsapiConfig);
+            }catch (e){
+              console.error(e)
+            }
+            wx.hideLoading();
+            wx.requestPayment({
+               'timeStamp': jsApiConfig.timeStamp,
+               'nonceStr': jsApiConfig.nonceStr,
+               'package': jsApiConfig.package,
+               'signType': 'MD5',
+               'paySign': jsApiConfig.paySign,
+               'success':function(res){
+                  // 支付成功
+                  wx.navigateTo({
+                     url: `/pages/class?id=${this.classId}`
+                  })
+               },
+               'fail':function(res){
+                  // 支付失败
+               }
+            })
+        } );
+       
+      },
+      gotoAircle(id){
+          wx.navigateTo({
+            url: `/pages/airticle?id=${id}`
+          })
+      }
+    }
+
+    events = {
+    
+    }
+
+    // 获得课程的信息
+    getClassInfo(){
+        wx.showLoading({
+          title: '获取中...',
+        })
+        wepy.request({
+            url:apiPath.classInfo,
+            method:"GET",
+            data:{
+              class_id:this.classId
+            },
+            header: {
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
+            }
+         } ).then(res => {
+          wx.hideLoading();
+          this.classInfo = res.data.data;
+          this.classInfo.price = this.formateMoney(this.classInfo.price);
+          this.classInfo.expire_month = this.formateMonth(this.classInfo.expire_month);
+          this.$apply();
+          console.log(res.data);
+        })
+    }
+
+    // 获得免费试听列表
+    getTryList(){
+      wepy.request({
+            url:apiPath.classTry,
+            method:"GET",
+            data:{
+              class_id:this.classId
+            },
+            header: {
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
+            }
+         } ).then(res => {
+          let data = res.data.data;
+          if( data.length ){
+              data.forEach(val => {
+                val.playing = false;
+                val.resource.media_time = val.resource.media_time && this.secondsFormate(val.resource.media_time);
+              })
+              this.freeClassList = data;
+              this.$apply();
+          }else{
+              
+          }
+          
+        })
+    }
+
+    // 获取章节列表
+    getChapterList(){
+      wepy.request({
+            url:apiPath.classChapter,
+            method:"GET",
+            data:{
+              class_id:this.classId
+            },
+            header: {
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
+            }
+         } ).then(res => {
+          let data = res.data.data;
+          if( data.length ){
+              data.forEach( (val,i) => {
+                val.slide = i === 0 ?  false : true;
+                val.lesson && val.lesson.forEach( val2 => {
+                  val2.resource.playing = false;
+                  val2.resource.media_time = val2.resource.media_time && this.secondsFormate(val2.resource.media_time);
+                })
+              });
+              this.chapterList = data;
+              this.$apply();
+          }else{
+
+          } 
+        })
+    }
+
+    // 获取是否已经购买过该课程
+    getIsPayed(){
+        wepy.request({
+            url:apiPath.classPay,
+            method:"POST",
+            data:{
+              class_id:Number(this.classId),
+              paysource:1
+            },
+            header: {
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
+            }
+         } ).then( res => {
+          console.log(res);
+          if( res.data.msg == '您已购买此课程'){
+            this.isPayed = true;
+          }else{
+            this.isPayed = false;
+          }
+        });
+    }
+
+
+    onLoad(options) {
+      this.classId = options.id || 6;
+      this.getClassInfo();
+      this.getTryList();
+      this.getChapterList();
+    }
+
+    onShareAppMessage() {
+          return {
+          title: '夜猫足彩课程',
+          path: '/pages/index',
+          imageUrl:'/images/share_img.jpg',
+          success:function(res) {
+            // 转发成功
+          },
+          fail: function(res) {
+            // 转发失败
+          }
+        }
+        }
+    
+  }
+</script>

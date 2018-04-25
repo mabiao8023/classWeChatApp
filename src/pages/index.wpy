@@ -88,7 +88,7 @@
 </style>
 <template>
   <view class="container">
-      <contact></contact>
+      <contact wx:if="{{currentId}}"></contact>
       <swiper class="swiper-container" indicator-dots="{{indicatorDots}}"
         autoplay="{{autoplay}}" interval="{{interval}}" 
         duration="{{duration}}">
@@ -113,21 +113,23 @@
                   <view class="class-name">
                       {{item.title}}
                   </view>
-                  <view class="class-money">
+                  <view class="class-money" wx:if="{{currentId}}">
                       ￥{{item.price}}/{{item.expire_month}}
                   </view>
               </view>  
           </view>  
       </view>
       <!-- 跳转小程序 -->
-
-    <!--   <view class="more">
-        更多咨询
-    </view>
-    <view class="gotoMini">
-        <button type="primary" bindtap="openMini1">比赛</button>
-        <button type="primary"  bindtap="openMini2">情报</button>
-    </view> -->
+      <!-- <view wx:if="{{currentId}}">
+         <view class="more">
+             更多咨询
+         </view>
+         <view class="gotoMini">
+             <button type="primary" bindtap="openMini1">比赛</button>
+             <button type="primary"  bindtap="openMini2">情报</button>
+         </view>
+       </view>  --> 
+    
   </view>
 </template>
 
@@ -155,6 +157,7 @@
       duration: 1000,
       banners:[],
       classList:[],
+      currentId:false,
     }
 
     computed = {
@@ -169,15 +172,28 @@
             }catch(e){
                 
             }
-            wx.navigateTo({
-              url: `/pages/classDetail?id=${id}`
-            })
+            if( id == 6 ){
+              wx.navigateTo({
+                url: `/pages/classPlay?id=${id}`
+              })
+            }else{
+              wx.navigateTo({
+                url: `/pages/classDetail?id=${id}`
+              })
+            } 
         },
           
         gotoClassIndex(id){
-          wx.navigateTo({
-            url: `/pages/classDetail?id=${id}`
-          })
+          if( id == 6 ){
+            wx.navigateTo({
+              url: `/pages/classPlay?id=${id}`
+            })
+          }else{
+            wx.navigateTo({
+              url: `/pages/classDetail?id=${id}`
+            })
+          }
+          
         },
         /* 打开足球比赛 */
         openMini1(){
@@ -223,7 +239,6 @@
     getBanners(){
       wepy.request(apiPath.bannerList)
         .then( res => {
-            console.log(res.data.data);
             this.banners = res.data.data;
             this.$apply();
         })
@@ -238,6 +253,9 @@
             this.classList.forEach( val => {
               val.price = this.formateMoney(val.price);
               val.expire_month = this.formateMonth(val.expire_month);
+              if( val.id != 6 ){
+                  this.currentId = true;
+              }
             } )
             this.$apply();
         })

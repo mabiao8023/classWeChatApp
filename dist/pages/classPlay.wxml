@@ -1,0 +1,90 @@
+
+  <view class="container">
+      <view class="class-nav boxShadow">
+            <view class="{{ navType == 1 ? 'nav-list active' : 'nav-list' }}" bindtap="navtag" data-wpynavtag-a="1">
+                <view class="text">课程特色</view>
+            </view>
+            <view class="{{ navType == 2 ? 'nav-list active' : 'nav-list' }}" bindtap="navtag" data-wpynavtag-a="2">
+                <view class="text">课程详情</view>
+            </view>
+      </view>
+      <!-- 视频和图片展示区域 -->
+        <view class="banner">
+            <image class="class-info" mode="widthFix" wx-if="{{!isHasVideo}}" src="{{classInfo.img_url}}"/>
+            <view class="video-container" wx-if="{{isHasVideo}}">
+              <video class="view-cover" autoplay="{{true}}"  wx:if="{{video.src}}" src="{{video.src}}" controls poster="{{classInfo.img_url}}" custom-cache="{{false}}">
+              </video>
+            </view>
+        </view>
+        <view class="class-info-text">
+          <view class="class-name">
+              {{classInfo.title}}
+          </view>
+          <!-- <view class="class-money">
+              ￥{{classInfo.price}}/{{classInfo.expire_month}}
+          </view> -->
+        </view>
+        <view class="class-detail-list"  wx:if="{{navType == 1}}">
+            <view wx:for="{{classInfo.introduce}}" wx:key="{{index}}" class="class-detail-item">
+                <view class="c-title" wx-if="{{item.title}}">
+                    {{ item.title }}
+                </view>
+                <view class="c-desc" wx-if="{{item.content}}">
+                    {{ item.content }}
+                </view>
+                <view class="c-img">
+                    <image mode="widthFix" wx:if="{{item.img_url}}" src="{{item.img_url}}"/> 
+                </view>
+            </view>
+        </view>
+
+        <view class="class-try-list" wx:if="{{navType == 2}}">
+            <view class="try-container">
+                <view class="try-title">
+                    <view class="icon">
+                        <image src="../images/free-icon.png"/>
+                    </view>
+                    <view class="title">
+                        课程视频
+                    </view>
+                </view>
+            </view>
+            <view class="try-list" wx:if="{{ freeClassList.length > 0 }}" wx:for="{{ freeClassList }}"> 
+                <view class="try-item" bindtap="gotoAircle" wx:if="{{ item.resource_type == 1 }}" data-wpygotoaircle-a="{{item.resource_id}}"> 
+                    <view class="try-item-img">
+                        <image src="{{item.img_url || classInfo.img_url}}"/>
+                        <view class="try-tag">阅读课程</view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            {{ item.title }}
+                        </view>
+                      <!--   <view class="try-item-desc">
+                            {{ item.desc }}
+                        </view> -->
+                    </view>
+                </view>
+                
+                <view class="try-item" wx:if="{{ item.resource_type == 0 }}" bindtap="playVideo" data-wpyplayvideo-a="{{item}}" data-wpyplayvideo-b="{{index}}"> 
+                    <view class="try-item-img">
+                        <image src="{{ item.img_url || classInfo.img_url }}"/>
+                        <view class="try-tag" wx:if="{{item.resource.playing}}">正在播放</view>
+                        <view class="mask-box" wx:else>
+                            <image src="../images/play.png"/>
+                        </view>
+                    </view>
+                    <view class="try-item-content">
+                        <view class="try-item-title">
+                            {{ item.title }}
+                        </view>
+                       <!--  <view class="try-item-desc">
+                            {{ item.desc }}
+                        </view> -->
+                        <view class="try-item-time" wx:if="{{item.resource.media_time}}">
+                            <icon type="waiting" size="12" color="#999"/>{{item.resource.media_time}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            </view>
+        </view>

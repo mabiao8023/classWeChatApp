@@ -24,16 +24,5 @@
       <view  wx:else class="empty-list">
         <image src="../images/empty.png" alt=""/>
       </view>
-      
-  <view>
-    <button class="contact share" open-type="share">
-          <image src="../images/share.png"/> 
-          分享
-    </button>
-    <button class="contact" open-type="contact">
-          <image src="../images/addFocus.png"/> 
-          关注
-    </button>
-  </view>
-
+      <!-- <contact></contact> -->
   </view>

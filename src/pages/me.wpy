@@ -91,7 +91,7 @@
         <image class="arrow" src="../images/arrow-right.png"/>
       </view>
     </view>
-     <contact></contact>
+     <!-- <contact></contact> -->
   </view>
 </template>
 
