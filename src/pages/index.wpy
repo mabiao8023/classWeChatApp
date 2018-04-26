@@ -1,11 +1,10 @@
 <style lang="less">
   @mainColor: #FF741F;
   page{
-    background: #eee;
-     padding-top: 80rpx;
+    background: #fff;
   }
   .container{
-    background: #eee;
+    background: #fff;
   }
   .nav{
     position: fixed;
@@ -14,6 +13,23 @@
     width: 100%;
     border-bottom: 2rpx solid #eaeaea;
     background: #fff;
+    z-index: 1000;
+    .focus{
+      position: relative;
+      .num{
+        position: absolute;
+        width: 40rpx;
+        height: 40rpx;
+        background: red;
+        color: #fff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40rpx;
+        font-size: 28rpx;
+        top: 5rpx;
+        right: 10rpx;
+      }
+    }
     .nav-item{
       width: 25%;
       text-align: center;
@@ -36,6 +52,9 @@
     padding: 30rpx 24rpx;
     background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
     border-bottom: 1px solid #CBCBCB;
+    &:first-child{
+       border-top: 1px solid #CBCBCB;
+    }
     .game-item-sc{
       width: 48rpx;
       margin-right: 20rpx;
@@ -122,6 +141,50 @@
   .share{
     width: 40rpx;
     height: 40rpx;
+   
+  }
+
+  .share-btn{
+    width: 40rpx;
+    height: 40rpx;
+    padding: 0;
+    border: 0;
+    border-radius:0;
+    line-height: 0;
+    background: transparent;
+    &::after{
+      display: none;
+    }
+  }
+  .upLoading{
+    padding: 24rpx;
+    font-size: 30rpx;
+    color: #666;
+  }
+
+  .upLoading{
+    display: flex;
+    align-items: center;
+  }
+
+  .loading-img{
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 10rpx;
+    animation: rotateLoading 1s linear infinite;
+  }
+
+  @keyframes rotateLoading{
+    0%{
+      transform: rotate(0); 
+    }
+    100%{
+      transform: rotate(360deg); 
+    }
+  } 
+  .down-flash{
+     height: 80rpx;
+
   }
 </style>
 <template>
@@ -131,12 +194,19 @@
         <view class="nav-item active">即时</view>
         <view class="nav-item" bindtap="gotoResult">赛果</view>
         <view class="nav-item" bindtap="gotoFeture">赛程</view>
-        <view class="nav-item">关注</view>
+        <view class="nav-item focus" bindtap="gotoFocus">
+          关注
+          <view class="num" wx:if="{{totalFocus}}">{{totalFocus}}</view>
+        </view>
     </view> 
+    <view class="upLoading down-flash"> 
+      <image class="loading-img" src="../images/footerball.png"></image> 
+      <view>比赛刷新中</view>
+    </view>
     <view class="game-list">
         <view class="game-item">
-           <view class="game-item-sc">
-              <image wx:if="{{true}}" class="collect" src="../images/sc.png"></image>
+           <view class="game-item-sc" bindtap="scGame">
+              <image wx:if="{{isScGame}}" class="collect" src="../images/sc.png"></image>
               <image wx:else class="collect" src="../images/sc-active.png"></image>
            </view>
            <view class="game-item-content">
@@ -162,11 +232,12 @@
               </view>
            </view> 
            <view class="share">
-              <image class="collect share" src="../images/share.png"></image>
+            <button class="share-btn" open-type="share">
+              <image bindtap="setShareContent" class="collect share" src="../images/share.png"></image>
+            </button>
            </view>
         </view>
-
-          <view class="game-item">
+          <view class="game-item" wx:for="gameList">
            <view class="game-item-sc">
               <image wx:if="{{false}}" class="collect" src="../images/sc.png"></image>
               <image wx:else class="collect" src="../images/sc-active.png"></image>
@@ -194,10 +265,18 @@
               </view>
            </view> 
            <view>
-              <image class="collect share" src="../images/share.png"></image>
+               <button class="share-btn" open-type="share">
+                 <image class="collect share" src="../images/share.png"></image>
+               </button>
            </view>
         </view>
     </view>  
+    <!--  -->
+    <view class="upLoading" wx:if="{{isUpFrash}}"> 
+      <image class="loading-img" src="../images/footerball.png"></image> 
+      <view>正在加载中</view>
+    </view>
+    <view class="upLoading" wx:else> 暂无更多数据 </view>
    <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
        <switch name="switch"/>
        <input name="input" placeholder="please input here" />
@@ -230,6 +309,11 @@
       duration: 1000,
       banners:[],
       classList:[],
+      gameList:[1,2,3,4,5,6,7,8,9,20,33,3,3,3,3,3,],
+      isUpFrash:false,
+      shareContent:'时间看得见福克斯',
+      isScGame: false,
+      totalFocus: 0,
     }
 
     computed = {
@@ -237,16 +321,15 @@
     }
 
     methods = {
-        banneGotoClassIndex(url){
-            let id = 6;
-            try{
-              id = url.split('?')[1].split('=')[1]  
-            }catch(e){
-                
-            }
-            wx.navigateTo({
-              url: `/pages/classDetail?id=${id}`
-            })
+        scGame(){
+          this.isScGame = !this.isScGame;
+          this.totalFocus ++ ;
+        },
+
+        gotoIndex(){
+          wx.navigateTo({
+            url: `/pages/index`
+          })
         },
         gotoResult(){
           wx.navigateTo({
@@ -258,9 +341,9 @@
             url: `/pages/feature`
           })
         },
-        gotoClassIndex(id){
+        gotoFocus(){
           wx.navigateTo({
-            url: `/pages/classDetail?id=${id}`
+            url: `/pages/focus`
           })
         },
         /* 打开足球比赛 */
@@ -298,6 +381,12 @@
             console.log('form发生了submit事件，携带数据为：', e.detail.value)
         },
 
+        /* 调整分享的内容 */
+        setShareContent(){
+          console.log(1);
+          this.shareContent = "啊哈哈沙发或多或少";
+        }
+
     }
 
     events = {
@@ -307,16 +396,6 @@
       }
     }
 
-    // 获取banners列表
-    
-    getBanners(){
-      wepy.request(apiPath.bannerList)
-        .then( res => {
-            console.log(res.data.data);
-            this.banners = res.data.data;
-            this.$apply();
-        })
-    }
 
     // 获取课程列表
     
@@ -333,8 +412,8 @@
     }
 
     onLoad() {
-      this.getBanners();
-      this.getClassList();
+      /*this.getBanners();
+      this.getClassList();*/
     }
 
     /**
@@ -342,28 +421,37 @@
     */
     onPullDownRefresh () {
       // 刷新完后停止刷新
-      this.getPressList().then(
-        wx.stopPullDownRefresh()
-      )
+
+      setTimeout( () => {
+          wx.stopPullDownRefresh()
+      },2000 )
     }
+
     
     /* 上拉触底 */
     onReachBottom(){
+      this.isUpFrash = true;
+      setTimeout( () => {
+          this.isUpFrash = false;
+          this.$apply();
+      },2000 )
       console.log("上拉触底了")
     }
 
     onShareAppMessage() {
+      /* todo:设置要分享的内容 */
+      console.log(2);
       return {
-      title: '2018/03/24 18:00 西班牙国家队 3:4 巴西国家队',
-      path: '/pages/index',
-      imageUrl:'/images/share_img.jpg',
-      success:function(res) {
-        // 转发成功
-      },
-      fail: function(res) {
-        // 转发失败
+          title: this.shareContent,
+          path: '/pages/index',
+          imageUrl:'/images/share_img.jpg',
+          success:function(res) {
+            // 转发成功
+          },
+          fail: function(res) {
+            // 转发失败
+          }
       }
-    }
     }
   }
 </script>

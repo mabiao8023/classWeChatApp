@@ -2,14 +2,14 @@
   <view class="container">
     
   <view>
-    <button class="contact share" open-type="share">
-          <image src="../images/share.png"/> 
+    <!-- <button class="contact share" open-type="share">
+          <image  src="../images/share.png"/> 
           分享
     </button>
     <button class="contact" open-type="contact">
-          <image src="../images/addFocus.png"/> 
+          <image  src="../images/addFocus.png"/> 
           关注
-    </button>
+    </button> -->
     <view class="shaixuan" bindtap="$contact$gotosx">
         <image src="../images/sx.png"/>
     </view>
@@ -19,13 +19,20 @@
         <view class="nav-item active">即时</view>
         <view class="nav-item" bindtap="gotoResult">赛果</view>
         <view class="nav-item" bindtap="gotoFeture">赛程</view>
-        <view class="nav-item">关注</view>
+        <view class="nav-item focus" bindtap="gotoFocus">
+          关注
+          <view class="num"  wx:if="{{totalFocus}}">{{totalFocus}}</view>
+        </view>
     </view> 
+    <view class="upLoading down-flash"> 
+      <image class="loading-img" src="../images/footerball.png"/> 
+      <view>比赛刷新中</view>
+    </view>
     <view class="game-list">
         <view class="game-item">
-           <view class="game-item-sc">
-              <image  wx:if="{{true}}" class="collect" src="../images/sc.png"/>
-              <image  wx:else class="collect" src="../images/sc-active.png"/>
+           <view class="game-item-sc" bindtap="scGame">
+              <image  wx:if="{{isScGame}}" class="collect" src="../images/sc.png"/>
+              <image wx:else class="collect" src="../images/sc-active.png"/>
            </view>
            <view class="game-item-content">
               <view class="game-item-con-info">
@@ -50,11 +57,12 @@
               </view>
            </view> 
            <view class="share">
-              <image class="collect share" src="../images/share.png"/>
+            <button class="share-btn" open-type="share">
+              <image bindtap="setShareContent" class="collect share" src="../images/share.png"/>
+            </button>
            </view>
         </view>
-
-          <view class="game-item">
+          <view class="game-item" wx:for="gameList">
            <view class="game-item-sc">
               <image wx:if="{{false}}" class="collect" src="../images/sc.png"/>
               <image wx:else class="collect" src="../images/sc-active.png"/>
@@ -82,10 +90,18 @@
               </view>
            </view> 
            <view>
-              <image class="collect share" src="../images/share.png"/>
+               <button class="share-btn" open-type="share">
+                 <image class="collect share" src="../images/share.png"/>
+               </button>
            </view>
         </view>
     </view>  
+    <!--  -->
+    <view class="upLoading" wx:if="{{isUpFrash}}"> 
+      <image class="loading-img" src="../images/footerball.png"/> 
+      <view>正在加载中</view>
+    </view>
+    <view class="upLoading" wx:else> 暂无更多数据 </view>
    <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
        <switch name="switch"/>
        <input name="input" placeholder="please input here" />

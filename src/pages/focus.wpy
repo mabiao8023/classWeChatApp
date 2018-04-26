@@ -1,13 +1,10 @@
 <style lang="less">
   @mainColor: #FF741F;
   page{
-    background: #eee;
+    background: #fff;
   }
   .container{
-    background: #eee;
-  }
-  .my-picker{
-    width: 100%;
+    background: #fff;
   }
   .nav{
     position: fixed;
@@ -17,22 +14,17 @@
     border-bottom: 2rpx solid #eaeaea;
     background: #fff;
     z-index: 1000;
-    text-align: center;
+    .nav-item{
+      width: 25%;
+      text-align: center;
       line-height: 80rpx;
       color: #333;
       font-size: 30rpx;
-      padding: 0 30rpx;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .date-choice{
-        width: 48rpx;
-        height: 48rpx;
+      &.active{
+        color: @mainColor;
+        border-bottom: 4rpx solid @mainColor;
       }
-      .arrow-right{
-        width: 40rpx;
-        height: 40rpx;
-      }
+    }
   }
   .game-list{
     width: 100%;
@@ -97,7 +89,7 @@
       margin: 0 20rpx;
       width: 60rpx;
       text-align: center;
-      color: #999;
+      color: @mainColor;
       font-size: 32rpx;
     }
     .red{
@@ -182,14 +174,12 @@
 <template>
   <view class="container">
     <!-- <contact></contact> -->
-    <picker class="my-picker"  mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
     <view class="nav">
-      <image class="date-choice" src="../images/date.png"></image>
-        <view>今天 2018/07/12 共32场</view>
-        <image src="../images/arrow.png" class="arrow-right"></image>
-    </view>
-        
-    </picker>
+        <view class="nav-item"  bindtap="gotoIndex">即时</view>
+        <view class="nav-item" bindtap="gotoResult">赛果</view>
+        <view class="nav-item" bindtap="gotoFeture">赛程</view>
+        <view class="nav-item  active" bindtap="gotoFocus">关注</view>
+    </view> 
     <view class="upLoading down-flash"> 
       <image class="loading-img" src="../images/footerball.png"></image> 
       <view>比赛刷新中</view>
@@ -206,15 +196,19 @@
                     <view>西甲</view>
                     <view class="game-time">18:00</view>
                   </view>
-                  <view class="game-minutes">未</view>
+                  <view class="game-minutes">50'</view>
               </view>
               <view class="game-name">
                  <view class="home">
+                    <view class="red">1</view>
+                    <view class="yellow">2</view>
                     <view class="name">皇家马德里</view>
                  </view>
-                 <view class="score">vs</view>
+                 <view class="score">3-4</view>
                  <view class="other">
                     <view class="name">西班牙三杀</view>
+                    <view class="yellow">2</view> 
+                    <view class="red">1</view>
                  </view>
               </view>
            </view> 
@@ -235,15 +229,19 @@
                     <view>西甲</view>
                     <view class="game-time">18:00</view>
                   </view>
-                  <view class="game-minutes">未</view>
+                  <view class="game-minutes">50'</view>
               </view>
               <view class="game-name">
                  <view class="home">
+                    <view class="red">1</view>
+                    <view class="yellow">2</view>
                     <view class="name">皇家马</view>
                  </view>
-                 <view class="score">vs</view>
+                 <view class="score">3-4</view>
                  <view class="other">
                     <view class="name">西班牙</view>
+                    <view class="yellow">2</view> 
+                    <view class="red">1</view>
                  </view>
               </view>
            </view> 
@@ -302,6 +300,11 @@
     }
 
     methods = {
+    	gotoIndex(){
+          wx.navigateTo({
+            url: `/pages/index`
+          })
+        },
         gotoResult(){
           wx.navigateTo({
             url: `/pages/result`
@@ -310,6 +313,11 @@
         gotoFeture(){
           wx.navigateTo({
             url: `/pages/feature`
+          })
+        },
+        gotoFocus(){
+          wx.navigateTo({
+            url: `/pages/focus`
           })
         },
         /* 打开足球比赛 */
