@@ -24,8 +24,8 @@
     <view class="game-list">
         <view class="game-item">
            <view class="game-item-sc">
-              <image  wx:if="{{true}}" class="collect" src="../images/collect_not.png"/>
-              <image  wx:else class="collect" src="../images/collect.png"/>
+              <image  wx:if="{{true}}" class="collect" src="../images/sc.png"/>
+              <image  wx:else class="collect" src="../images/sc-active.png"/>
            </view>
            <view class="game-item-content">
               <view class="game-item-con-info">
@@ -49,12 +49,15 @@
                  </view>
               </view>
            </view> 
+           <view class="share">
+              <image class="collect share" src="../images/share.png"/>
+           </view>
         </view>
 
           <view class="game-item">
            <view class="game-item-sc">
-              <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"/>
-              <image wx:else class="collect" src="../images/collect.png"/>
+              <image wx:if="{{false}}" class="collect" src="../images/sc.png"/>
+              <image wx:else class="collect" src="../images/sc-active.png"/>
            </view>
           <view class="game-item-content">
               <view class="game-item-con-info">
@@ -78,6 +81,9 @@
                  </view>
               </view>
            </view> 
+           <view>
+              <image class="collect share" src="../images/share.png"/>
+           </view>
         </view>
     </view>  
    <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">

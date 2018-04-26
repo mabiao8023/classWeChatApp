@@ -36,10 +36,9 @@
     padding: 30rpx 24rpx;
     background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
     border-bottom: 1px solid #CBCBCB;
-    border-left: 8rpx solid @mainColor;
-    margin: 10rpx 0;
     .game-item-sc{
-      width: 40rpx;
+      width: 48rpx;
+      margin-right: 20rpx;
     }
     .game-item-content{
       flex: 1;
@@ -50,17 +49,16 @@
       margin-bottom: 10rpx;
       .game-ls{
         width: 38%;
-        padding-left: 40rpx; 
         text-align: left;
         color: #999;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
       }
       .game-time{
-        margin: 0 20rpx;
+        margin-left: 20rpx;
         color: #999;
         width: 80rpx;
-        text-align: center;
+        text-align: right;
       }
       .game-minutes{
         margin: 0 20rpx;
@@ -118,8 +116,12 @@
   }
   .collect{
     width: 48rpx;
-    height: 44rpx;
+    height: 48rpx;
     vertical-align: middle;
+  }
+  .share{
+    width: 40rpx;
+    height: 40rpx;
   }
 </style>
 <template>
@@ -134,8 +136,8 @@
     <view class="game-list">
         <view class="game-item">
            <view class="game-item-sc">
-              <image wx:if="{{true}}" class="collect" src="../images/collect_not.png"></image>
-              <image wx:else class="collect" src="../images/collect.png"></image>
+              <image wx:if="{{true}}" class="collect" src="../images/sc.png"></image>
+              <image wx:else class="collect" src="../images/sc-active.png"></image>
            </view>
            <view class="game-item-content">
               <view class="game-item-con-info">
@@ -159,12 +161,15 @@
                  </view>
               </view>
            </view> 
+           <view class="share">
+              <image class="collect share" src="../images/share.png"></image>
+           </view>
         </view>
 
           <view class="game-item">
            <view class="game-item-sc">
-              <image wx:if="{{false}}" class="collect" src="../images/collect_not.png"></image>
-              <image wx:else class="collect" src="../images/collect.png"></image>
+              <image wx:if="{{false}}" class="collect" src="../images/sc.png"></image>
+              <image wx:else class="collect" src="../images/sc-active.png"></image>
            </view>
           <view class="game-item-content">
               <view class="game-item-con-info">
@@ -188,6 +193,9 @@
                  </view>
               </view>
            </view> 
+           <view>
+              <image class="collect share" src="../images/share.png"></image>
+           </view>
         </view>
     </view>  
    <!--  <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
@@ -327,6 +335,21 @@
     onLoad() {
       this.getBanners();
       this.getClassList();
+    }
+
+    /**
+     * 页面相关事件处理函数--监听用户下拉动作
+    */
+    onPullDownRefresh () {
+      // 刷新完后停止刷新
+      this.getPressList().then(
+        wx.stopPullDownRefresh()
+      )
+    }
+    
+    /* 上拉触底 */
+    onReachBottom(){
+      console.log("上拉触底了")
     }
 
     onShareAppMessage() {
