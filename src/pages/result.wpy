@@ -2,6 +2,7 @@
   @mainColor: #FF741F;
   page{
     background: #eee;
+    padding-bottom: 120rpx;
   }
   .container{
     background: #eee;
@@ -14,6 +15,7 @@
     top: 0;
     display: flex;
     width: 100%;
+    border-top: 2rpx solid #eaeaea;
     border-bottom: 2rpx solid #eaeaea;
     background: #fff;
     z-index: 1000;
@@ -42,8 +44,9 @@
     align-items: center;
     width: 100%;
     padding: 30rpx 24rpx;
-    background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
-    border-bottom: 1px solid #CBCBCB;
+    background: #fff;
+    // background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
+    border-bottom: 1px solid #eaeaea;
     &:first-child{
        border-top: 1px solid #CBCBCB;
     }
@@ -284,7 +287,10 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '夜猫足球实时比分'
+      navigationBarTitleText: '赛果',
+      navigationBarBackgroundColor: '#ffffff',
+      enablePullDownRefresh: false,
+      navigationBarTextStyle: 'black'  
     }
 
     components = {

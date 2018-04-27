@@ -64,7 +64,7 @@
         </view>
           <view class="game-item" wx:for="gameList">
            <view class="game-item-sc">
-              <image wx:if="{{false}}" class="collect" src="../images/sc.png"/>
+              <image wx:if="{{true}}" class="collect" src="../images/sc.png"/>
               <image wx:else class="collect" src="../images/sc-active.png"/>
            </view>
           <view class="game-item-content">
@@ -107,4 +107,20 @@
        <input name="input" placeholder="please input here" />
        <button class="sc-btn" formType="submit">提交</button>
     </form> -->
+    
+  <view class="footer">
+        <view class="footer-item">
+           <image src="../images/footerball-icon.png"/>
+           <view>足球</view>
+        </view>  
+        <view class="footer-item">
+           <image src="../images/basketball.png"/>
+           <view>篮球</view>
+        </view>  
+         <view class="footer-item">
+           <image src="../images/basketball.png"/>
+           <view>篮球</view>
+        </view>
+    </view>
+
   </view>

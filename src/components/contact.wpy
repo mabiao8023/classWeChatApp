@@ -29,15 +29,16 @@
   }
   .shaixuan{
       position: fixed;
-      bottom: 80rpx;
+      bottom: 160rpx;
       right: 20rpx;
-      width: 100rpx;
-      height: 100rpx;
+      width: 80rpx;
+      height: 80rpx;
       border-radius: 50%;
       background:#f6c151;
+      z-index: 1000;
       image{
-        width: 100rpx;
-        height: 100rpx;
+        width: 80rpx;
+        height: 80rpx;
       }
   }
 

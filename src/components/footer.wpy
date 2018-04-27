@@ -1,0 +1,65 @@
+<style lang="less">
+  .footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    height: 120rpx;
+    display: flex;
+    border-top: 2rpx solid #eaeaea;
+    padding-bottom: 20rpx;
+    .footer-item{
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30rpx;
+      flex-direction: column;
+      image{
+        width: 40rpx;
+        height: 40rpx;
+      }
+    }
+  }
+
+</style>
+<template>
+  <view class="footer">
+        <view class="footer-item">
+           <image src="../images/footerball-icon.png"></image>
+           <view>足球</view>
+        </view>  
+        <view class="footer-item">
+           <image src="../images/basketball.png"></image>
+           <view>篮球</view>
+        </view>  
+         <view class="footer-item">
+           <image src="../images/basketball.png"></image>
+           <view>篮球</view>
+        </view>
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  // import abc from 'abc'
+
+  export default class Contact extends wepy.component {
+
+    data = {
+
+    }
+
+    events = {
+  
+    }
+
+    methods = {
+      gotosx(){
+         wx.navigateTo({
+            url: `/pages/shaixuan`
+          })
+      }
+    }
+  }
+</script>

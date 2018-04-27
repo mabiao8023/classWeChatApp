@@ -2,6 +2,7 @@
   @mainColor: #FF741F;
   page{
     background: #fff;
+    padding-bottom: 120rpx;
   }
   .container{
     background: #fff;
@@ -11,6 +12,7 @@
     top: 0;
     display: flex;
     width: 100%;
+    border-top: 2rpx solid #eaeaea;
     border-bottom: 2rpx solid #eaeaea;
     background: #fff;
     z-index: 1000;
@@ -50,10 +52,11 @@
     align-items: center;
     width: 100%;
     padding: 30rpx 24rpx;
-    background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
-    border-bottom: 1px solid #CBCBCB;
+    background: #fff;
+    // background: linear-gradient(to bottom, #fff 0%,#F7F6F5 100%);
+    border-bottom: 1px solid #eaeaea;
     &:first-child{
-       border-top: 1px solid #CBCBCB;
+       border-top: 1px solid #eaeaea;
     }
     .game-item-sc{
       width: 48rpx;
@@ -186,6 +189,7 @@
      height: 80rpx;
 
   }
+
 </style>
 <template>
   <view class="container">
@@ -239,7 +243,7 @@
         </view>
           <view class="game-item" wx:for="gameList">
            <view class="game-item-sc">
-              <image wx:if="{{false}}" class="collect" src="../images/sc.png"></image>
+              <image wx:if="{{true}}" class="collect" src="../images/sc.png"></image>
               <image wx:else class="collect" src="../images/sc-active.png"></image>
            </view>
           <view class="game-item-content">
@@ -282,22 +286,28 @@
        <input name="input" placeholder="please input here" />
        <button class="sc-btn" formType="submit">提交</button>
     </form> -->
+    <footer></footer>
   </view>
 </template>
   
 <script>
   import wepy from 'wepy'
   import Contact from '@/components/contact' // alias example
+  import Footer from '@/components/footer' // alias example
   import myMixin from '../mixins/test'
   import apiPath from '../config/config'
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '夜猫足球实时比分'
+      navigationBarTitleText: '即时比分',
+      navigationBarBackgroundColor: '#ffffff',
+      enablePullDownRefresh: false,
+      navigationBarTextStyle: 'black'      
     }
 
     components = {
-      contact:Contact
+      contact:Contact,
+      footer:Footer
     }
 
     mixins = [myMixin]
@@ -312,7 +322,7 @@
       gameList:[1,2,3,4,5,6,7,8,9,20,33,3,3,3,3,3,],
       isUpFrash:false,
       shareContent:'时间看得见福克斯',
-      isScGame: false,
+      isScGame: true,
       totalFocus: 0,
     }
 
