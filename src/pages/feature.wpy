@@ -189,7 +189,7 @@
     <picker class="my-picker"  mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
     <view class="nav">
       <image class="date-choice" src="../images/date.png"></image>
-        <view>今天 2018/07/12 共32场</view>
+        <view>今天 2018/07/12 共{{total}}场</view>
         <image src="../images/arrow.png" class="arrow-right"></image>
     </view>
         
@@ -199,7 +199,7 @@
       <view>比赛刷新中</view>
     </view>
     <view class="game-list">
-        <view class="game-item">
+      <!--   <view class="game-item">
            <view class="game-item-sc">
               <image wx:if="{{true}}" class="collect" src="../images/sc.png"></image>
               <image wx:else class="collect" src="../images/sc-active.png"></image>
@@ -227,8 +227,8 @@
               <image bindtap="setShareContent" class="collect share" src="../images/share.png"></image>
             </button>
            </view>
-        </view>
-          <view class="game-item" wx:for="gameList">
+        </view> -->
+          <view class="game-item" wx:for="{{matchList}}">
            <view class="game-item-sc">
               <image wx:if="{{false}}" class="collect" src="../images/sc.png"></image>
               <image wx:else class="collect" src="../images/sc-active.png"></image>
@@ -236,18 +236,18 @@
           <view class="game-item-content">
               <view class="game-item-con-info">
                   <view class="game-ls">
-                    <view>西甲</view>
-                    <view class="game-time">18:00</view>
+                    <view style="color:{{item.league_color}}">{{item.league_name}}</view>
+                    <view class="game-time">{{item.match_time}}</view>
                   </view>
                   <view class="game-minutes">未</view>
               </view>
               <view class="game-name">
                  <view class="home">
-                    <view class="name">皇家马</view>
+                    <view class="name">{{item.home}}</view>
                  </view>
                  <view class="score">vs</view>
                  <view class="other">
-                    <view class="name">西班牙</view>
+                    <view class="name">{{item.away}}</view>
                  </view>
               </view>
            </view> 
@@ -282,7 +282,6 @@
     config = {
       navigationBarTitleText: '赛程',
       navigationBarBackgroundColor: '#ffffff',
-      enablePullDownRefresh: false,
       navigationBarTextStyle: 'black'  
     }
 
@@ -301,7 +300,10 @@
       classList:[],
       gameList:[1,2,3,4,5,6,7,8,9,20,33,3,3,3,3,3,],
       isUpFrash:false,
-      shareContent:'时间看得见福克斯'
+      shareContent:'时间看得见福克斯',
+      page:1,
+      matchList:[],
+      total:0,
     }
 
     computed = {
@@ -370,23 +372,27 @@
     }
 
 
+    
     // 获取课程列表
     
     getClassList(){
-      wepy.request(apiPath.classList)
+       return wepy.request({url:apiPath.matchList,data:{type : 2,page: this.page}})
         .then( res => {
-            this.classList = res.data.data.list;
-            this.classList.forEach( val => {
-              val.price = this.formateMoney(val.price);
-              val.expire_month = this.formateMonth(val.expire_month);
-            } )
-            this.$apply();
+          let list = res.data.data.list;
+          list.forEach( val => {
+            val.isFocus = false;
+            val.match_time = val.match_time.slice(10,16);
+          } )
+          this.total = res.data.data.meta.total;
+          this.matchList = this.matchList.concat( res.data.data.list );
+          this.page ++ ;
+          this.$apply();
         })
     }
 
     onLoad() {
-      /*this.getBanners();
-      this.getClassList();*/
+      /*this.getBanners();*/
+      this.getClassList();
     }
 
     /**
@@ -394,21 +400,21 @@
     */
     onPullDownRefresh () {
       // 刷新完后停止刷新
-
-      setTimeout( () => {
-          wx.stopPullDownRefresh()
-      },2000 )
+      this.page = 1;
+      this.matchList = [];
+      this.getClassList().then( res => {
+        wx.stopPullDownRefresh();
+      } );
     }
 
     
     /* 上拉触底 */
     onReachBottom(){
       this.isUpFrash = true;
-      setTimeout( () => {
-          this.isUpFrash = false;
-          this.$apply();
-      },2000 )
-      console.log("上拉触底了")
+      this.getClassList().then( res => {
+        this.isUpFrash = false;
+        this.$apply();
+      } )
     }
 
     onShareAppMessage() {

@@ -29,10 +29,10 @@
       <view>比赛刷新中</view>
     </view>
     <view class="game-list">
-        <view class="game-item">
+        <!-- <view class="game-item">
            <view class="game-item-sc" bindtap="scGame">
-              <image  wx:if="{{isScGame}}" class="collect" src="../images/sc.png"/>
-              <image wx:else class="collect" src="../images/sc-active.png"/>
+              <image wx:if="{{isScGame}}" class="collect" src="../images/sc.png"></image>
+              <image wx:else class="collect" src="../images/sc-active.png"></image>
            </view>
            <view class="game-item-content">
               <view class="game-item-con-info">
@@ -58,11 +58,11 @@
            </view> 
            <view class="share">
             <button class="share-btn" open-type="share">
-              <image bindtap="setShareContent" class="collect share" src="../images/share.png"/>
+              <image bindtap="setShareContent" class="collect share" src="../images/share.png"></image>
             </button>
            </view>
-        </view>
-          <view class="game-item" wx:for="gameList">
+        </view> -->
+          <view class="game-item"  wx:for="{{matchList}}" wx:key="{{index}}">
            <view class="game-item-sc">
               <image wx:if="{{true}}" class="collect" src="../images/sc.png"/>
               <image wx:else class="collect" src="../images/sc-active.png"/>
@@ -70,8 +70,8 @@
           <view class="game-item-content">
               <view class="game-item-con-info">
                   <view class="game-ls">
-                    <view>西甲</view>
-                    <view class="game-time">18:00</view>
+                    <view style="color:{{item.league_color}}">{{item.league_name}}</view>
+                    <view class="game-time">{{item.match_time_minute}}</view>
                   </view>
                   <view class="game-minutes">50'</view>
               </view>
@@ -79,11 +79,11 @@
                  <view class="home">
                     <view class="red">1</view>
                     <view class="yellow">2</view>
-                    <view class="name">皇家马</view>
+                    <view class="name">{{item.home}}</view>
                  </view>
-                 <view class="score">3-4</view>
+                 <view class="score">{{item.home_score}}-{{item.away_score}}</view>
                  <view class="other">
-                    <view class="name">西班牙</view>
+                    <view class="name">{{item.away}}</view>
                     <view class="yellow">2</view> 
                     <view class="red">1</view>
                  </view>
@@ -91,7 +91,7 @@
            </view> 
            <view>
                <button class="share-btn" open-type="share">
-                 <image class="collect share" src="../images/share.png"/>
+                 <image bindtap="setShareContent" class="collect share" src="../images/share.png" data-wpysetsharecontent-a="{{item}}"/>
                </button>
            </view>
         </view>

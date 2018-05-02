@@ -1,5 +1,4 @@
-const aipCommonPath = '/home/apiEntry/api/';
-const Host = `https://a.ym8800.com`;
+const Host = `http://120.78.193.207:8001`;
 
 let apiPath = {
     bannerList:`${Host}/index/banner`, // banner图
@@ -18,6 +17,8 @@ let apiPath = {
 	getRandAnswer:`${Host}/test/get_answer`, // 获取随机问题
 	login:`${Host}/wxapp/login`, // 登录接口
 	updateUserInfo:`${Host}/wxapp/user/update`, // 更新用户信息
+
+	matchList:`${Host}/match/list`
 }
 
 export default apiPath

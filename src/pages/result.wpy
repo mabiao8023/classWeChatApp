@@ -198,7 +198,7 @@
       <view>比赛刷新中</view>
     </view>
     <view class="game-list">
-        <view class="game-item">
+       <!--  <view class="game-item">
            <view class="game-item-sc">
               <image wx:if="{{true}}" class="collect" src="../images/sc.png"></image>
               <image wx:else class="collect" src="../images/sc-active.png"></image>
@@ -230,8 +230,8 @@
               <image bindtap="setShareContent" class="collect share" src="../images/share.png"></image>
             </button>
            </view>
-        </view>
-          <view class="game-item" wx:for="gameList">
+        </view> -->
+          <view class="game-item" wx:for="{{matchList}}" wx:key="{{index}}">
            <view class="game-item-sc">
               <image wx:if="{{false}}" class="collect" src="../images/sc.png"></image>
               <image wx:else class="collect" src="../images/sc-active.png"></image>
@@ -239,8 +239,8 @@
           <view class="game-item-content">
               <view class="game-item-con-info">
                   <view class="game-ls">
-                    <view>西甲</view>
-                    <view class="game-time">18:00</view>
+                    <view style="color:{{item.league_color}}">{{item.league_name}}</view>
+                    <view class="game-time">{{item.match_time}}</view>
                   </view>
                   <view class="game-minutes">完</view>
               </view>
@@ -248,11 +248,11 @@
                  <view class="home">
                     <view class="red">1</view>
                     <view class="yellow">2</view>
-                    <view class="name">皇家马</view>
+                    <view class="name">{{item.home}}</view>
                  </view>
-                 <view class="score">3-4</view>
+                 <view class="score">{{item.home_score}}-{{item.away_score}}</view>
                  <view class="other">
-                    <view class="name">西班牙</view>
+                    <view class="name">{{item.away}}</view>
                     <view class="yellow">2</view> 
                     <view class="red">1</view>
                  </view>
@@ -289,7 +289,6 @@
     config = {
       navigationBarTitleText: '赛果',
       navigationBarBackgroundColor: '#ffffff',
-      enablePullDownRefresh: false,
       navigationBarTextStyle: 'black'  
     }
 
@@ -308,7 +307,9 @@
       classList:[],
       gameList:[1,2,3,4,5,6,7,8,9,20,33,3,3,3,3,3,],
       isUpFrash:false,
-      shareContent:'时间看得见福克斯'
+      shareContent:'时间看得见福克斯',
+      page:1,
+      matchList:[]
     }
 
     computed = {
@@ -379,21 +380,26 @@
 
     // 获取课程列表
     
+     // 获取课程列表
+    
     getClassList(){
-      wepy.request(apiPath.classList)
+       return wepy.request({url:apiPath.matchList,data:{type : 1,page: this.page}})
         .then( res => {
-            this.classList = res.data.data.list;
-            this.classList.forEach( val => {
-              val.price = this.formateMoney(val.price);
-              val.expire_month = this.formateMonth(val.expire_month);
-            } )
+          let list = res.data.data.list;
+          list.forEach( val => {
+            val.isFocus = false;
+            val.match_time = val.match_time.slice(10,16);
+          } )
+            this.matchList = this.matchList.concat( res.data.data.list );
+            this.page ++ ;
+            console.log(this.matchList);
             this.$apply();
         })
     }
 
     onLoad() {
-      /*this.getBanners();
-      this.getClassList();*/
+      /*this.getBanners();*/
+      this.getClassList();
     }
 
     /**
@@ -401,21 +407,21 @@
     */
     onPullDownRefresh () {
       // 刷新完后停止刷新
-
-      setTimeout( () => {
-          wx.stopPullDownRefresh()
-      },2000 )
+      this.page = 1;
+      this.matchList = [];
+      this.getClassList().then( res => {
+        wx.stopPullDownRefresh();
+      } );
     }
 
     
     /* 上拉触底 */
     onReachBottom(){
       this.isUpFrash = true;
-      setTimeout( () => {
-          this.isUpFrash = false;
-          this.$apply();
-      },2000 )
-      console.log("上拉触底了")
+      this.getClassList().then( res => {
+        this.isUpFrash = false;
+        this.$apply();
+      } )
     }
 
     onShareAppMessage() {

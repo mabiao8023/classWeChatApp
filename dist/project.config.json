@@ -12,8 +12,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.7.2",
-	"appid": "wxeebf4ed549cf121f",
-	"projectname": "%E8%B6%B3%E5%BD%A9%E8%AF%BE%E7%A8%8B",
+	"appid": "wxc0088367df4dd2b1",
+	"projectname": "%E8%B6%B3%E7%90%83%E6%AF%94%E5%88%86%E5%B0%8F%E7%A8%8B%E5%BA%8F",
 	"svr": "",
 	"client": "",
 	"qcloudRoot": "",
@@ -74,6 +74,18 @@
 					"id": -1,
 					"name": "筛选",
 					"pathName": "pages/shaixuan",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "赛果",
+					"pathName": "pages/result",
+					"query": ""
+				},
+				{
+					"id": 7,
+					"name": "赛程",
+					"pathName": "pages/feature",
 					"query": ""
 				}
 			]
