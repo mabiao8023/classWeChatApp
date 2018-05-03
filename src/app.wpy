@@ -103,13 +103,15 @@ export default class extends wepy.app {
                   //发起网络请求
                   wepy.request({
                     url: apiPath.login,
-                    method:'POST',
+                    method:'GET',
                     data: {
+                      login_type: 4,
                       code: res.code
                     }
                   }).then( res => {
+                    console.log(res);
                     self.globalData.sessionID = res.data.data.session_id;
-                    self.getUserInfo();
+                    // self.getUserInfo();
                   } )
                 } else {
                   console.log('获取用户登录态失败！' + res.errMsg)

@@ -4,7 +4,7 @@
     <picker class="my-picker" mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
     <view class="nav">
       <image class="date-choice" src="../images/date.png"/>
-        <view>今天 2018/07/12 共32场</view>
+        <view>今天 {{date}} 共32场</view>
         <image src="../images/arrow.png" class="arrow-right"/>
     </view>
         

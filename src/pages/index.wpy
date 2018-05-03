@@ -457,7 +457,6 @@
 
     onShareAppMessage() {
       /* todo:设置要分享的内容 */
-      console.log(2);
       return {
           title: this.shareContent,
           path: '/pages/index',

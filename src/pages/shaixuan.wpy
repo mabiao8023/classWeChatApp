@@ -175,7 +175,8 @@
         '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
         '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
         '法甲','欧冠杯','自由杯','巴西乙','哥轮甲春',
-      ]
+      ],
+      leagueList:[],
     }
 
     computed = {
@@ -247,31 +248,16 @@
     // 获取banners列表
     
     getBanners(){
-      wepy.request(apiPath.bannerList)
+      wepy.request(apiPath.leagueList)
         .then( res => {
             console.log(res.data.data);
-            this.banners = res.data.data;
             this.$apply();
         })
     }
 
-    // 获取课程列表
-    
-    getClassList(){
-      wepy.request(apiPath.classList)
-        .then( res => {
-            this.classList = res.data.data.list;
-            this.classList.forEach( val => {
-              val.price = this.formateMoney(val.price);
-              val.expire_month = this.formateMonth(val.expire_month);
-            } )
-            this.$apply();
-        })
-    }
 
     onLoad() {
       this.getBanners();
-      this.getClassList();
     }
 
     onShareAppMessage() {

@@ -188,7 +188,7 @@
     <picker class="my-picker"  mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
     <view class="nav">
       <image class="date-choice" src="../images/date.png"></image>
-        <view>今天 2018/07/12 共32场</view>
+        <view>今天 {{date}} 共32场</view>
         <image src="../images/arrow.png" class="arrow-right"></image>
     </view>
         
@@ -309,7 +309,10 @@
       isUpFrash:false,
       shareContent:'时间看得见福克斯',
       page:1,
-      matchList:[]
+      matchList:[],
+      date: '',
+      start: '',
+      end:'',
     }
 
     computed = {
@@ -366,6 +369,10 @@
         setShareContent(){
           console.log(1);
           this.shareContent = "啊哈哈沙发或多或少";
+        },
+
+        bindDateChange(e){
+          this.date = e.detail.value;
         }
 
     }
@@ -400,7 +407,12 @@
     onLoad() {
       /*this.getBanners();*/
       this.getClassList();
+      this.date = this.getNowFormatDate();
+      this.start = this.getNowFormatDate();
+      this.end = this.getNowFormatDate();
     }
+
+
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
