@@ -53,7 +53,7 @@
           <image  src="../images/addFocus.png"/> 
           关注
     </button> -->
-    <view class="shaixuan" bindtap="gotosx">
+    <view class="shaixuan">
         <image src="../images/sx.png"></image>
     </view>
   </view>

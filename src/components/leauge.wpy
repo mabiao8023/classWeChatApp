@@ -1,0 +1,198 @@
+<style lang="less">
+   @mainColor: #FF741F;
+    .shaixuan-container{
+      position: fixed;
+      top:0;
+      left: 0;
+      right: 0;
+      bottom:0;
+      z-index: 10000;
+      background: #dee7f0;
+    }
+    .ls-list{
+    	position: absolute;
+    	top:0 ;
+    	left:0;
+    	right:0;
+    	bottom:164rpx;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px;
+      overflow: scroll;
+      align-content:flex-start;
+
+      .ls-item{
+        width: 25%;
+        text-align: center;
+        font-size: 28rpx;
+        padding: 10rpx;
+
+        .ls-item-btn{
+            line-height: 60rpx;
+            background: #fff;
+            color: #999;
+            border: 2rpx solid #dddce1;
+            border-radius: 5rpx;
+            &.active{
+              background: #fde399;
+              color: #b14008;
+              border: 2rpx solid #ffa478;
+            }
+        }
+      }
+    }
+     .ls-nav{
+        font-size: 30rpx;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        background: #fff;
+        border-top: 2rpx solid #eaeaea;
+        border-bottom: 2rpx solid #eaeaea;
+        .ls-nav-item{
+          flex: 1;
+          text-align: center;
+          line-height: 80rpx;
+          
+          &.active{
+            background: @mainColor;
+            color: #fff;
+          }
+        }
+      }
+  .choice{
+    color: #333;
+          font-size: 30rpx;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+     
+
+      .ls-btns{
+        display: flex;
+        background: #fff;
+        justify-content: space-between;
+        align-items:center;
+        border-top: 2rpx solid #eaeaea;
+        height: 160rpx;
+        padding: 24rpx;
+        color: #666;
+      }
+      
+      .choice-container{
+        display: flex;
+        align-items: center;
+      }
+      .choice-btn{
+         padding: 10rpx;
+         color: #333;
+         border-radius: 10rpx;
+         margin-right:20rpx;
+         background: #fff;
+         color: #999;
+         border: 2rpx solid #dddce1;
+         &.all-in{
+          background: #fde399;
+          color: #b14008;
+          border: 2rpx solid #ffa478;
+        }
+      }
+      .sure-btn{
+         padding: 20rpx 25px;
+         border-radius: 10rpx;
+         font-size: 32rpx;
+         background: #e74a5b;
+         color: #fff;
+      }
+  }
+</style>
+<template>
+  <view class="shaixuan-container">
+     <!--  <view class="ls-nav">
+           <view class="ls-nav-item active">全部</view>
+           <view class="ls-nav-item">国家</view>
+           <view class="ls-nav-item">足彩</view>
+           <view class="ls-nav-item">竞彩</view>
+           <view class="ls-nav-item">单场</view>
+     </view> -->
+    <!-- <contact></contact> -->
+    <view class="ls-list">
+        <view class="ls-item" wx:for="{{list}}" wx:key="{{index}}" bindtap="choice({{index}})">
+          <view class="ls-item-btn" :class="{'active':item.checked}">{{item.league_name}}</view>
+        </view>
+    </view> 
+    <view class="choice">
+        
+        <view class="ls-btns">
+            <view class="choice-container">
+               <view class="choice-btn all-in" bindtap="allin">全选</view>
+               <view class="choice-btn" bindtap="allout">全不选</view>
+               <view>选中105场</view>
+            </view>
+            <view class="sure-btn" bindtap="sure">
+               确定
+            </view>
+        </view>
+    </view>  
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  // import abc from 'abc'
+
+  export default class Contact extends wepy.component {
+  	props = {
+  		list:{
+  			type: Array,
+  			default:[]
+  		}
+  	}
+
+    data = {
+    }
+
+    events = {
+  		
+    }
+
+    methods = {
+      gotosx(){
+         wx.navigateTo({
+            url: `/pages/shaixuan`
+          })
+      },
+      choice(index){
+      	this.list[index].checked = !this.list[index].checked;
+      },
+      allin(){
+      	this.list.forEach( val => {
+      		val.checked = true;
+      	} )
+      },
+      allout(){
+      	this.list.forEach( val => {
+      		val.checked = false;
+      	} )
+      },
+      sure(){
+      	let leagueIds = [];
+      	this.list.forEach( val => {
+      		if( val.checked == true ){
+      			leagueIds.push(val.id)	
+      		}
+      		
+      	} )
+      	this.$emit('league-emit',leagueIds);
+      }
+    }
+
+    onLoad () {
+    	// this.list.forEach( val => {
+    	// 	val.checked = true;
+    	// } )
+    }
+  }
+</script>

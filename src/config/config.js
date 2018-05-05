@@ -21,6 +21,7 @@ let apiPath = {
 	matchList:`${Host}/match/list`,
 	leagueList:`${Host}/match/league/list`,
 	matchCollect:`${Host}/match/collect`,
+	focusList:`${Host}/match_collect/list`,
 }
 
 export default apiPath

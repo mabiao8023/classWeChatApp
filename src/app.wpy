@@ -63,7 +63,7 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    sessionID:'',
+    token:'',
   }
 
   constructor () {
@@ -73,7 +73,17 @@ export default class extends wepy.app {
   }
 
   onLaunch() {
-    this.login();  
+
+    try {
+      this.globalData.token = wx.getStorageSync('token')
+    } catch (e) {
+      // Do something when catch error
+      this.globalData.token = "";
+    }
+    if( !this.globalData.token ){
+      this.login(); 
+    }
+     
   }
 
   getUserInfo() {
@@ -86,8 +96,8 @@ export default class extends wepy.app {
            url: apiPath.updateUserInfo,
            method:'POST',
            header: {
-              'cookie': `PHPSESSID=${this.globalData.sessionID}`
-            },
+              'Authorization': `${this.globalData.token}`
+           },
            data:res.userInfo
         }).then( res => { console.log(res) } )
     } )
@@ -110,7 +120,11 @@ export default class extends wepy.app {
                     }
                   }).then( res => {
                     console.log(res);
-                    self.globalData.sessionID = res.data.data.session_id;
+                    self.globalData.token = res.data.data.token;
+                    wx.setStorageSync({
+                      key:"token",
+                      data: res.data.data.token
+                    })
                     // self.getUserInfo();
                   } )
                 } else {
