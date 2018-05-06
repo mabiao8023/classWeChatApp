@@ -62,7 +62,7 @@
       font-size: 28rpx;
       margin-bottom: 10rpx;
       .game-ls{
-        width: 38%;
+        width: 41%;
         text-align: left;
         color: #999;
         display: flex;
@@ -88,7 +88,7 @@
     }
     .home{
       display: flex;
-      width: 38%;
+      width: 41%;
       justify-content: flex-end;
       align-items: center;
     }
@@ -194,11 +194,13 @@
 </style>
 <template>
   <view class="container">
-    <!-- <contact></contact> -->
+    <view bindtap="openLeague">
+      <contact></contact>
+    </view>
     <picker class="my-picker"  mode="date" start="{{start}}" end="{{date}}" bindchange="bindDateChange">
     <view class="nav">
       <image class="date-choice" src="../images/date.png"></image>
-        <view>今天 {{date}} 共{{total}}场</view>
+        <view>{{date}} 共{{total}}场</view>
         <image src="../images/arrow.png" class="arrow-right"></image>
     </view>
         
@@ -250,12 +252,17 @@
       <view>正在加载中</view>
     </view>
     <view class="upLoading" wx:else> 暂无更多数据 </view>
+
+    <view hidden="{{!isShowLeague}}" >
+      <Leauge :list.sync="leaguelist"></Leauge>
+    </view>
   </view>
 </template>
   
 <script>
   import wepy from 'wepy'
   import Contact from '@/components/contact' // alias example
+  import Leauge from '@/components/leauge' // alias example
   import myMixin from '../mixins/test'
   import apiPath from '../config/config'
 
@@ -267,7 +274,8 @@
     }
 
     components = {
-      contact:Contact
+      contact:Contact,
+      Leauge
     }
 
     mixins = [myMixin]
@@ -288,6 +296,9 @@
       date: '',
       start: '',
       end:'',
+      isShowLeague:false,
+      leagueFilte:null,
+      leaguelist:[],
     }
 
     computed = {
@@ -295,6 +306,9 @@
     }
 
     methods = {
+      openLeague(){
+           this.isShowLeague = true;
+        },
         gotoResult(){
           wx.navigateTo({
             url: `/pages/result`
@@ -395,6 +409,17 @@
     }
 
     events = {
+       'league-cancel':(...args) => {
+          this.isShowLeague = false;
+      },
+       'league-emit': (...args) => {
+        console.log(args[0]);
+        this.isShowLeague = false;
+        this.page = 1;
+        this.matchList = [];
+        this.leagueFilte = args[0];
+        this.getClassList();
+      },
       'index-emit': (...args) => {
         let $event = args[args.length - 1]
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
@@ -407,15 +432,27 @@
      // 获取课程列表
     
     getClassList(){
+      let data = {};
+       if( this.leagueFilte === null ){
+        data = {
+            type : 1,
+            page: this.page,
+            date: this.date
+          }
+           
+       }else{
+             data = {
+                    type : 1,
+                    page: this.page,
+                    date: this.date,
+                    league_id:this.leagueFilte.join(',')
+                  }
+       }
       wx.showLoading({
               title: '加载中',
             })
        return wepy.request({url:apiPath.matchList,
-          data:{
-            type : 1,
-            page: this.page,
-            date: this.date
-          },
+          data:data,
           header: {
               'Authorization': `${this.$parent.globalData.token}`
            },})
@@ -432,13 +469,28 @@
         })
     }
 
+     getLeaugeList(){
+       return wepy.request({url:apiPath.leagueList,data:{type : 1, date: this.date},
+           header: {
+              'Authorization': `${this.$parent.globalData.token}`
+           },})
+        .then( res => {
+            let list = res.data.data.list;
+            this.leaguelist = list.slice(1,100);
+            this.leaguelist.forEach( val => {
+              val.checked = true;
+            } )
+            this.$apply();
+        })
+    }
+
     onLoad() {
       /*this.getBanners();*/
       this.date = this.getNowFormatDate();
       this.start = this.getNowFormatDate(new Date(new Date().getTime() - 604800000));
       this.end = this.getNowFormatDate();
       this.getClassList();
-      
+      this.getLeaugeList();
     }
 
 

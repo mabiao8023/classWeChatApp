@@ -70,7 +70,7 @@
       font-size: 28rpx;
       margin-bottom: 10rpx;
       .game-ls{
-        width: 38%;
+        width: 42%;
         text-align: left;
         color: #999;
         display: flex;
@@ -96,7 +96,7 @@
     }
     .home{
       display: flex;
-      width: 38%;
+      width: 42%;
       justify-content: flex-end;
       align-items: center;
     }
@@ -395,7 +395,23 @@
 
         /* 调整分享的内容 */
         setShareContent( match ){
-          this.shareContent = `${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home}  ${match.home_score}-${match.away_score} ${match.away}`;
+          if( match.status == 1 || match.status == 2 || match.status == 3 || match.status == 4 ){
+              this.shareContent = `进行中：${match.league_name}  ${match.home}  ${match.home_score}-${match.away_score} ${match.away}`;
+          }else if( match.status == -1 ){
+              this.shareContent = `${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home}  ${match.home_score}-${match.away_score} ${match.away}`;
+          }else if( match.status == 0 ){
+              this.shareContent = `${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -10 ){
+              this.shareContent = `比赛取消：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -11 ){
+              this.shareContent = `比赛待定：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -12 ){
+              this.shareContent = `比赛腰斩：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -13 ){
+              this.shareContent = `比赛中断：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -14 ){
+              this.shareContent = `比赛推迟：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }
         },
 
         /* 收藏 */
@@ -443,6 +459,9 @@
     }
 
     events = {
+      'league-cancel':(...args) => {
+          this.isShowLeague = false;
+      },
       'league-emit': (...args) => {
         console.log(args[0]);
         this.isShowLeague = false;
@@ -463,7 +482,6 @@
     
     getClassList( ){
       let data = {};
-      console.log(this.leagueFilte === null)
        if( this.leagueFilte === null ){
         data = {
             type : 0,
@@ -490,6 +508,10 @@
             this.matchList = this.matchList.concat( res.data.data.list );
             this.page ++ ;
             this.$apply();
+        }).catch( e => {
+          this.getClassList();
+          this.getLeaugeList();
+          this.getFocusTotal();
         })
     }
 

@@ -55,7 +55,7 @@
       font-size: 28rpx;
       margin-bottom: 10rpx;
       .game-ls{
-        width: 38%;
+        width: 41%;
         text-align: left;
         color: #999;
         display: flex;
@@ -81,7 +81,7 @@
     }
     .home{
       display: flex;
-      width: 38%;
+      width: 41%;
       justify-content: flex-end;
       align-items: center;
     }
@@ -197,7 +197,7 @@
       display: none;
     }
   }
-  
+
 </style>
 <template>
   <view class="container">
@@ -206,7 +206,10 @@
         <view class="nav-item"  bindtap="gotoIndex">即时</view>
         <view class="nav-item" bindtap="gotoResult">赛果</view>
         <view class="nav-item" bindtap="gotoFeture">赛程</view>
-        <view class="nav-item  active" bindtap="gotoFocus">关注</view>
+        <view class="nav-item  active" bindtap="gotoFocus">
+        关注
+        <view class="num" wx:if="{{totalFocus > 0}}">{{totalFocus}}</view>
+        </view>
     </view> 
     <view class="upLoading down-flash"> 
       <image class="loading-img" src="../images/footerball.png"></image> 
@@ -226,7 +229,14 @@
                     <view style="color:{{item.league_color}}">{{item.league_name}}</view>
                     <view class="game-time">{{item.match_time_minute}}</view>
                   </view>
-                  <view class="game-minutes">50<text class="shanxian">'</text></view>
+                  <view wx:if="{{ item.status == 1 || item.status == 2 || item.status == 3  || item.status == 4}}" class="game-minutes">50<text class="shanxian">'</text></view>
+                  <view wx:if="{{ item.status == -1 }}" class="game-minutes">完</view>
+                  <view wx:if="{{ item.status == 0 }}" class="game-minutes">未</view>
+                   <view wx:if="{{ item.status == -10 }}" class="game-minutes">取消</view>
+                    <view wx:if="{{ item.status == -11 }}" class="game-minutes">待定</view>
+                    <view wx:if="{{ item.status == -12 }}" class="game-minutes">腰斩</view>
+                    <view wx:if="{{ item.status == -13 }}" class="game-minutes">中断</view>
+                    <view wx:if="{{ item.status == -14 }}" class="game-minutes">推迟</view>
               </view>
               <view class="game-name">
                  <view class="home">
@@ -234,7 +244,9 @@
                     <view class="yellow" wx:if="{{item.home_yellow}}">{{item.home_yellow}}</view>
                     <view class="name">{{item.home}}</view>
                  </view>
-                 <view class="score">{{item.home_score}}-{{item.away_score}}</view>
+                 <view class="score" wx:if="{{ item.status == 1 || item.status == 2 || item.status == 3  || item.status == 4}}">{{item.home_score}}-{{item.away_score}}</view>
+                 <view class="score" wx:if="{{ item.status == -1}}">{{item.home_score}}-{{item.away_score}}</view>
+                 <view class="score" wx:if="{{ item.status == 0 || item.status == -10 || item.status == -11 || item.status == -12 || item.status == -13 || item.status == -14}}">VS</view>
                  <view class="other">
                     <view class="name">{{item.away}}</view>
                     <view class="yellow" wx:if="{{item.away_yellow}}">{{item.away_yellow}}</view> 
@@ -356,7 +368,23 @@
 
         /* 调整分享的内容 */
         setShareContent( match ){
-          this.shareContent = `${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home}  ${match.home_score}-${match.away_score} ${match.away}`;
+          if( match.status == 1 || match.status == 2 || match.status == 3 || match.status == 4 ){
+              this.shareContent = `进行中：${match.league_name}  ${match.home}  ${match.home_score}-${match.away_score} ${match.away}`;
+          }else if( match.status == -1 ){
+              this.shareContent = `${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home}  ${match.home_score}-${match.away_score} ${match.away}`;
+          }else if( match.status == 0 ){
+              this.shareContent = `${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -10 ){
+              this.shareContent = `比赛取消：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -11 ){
+              this.shareContent = `比赛待定：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -12 ){
+              this.shareContent = `比赛腰斩：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -13 ){
+              this.shareContent = `比赛中断：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }else if( match.status == -14 ){
+              this.shareContent = `比赛推迟：${match.league_name} ${match.match_time.slice(0,match.match_time.length-3)} ${match.home} vs ${match.away}`;
+          }
         },
 
         /* 收藏 */
@@ -374,7 +402,8 @@
                  },})
               .then( res => {
                   wx.hideLoading()
-                  this.matchList[index].is_collect = false;
+                  this.matchList.splice(index,1);
+                  // this.matchList[index].is_collect = false;
                   this.totalFocus -- ;
                   this.$apply();
                   console.log('取消收藏成功');
@@ -438,20 +467,24 @@
     */
     onPullDownRefresh () {
       // 刷新完后停止刷新
-
-      setTimeout( () => {
-          wx.stopPullDownRefresh()
-      },2000 )
+      this.page = 1;
+      this.matchList = [];
+      this.getClassList().then( res => {
+        wx.stopPullDownRefresh();
+      } );
+      // setTimeout( () => {
+          
+      // },2000 )
     }
 
     
     /* 上拉触底 */
     onReachBottom(){
       this.isUpFrash = true;
-      setTimeout( () => {
-          this.isUpFrash = false;
-          this.$apply();
-      },2000 )
+      this.getClassList().then( res => {
+        this.isUpFrash = false;
+        this.$apply();
+      } )
       console.log("上拉触底了")
     }
 

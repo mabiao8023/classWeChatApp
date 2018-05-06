@@ -5,7 +5,10 @@
         <view class="nav-item" bindtap="gotoIndex">即时</view>
         <view class="nav-item" bindtap="gotoResult">赛果</view>
         <view class="nav-item" bindtap="gotoFeture">赛程</view>
-        <view class="nav-item  active" bindtap="gotoFocus">关注</view>
+        <view class="nav-item  active" bindtap="gotoFocus">
+        关注
+        <view class="num"  wx:if="{{totalFocus > 0}}">{{totalFocus}}</view>
+        </view>
     </view> 
     <view class="upLoading down-flash"> 
       <image class="loading-img" src="../images/footerball.png"/> 
@@ -25,7 +28,14 @@
                     <view style="color:{{item.league_color}}">{{item.league_name}}</view>
                     <view class="game-time">{{item.match_time_minute}}</view>
                   </view>
-                  <view class="game-minutes">50<text class="shanxian">'</text></view>
+                  <view wx:if="{{ item.status == 1 || item.status == 2 || item.status == 3  || item.status == 4}}" class="game-minutes">50<text class="shanxian">'</text></view>
+                  <view wx:if="{{ item.status == -1 }}" class="game-minutes">完</view>
+                  <view wx:if="{{ item.status == 0 }}" class="game-minutes">未</view>
+                   <view wx:if="{{ item.status == -10 }}" class="game-minutes">取消</view>
+                    <view wx:if="{{ item.status == -11 }}" class="game-minutes">待定</view>
+                    <view wx:if="{{ item.status == -12 }}" class="game-minutes">腰斩</view>
+                    <view wx:if="{{ item.status == -13 }}" class="game-minutes">中断</view>
+                    <view wx:if="{{ item.status == -14 }}" class="game-minutes">推迟</view>
               </view>
               <view class="game-name">
                  <view class="home">
@@ -33,7 +43,9 @@
                     <view class="yellow" wx:if="{{item.home_yellow}}">{{item.home_yellow}}</view>
                     <view class="name">{{item.home}}</view>
                  </view>
-                 <view class="score">{{item.home_score}}-{{item.away_score}}</view>
+                 <view class="score" wx:if="{{ item.status == 1 || item.status == 2 || item.status == 3  || item.status == 4}}">{{item.home_score}}-{{item.away_score}}</view>
+                 <view class="score" wx:if="{{ item.status == -1}}">{{item.home_score}}-{{item.away_score}}</view>
+                 <view class="score" wx:if="{{ item.status == 0 || item.status == -10 || item.status == -11 || item.status == -12 || item.status == -13 || item.status == -14}}">VS</view>
                  <view class="other">
                     <view class="name">{{item.away}}</view>
                     <view class="yellow" wx:if="{{item.away_yellow}}">{{item.away_yellow}}</view> 
@@ -49,7 +61,7 @@
         </view>
     </view>   
     <!--  -->
-    <view class="upLoading"  wx:if="{{isUpFrash}}"> 
+    <view class="upLoading" wx:if="{{isUpFrash}}"> 
       <image class="loading-img" src="../images/footerball.png"/> 
       <view>正在加载中</view>
     </view>

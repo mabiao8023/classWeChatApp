@@ -1,10 +1,26 @@
 
   <view class="container">
-    <!-- <contact></contact> -->
+    <view bindtap="openLeague">
+      
+  <view>
+    <!-- <button class="contact share" open-type="share">
+          <image  src="../images/share.png"/> 
+          分享
+    </button>
+    <button class="contact" open-type="contact">
+          <image  src="../images/addFocus.png"/> 
+          关注
+    </button> -->
+    <view class="shaixuan">
+        <image src="../images/sx.png"/>
+    </view>
+  </view>
+
+    </view>
     <picker class="my-picker" mode="date" start="{{start}}" end="{{end}}" bindchange="bindDateChange">
     <view class="nav">
       <image class="date-choice" src="../images/date.png"/>
-        <view>今天 {{date}} 共{{total}}场</view>
+        <view>{{date}} 共{{total}}场</view>
         <image src="../images/arrow.png" class="arrow-right"/>
     </view>
         
@@ -56,4 +72,40 @@
       <view>正在加载中</view>
     </view>
     <view class="upLoading" wx:else> 暂无更多数据 </view>
+    <view hidden="{{!isShowLeague}}">
+      
+  <view class="shaixuan-container">
+     <!--  <view class="ls-nav">
+           <view class="ls-nav-item active">全部</view>
+           <view class="ls-nav-item">国家</view>
+           <view class="ls-nav-item">足彩</view>
+           <view class="ls-nav-item">竞彩</view>
+           <view class="ls-nav-item">单场</view>
+     </view> -->
+    <!-- <contact></contact> -->
+    <view class="ls-list">
+        <view class="ls-item"  wx:for="{{$Leauge$list}}" wx:key="{{index}}" bindtap="$Leauge$choice" data-wpychoice-a="{{index}}">
+          <view class="ls-item-btn {{item.checked ? 'active' : ''}}" >{{item.league_name}}</view>
+        </view>
+    </view> 
+    <view class="choice">
+        
+        <view class="ls-btns">
+            <view class="sure-btn" bindtap="$Leauge$sure">
+               确定
+            </view>
+            <view class="sure-btn cancel-btn" bindtap="$Leauge$cancel">
+               取消
+            </view>
+            <view class="choice-container">
+               <view class="choice-btn all-in" bindtap="$Leauge$allin">全选</view>
+               <view class="choice-btn" bindtap="$Leauge$allout">全不选</view>
+              <!--  <view>选中105场</view> -->
+            </view>
+            
+        </view>
+    </view>  
+  </view>
+
+    </view>
   </view>

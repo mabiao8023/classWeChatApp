@@ -93,14 +93,18 @@
     <view class="choice">
         
         <view class="ls-btns">
-            <view class="choice-container">
-               <view class="choice-btn all-in" bindtap="$Leauge$allin">全选</view>
-               <view class="choice-btn" bindtap="$Leauge$allout">全不选</view>
-               <view>选中105场</view>
-            </view>
             <view class="sure-btn" bindtap="$Leauge$sure">
                确定
             </view>
+            <view class="sure-btn cancel-btn" bindtap="$Leauge$cancel">
+               取消
+            </view>
+            <view class="choice-container">
+               <view class="choice-btn all-in" bindtap="$Leauge$allin">全选</view>
+               <view class="choice-btn" bindtap="$Leauge$allout">全不选</view>
+              <!--  <view>选中105场</view> -->
+            </view>
+            
         </view>
     </view>  
   </view>

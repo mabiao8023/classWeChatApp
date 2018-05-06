@@ -107,6 +107,10 @@
          background: #e74a5b;
          color: #fff;
       }
+      .cancel-btn{
+        background: #eaeaea;
+        color: #999;
+      }
   }
 </style>
 <template>
@@ -127,14 +131,18 @@
     <view class="choice">
         
         <view class="ls-btns">
-            <view class="choice-container">
-               <view class="choice-btn all-in" bindtap="allin">全选</view>
-               <view class="choice-btn" bindtap="allout">全不选</view>
-               <view>选中105场</view>
-            </view>
             <view class="sure-btn" bindtap="sure">
                确定
             </view>
+            <view class="sure-btn cancel-btn" bindtap="cancel">
+               取消
+            </view>
+            <view class="choice-container">
+               <view class="choice-btn all-in" bindtap="allin">全选</view>
+               <view class="choice-btn" bindtap="allout">全不选</view>
+              <!--  <view>选中105场</view> -->
+            </view>
+            
         </view>
     </view>  
   </view>
@@ -159,6 +167,9 @@
     }
 
     methods = {
+      cancel(){
+        this.$emit('league-cancel');
+      },
       gotosx(){
          wx.navigateTo({
             url: `/pages/shaixuan`
