@@ -380,6 +380,7 @@
           this.page = 1;
           this.matchList = [];
           this.getClassList();
+           this.getLeaugeList();
         },
         /* 收藏 */
         collect(index,id){
@@ -435,7 +436,6 @@
         this.matchList = [];
         this.leagueFilte = args[0];
         this.getClassList();
-        this.getLeaugeList();
       },
       'index-emit': (...args) => {
         let $event = args[args.length - 1]
