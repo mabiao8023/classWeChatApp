@@ -208,7 +208,7 @@
     <view bindtap="openLeague">
       <contact></contact>
     </view>
-    <picker class="my-picker"  mode="date" start="{{start}}" end="{{date}}" bindchange="bindDateChange">
+    <picker class="my-picker"  mode="date" start="{{start}}" end="{{end}}" bindchange="bindDateChange">
     <view class="nav">
       <image class="date-choice" src="../images/date.png"></image>
         <view>{{date}} 共{{total}}场</view>
