@@ -434,6 +434,7 @@
         this.matchList = [];
         this.leagueFilte = args[0];
         this.getClassList();
+        this.getLeaugeList();
       },
       'index-emit': (...args) => {
         let $event = args[args.length - 1]

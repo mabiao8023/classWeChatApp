@@ -481,6 +481,8 @@
             this.$apply();
         })
     }
+      
+
 
     onLoad() {
       /*this.getBanners();*/
