@@ -188,6 +188,10 @@
     animation: rotateLoading 1s linear infinite;
   }
 
+  .game-flag{
+    color: #999;
+  }
+
   @keyframes rotateLoading{
     0%{
       transform: rotate(0); 
@@ -262,7 +266,10 @@
                     <view style="color:{{item.league_color}}">{{item.league_name}}</view>
                     <view class="game-time">{{item.match_time_minute}}</view>
                   </view>
-                  <view wx:if="{{ item.status == 1 || item.status == 2 || item.status == 3  || item.status == 4}}" class="game-minutes">{{item.current_minutes}}<text class="shanxian">'</text></view>
+                  <view wx:if="{{ item.status == 1 }}" class="game-minutes">{{item.current_minutes}}<text class="shanxian">'</text></view>
+                  <view wx:if="{{ item.status == 2 }}" class="game-minutes">{{item.current_minutes}}<text class="shanxian">'</text></view>
+                  <view wx:if="{{ item.status == 3 }}" class="game-minutes">{{item.current_minutes}}<text class="shanxian">'</text></view>
+                  <!-- <view wx:if="{{ item.status == 1 || item.status == 2 || item.status == 3  || item.status == 4}}" class="game-minutes">{{item.current_minutes}}<text class="shanxian">'</text></view> -->
                   <view wx:if="{{ item.status == -1 }}" class="game-minutes">完</view>
                   <view wx:if="{{ item.status == 0 }}" class="game-minutes">未</view>
                    <view wx:if="{{ item.status == -10 }}" class="game-minutes">取消</view>
@@ -270,6 +277,9 @@
                     <view wx:if="{{ item.status == -12 }}" class="game-minutes">腰斩</view>
                     <view wx:if="{{ item.status == -13 }}" class="game-minutes">中断</view>
                     <view wx:if="{{ item.status == -14 }}" class="game-minutes">推迟</view>
+                    <view wx:if="{{ item.status == 1 }}" class="game-flag">上半场</view>
+                  <view wx:if="{{ item.status == 2 }}" class="game-flag">中场</view>
+                  <view wx:if="{{ item.status == 3 }}" class="game-flag">下半场</view>
               </view>
               <view class="game-name">
                  <view class="home">
@@ -348,7 +358,8 @@
       matchList:[],
       leaguelist:[],
       isShowLeague:false,
-      leagueFilte:null
+      leagueFilte:null,
+      date: '',
     }
 
     computed = {
@@ -512,12 +523,14 @@
         data = {
             type : 0,
             page: this.page,
+            date: this.date
           }
            
        }else{
              data = {
                     type : 0,
                     page: this.page,
+                    date: this.date,
                     league_id:this.leagueFilte.join(',')
                   }
        }
@@ -571,6 +584,7 @@
 
     onLoad() {
       /*this.getBanners();*/
+      this.date = this.getNowFormatDate();
       this.getClassList();
       this.getLeaugeList();
       this.getFocusTotal();
