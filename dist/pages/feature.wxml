@@ -29,8 +29,13 @@
       <image class="loading-img" src="../images/footerball.png"/> 
       <view>比赛刷新中</view>
     </view>
+    <!-- 没有数据时 -->
+    <view class="no-data"  wx:if="{{matchList.length <= 0}}">
+        <image src="../images/noData.png"/> 
+        <view>目前暂无比赛</view>  
+    </view>  
      <view class="game-list">
-          <view class="game-item"  wx:for="{{matchList}}" wx:key="{{index}}">
+          <view class="game-item"  wx:for="{{matchList}}" wx:key="{{index}}" wx:if="{{ item.home != null && item.away != null }}">
           <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
              <button class="collect-btn" bindtap="collect" formType="submit" data-wpycollect-a="{{index}}" data-wpycollect-b="{{item.match_id}}">
                <image wx:if="{{!item.is_collect}}" class="collect" src="../images/sc.png"/>
@@ -67,11 +72,11 @@
         </view>
     </view>   
     <!--  -->
-    <view class="upLoading"  wx:if="{{isUpFrash}}"> 
+    <view class="upLoading" wx:if="{{isUpFrash}}"> 
       <image class="loading-img" src="../images/footerball.png"/> 
       <view>正在加载中</view>
     </view>
-    <view class="upLoading" wx:else> 暂无更多数据 </view>
+    <!-- <view class="upLoading" wx:else> 暂无更多数据 </view> -->
     <view hidden="{{!isShowLeague}}">
       
   <view class="shaixuan-container">

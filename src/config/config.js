@@ -1,4 +1,4 @@
-const Host = `http://120.78.193.207:8001`;
+const Host = `https://api-qiuwen.ym8800.com`;
 
 let apiPath = {
     bannerList:`${Host}/index/banner`, // banner图

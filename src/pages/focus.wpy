@@ -198,6 +198,17 @@
     }
   }
 
+   .no-data{
+    text-align: center;
+    font-size: 28rpx;
+    color: #999;
+    padding-top: 100rpx;
+    image{
+      width: 200rpx;
+      height: 200rpx;
+    }
+  }
+
 </style>
 <template>
   <view class="container">
@@ -215,8 +226,13 @@
       <image class="loading-img" src="../images/footerball.png"></image> 
       <view>比赛刷新中</view>
     </view>
+    <!-- 没有数据时 -->
+    <view class="no-data" wx:if="{{matchList.length <= 0}}">
+        <image src="../images/noData.png"></image> 
+        <view>目前暂无比赛</view>  
+    </view>  
    <view class="game-list">
-          <view class="game-item" wx:for="{{matchList}}" wx:key="{{index}}">
+          <view class="game-item" wx:for="{{matchList}}" wx:key="{{index}}" wx:if="{{ item.home != null && item.away != null }}">
           <form bindsubmit="formSubmit" report-submit="true" bindreset="formReset">
              <button class="collect-btn" bindtap="collect({{index}},{{item.match_id}})" formType="submit">
                <image wx:if="{{!item.is_collect}}" class="collect" src="../images/sc.png"></image>
@@ -266,7 +282,7 @@
       <image class="loading-img" src="../images/footerball.png"></image> 
       <view>正在加载中</view>
     </view>
-    <view class="upLoading" wx:else> 暂无更多数据 </view>
+    <!-- <view class="upLoading" wx:else> 暂无更多数据 </view> -->
   </view>
 </template>
   
