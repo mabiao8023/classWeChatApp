@@ -6,7 +6,7 @@
     z-index:1000;
     line-height:68rpx;
 
-    bottom:160rpx; 
+    bottom:360rpx; 
     font-size:30rpx;
     border-radius:0;
     color:#fff;
@@ -49,13 +49,13 @@
           <image  src="../images/share.png"/> 
           分享
     </button> -->
-   <!--  <button class="contact" open-type="contact">
+    <button class="contact" open-type="contact">
         关注
           <image  src="../images/addFocus.png"/>   
-    </button>  -->
-    <view class="shaixuan">
+    </button> 
+<!--     <view class="shaixuan">
         <image src="../images/sx.png"></image>
-    </view>
+    </view> -->
   </view>
 </template>
 <script>

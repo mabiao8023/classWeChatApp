@@ -1,11 +1,11 @@
 <style lang="less">
   @mainColor: #FF741F;
   page{
-    background: #eee;
+    background: #fff;
     padding-bottom: 120rpx;
   }
   .container{
-    background: #eee;
+    background: #fff;
   }
   .my-picker{
     width: 100%;
@@ -464,16 +464,16 @@
                     league_id:this.leagueFilte.join(',')
                   }
        }
-      wx.showLoading({
-              title: '加载中',
-            })
+      // wx.showLoading({
+      //         title: '加载中',
+      //       })
        return wepy.request({url:apiPath.matchList,
           data:data,
           header: {
               'Authorization': `${this.$parent.globalData.token}`
            },})
         .then( res => {
-          wx.hideLoading();
+          // wx.hideLoading();
 
           let list = res.data.data.list;
           this.total = res.data.data.meta.total;

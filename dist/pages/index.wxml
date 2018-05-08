@@ -1,16 +1,31 @@
 
   <view class="container">
+    
+  <view>
+    <!-- <button class="contact share" open-type="share">
+          <image  src="../images/share.png"/> 
+          分享
+    </button> -->
+    <button class="contact" open-type="contact">
+        关注
+          <image src="../images/addFocus.png"/>   
+    </button> 
+<!--     <view class="shaixuan">
+        <image src="../images/sx.png"></image>
+    </view> -->
+  </view>
+
     <view bindtap="openLeague">
       
   <view>
     <!-- <button class="contact share" open-type="share">
           <image  src="../images/share.png"/> 
           分享
-    </button>
-    <button class="contact" open-type="contact">
-          <image  src="../images/addFocus.png"/> 
-          关注
     </button> -->
+   <!--  <button class="contact" open-type="contact">
+        关注
+          <image  src="../images/addFocus.png"/>   
+    </button>  -->
     <view class="shaixuan">
         <image src="../images/sx.png"/>
     </view>
