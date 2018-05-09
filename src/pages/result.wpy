@@ -315,6 +315,7 @@
       isShowLeague:false,
       leagueFilte:null,
       leaguelist:[],
+      formId:'',
     }
 
     computed = {
@@ -365,6 +366,7 @@
           })
         },
         formSubmit: function(e) {
+            this.formId = e.detail.formId;
             // console.log(e);
             console.log(e.detail.formId);
             console.log('form发生了submit事件，携带数据为：', e.detail.value)
@@ -408,7 +410,8 @@
               })
               wepy.request({url:apiPath.matchCollect,
                 method:'POST',
-                data:{match_id : id},
+                data:{match_id : id,
+                form_id:this.formId},
                  header: {
                     'Authorization': `${this.$parent.globalData.token}`
                  },})

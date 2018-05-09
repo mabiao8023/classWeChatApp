@@ -557,9 +557,9 @@
             this.page ++ ;
             this.$apply();
         }).catch( e => {
-          this.getClassList();
-          this.getLeaugeList();
-          this.getFocusTotal();
+          // this.getClassList();
+          // this.getLeaugeList();
+          // this.getFocusTotal();
         })
     }
 
@@ -577,7 +577,7 @@
             this.$apply();
         })
     }
-
+    
 
     getFocusTotal(){
        return wepy.request({url:apiPath.focusList,data:{page: this.page},
