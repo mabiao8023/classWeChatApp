@@ -230,6 +230,7 @@
 </style>
 <template>
   <view class="container">
+    <Focus></Focus>
     <view bindtap="openLeague">
       <contact></contact>
     </view>
@@ -322,6 +323,7 @@
 <script>
   import wepy from 'wepy'
   import Contact from '@/components/contact' // alias example
+  import Focus from '@/components/focus' // alias example
   import Leauge from '@/components/leauge' // alias example
   import Footer from '@/components/footer' // alias example
   import myMixin from '../mixins/test'
@@ -337,7 +339,8 @@
     components = {
       contact:Contact,
       footer:Footer,
-      Leauge
+      Leauge,
+      Focus
     }
 
     mixins = [myMixin]
@@ -360,6 +363,8 @@
       isShowLeague:false,
       leagueFilte:null,
       date: '',
+      formId:'',
+
     }
 
     computed = {
@@ -425,6 +430,7 @@
           })
         },
         formSubmit: function(e) {
+            this.formId = e.detail.formId;
             // console.log(e);
             console.log(e.detail.formId);
             console.log('form发生了submit事件，携带数据为：', e.detail.value)
@@ -478,7 +484,10 @@
               })
               wepy.request({url:apiPath.matchCollect,
                 method:'POST',
-                data:{match_id : id},
+                data:{
+                  match_id : id,
+                  form_id:this.formId
+                },
                  header: {
                     'Authorization': `${this.$parent.globalData.token}`,
                     'content-type': 'application/json'

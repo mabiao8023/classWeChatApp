@@ -1,11 +1,11 @@
 <style lang="less">
   @mainColor: #FF741F;
   page{
-    background: #eee;
+    background: #fff;
     padding-bottom: 120rpx;
   }
   .container{
-    background: #eee;
+    background: #fff;
   }
   .my-picker{
     width: 100%;

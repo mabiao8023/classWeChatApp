@@ -1,3 +1,4 @@
+@import "./../components/focus.wxss";
 @import "./../components/leauge.wxss";
 @import "./../components/footer.wxss";
 @import "./../components/contact.wxss";
