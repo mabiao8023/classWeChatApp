@@ -33,10 +33,10 @@
 
     </view>
     <view class="nav">
-        <view class="nav-item active">即时</view>
-        <view class="nav-item" bindtap="gotoResult">赛果</view>
-        <view class="nav-item" bindtap="gotoFeture">赛程</view>
-        <view class="nav-item focus" bindtap="gotoFocus">
+        <view class="nav-item {{type == 0 ? 'active' : ''}}"  bindtap="chioceType" data-wpychiocetype-a="0">即时</view>
+        <view class="nav-item {{type == 1 ? 'active' : ''}}" bindtap="chioceType" data-wpychiocetype-a="1">赛果</view>
+        <view class="nav-item {{type == 2 ? 'active' : ''}}" bindtap="chioceType" data-wpychiocetype-a="2">赛程</view>
+        <view class="nav-item focus {{type == 3 ? 'active' : ''}}" bindtap="chioceType" data-wpychiocetype-a="3">
           关注
           <view class="num"  wx:if="{{totalFocus}}">{{totalFocus}}</view>
         </view>

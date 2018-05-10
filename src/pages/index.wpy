@@ -235,10 +235,10 @@
       <contact></contact>
     </view>
     <view class="nav">
-        <view class="nav-item active">即时</view>
-        <view class="nav-item" bindtap="gotoResult">赛果</view>
-        <view class="nav-item" bindtap="gotoFeture">赛程</view>
-        <view class="nav-item focus" bindtap="gotoFocus">
+        <view class="nav-item" :class="{'active': type == 0}" bindtap="chioceType(0)">即时</view>
+        <view class="nav-item" :class="{'active': type == 1}" bindtap="chioceType(1)">赛果</view>
+        <view class="nav-item" :class="{'active': type == 2}" bindtap="chioceType(2)">赛程</view>
+        <view class="nav-item focus" :class="{'active': type == 3}" bindtap="chioceType(3)">
           关注
           <view class="num" wx:if="{{totalFocus}}">{{totalFocus}}</view>
         </view>
@@ -346,24 +346,35 @@
     mixins = [myMixin]
 
     data = {
-      indicatorDots: true,
-      autoplay: true,
-      interval: 5000,
-      duration: 1000,
-      banners:[],
-      classList:[],
-      gameList:[1,2,3,4,5,6,7,8,9,20,33,3,3,3,3,3,],
+      /* 0 -> 即时  1 -> 赛果  2 -> 赛程  3 -> 关注*/
+      type: 0,  
       isUpFrash:false,
-      shareContent:'时间看得见福克斯',
-      isScGame: true,
+      shareContent:'足球即时比分',
       totalFocus: 0,
-      page:1,
-      matchList:[],
-      leaguelist:[],
       isShowLeague:false,
       leagueFilte:null,
       date: '',
       formId:'',
+
+      page:1,
+      matchList:[],
+      leaguelist:[],
+      saiguoList:{
+        page:1,
+        data:[]
+      },
+      jishiList:{
+        page:1,
+        data:[]
+      },
+      saichengList:{
+        page:1,
+        data:[]
+      },
+      guanzhuList:{
+        page:1,
+        data:[]
+      }
 
     }
 
@@ -372,14 +383,12 @@
     }
 
     methods = {
+        chioceType( type ){
+          this.type = type;
+        }
         openLeague(){
            this.isShowLeague = true;
         },
-        scGame(){
-          this.isScGame = !this.isScGame;
-          
-        },
-
         gotoIndex(){
           wx.navigateTo({
             url: `/pages/index`
@@ -400,40 +409,8 @@
             url: `/pages/focus`
           })
         },
-        /* 打开足球比赛 */
-        openMini1(){
-          wx.navigateToMiniProgram({
-            appId: 'wxe0a4c5b9f85f9cf5',
-            path: 'pages/index',
-            extraData: {
-              foo: 'bar'
-            },
-            envVersion: 'release',
-            success(res) {
-              // 打开成功
-            }
-          })
-        },
-
-        /* 世界杯足球情报 */
-        openMini2(){
-           wx.navigateToMiniProgram({
-            appId: 'wx0c2d51b7b4337c3a',
-            path: 'pages/index',
-            extraData: {
-              foo: 'bar'
-            },
-            envVersion: 'release',
-            success(res) {
-              // 打开成功
-            }
-          })
-        },
         formSubmit: function(e) {
             this.formId = e.detail.formId;
-            // console.log(e);
-            console.log(e.detail.formId);
-            console.log('form发生了submit事件，携带数据为：', e.detail.value)
         },
 
         /* 调整分享的内容 */
