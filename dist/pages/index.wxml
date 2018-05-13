@@ -33,9 +33,9 @@
 
     </view>
     <view class="nav">
-        <view class="nav-item {{type == 0 ? 'active' : ''}}"  bindtap="chioceType" data-wpychiocetype-a="0">即时</view>
-        <view class="nav-item {{type == 1 ? 'active' : ''}}" bindtap="chioceType" data-wpychiocetype-a="1">赛果</view>
-        <view class="nav-item {{type == 2 ? 'active' : ''}}" bindtap="chioceType" data-wpychiocetype-a="2">赛程</view>
+        <view class="{{type == 0 ? 'nav-item active': 'nav-item' }}" bindtap="chioceType" data-wpychiocetype-a="0">即时</view>
+        <view class="{{type == 1 ? 'nav-item active': 'nav-item' }}" bindtap="chioceType" data-wpychiocetype-a="1">赛果</view>
+        <view class="nav-item {{type == 2 ? 'active' : ''}}"  bindtap="chioceType" data-wpychiocetype-a="2">赛程</view>
         <view class="nav-item focus {{type == 3 ? 'active' : ''}}" bindtap="chioceType" data-wpychiocetype-a="3">
           关注
           <view class="num"  wx:if="{{totalFocus}}">{{totalFocus}}</view>
@@ -46,8 +46,22 @@
       <image class="loading-img" src="../images/footerball.png"/> 
       <view>比赛刷新中</view>
     </view>
+    <picker  wx:if="{{type == 1}}" class="my-picker" mode="date" start="{{saiguoList.start}}" end="{{saiguoList.end}}" bindchange="saiGuoDateChange">
+        <view class="picker-nav">
+          <image class="date-choice" src="../images/date.png"/>
+            <view>{{saiguoList.date}} 共{{saiguoList.total}}场</view>
+            <image src="../images/arrow.png" class="arrow-right"/>
+        </view>
+    </picker>
+    <picker wx:if="{{type == 2}}" class="my-picker" mode="date" start="{{saichengList.start}}" end="{{saichengList.end}}" bindchange="saiChengDateChange">
+        <view class="picker-nav">
+          <image class="date-choice" src="../images/date.png"/>
+            <view>{{saichengList.date}} 共{{saichengList.total}}场</view>
+            <image src="../images/arrow.png" class="arrow-right"/>
+        </view>
+    </picker>
     <!-- 没有数据时 -->
-    <view class="no-data"  wx:if="{{matchList.length <= 0}}">
+    <view class="no-data" wx:if="{{matchList.length <= 0}}">
         <image src="../images/noData.png"/> 
         <view>目前暂无比赛</view>  
     </view>  

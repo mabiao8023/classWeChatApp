@@ -227,6 +227,33 @@
       height: 200rpx;
     }
   }
+
+  .my-picker{
+    width: 100%;
+  }
+  .picker-nav{
+    display: flex;
+    width: 100%;
+    border-top: 2rpx solid #eaeaea;
+    border-bottom: 2rpx solid #eaeaea;
+    background: #fff;
+    text-align: center;
+      line-height: 80rpx;
+      color: #333;
+      font-size: 30rpx;
+      padding: 0 30rpx;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .date-choice{
+        width: 48rpx;
+        height: 48rpx;
+      }
+      .arrow-right{
+        width: 40rpx;
+        height: 40rpx;
+      }
+  }
 </style>
 <template>
   <view class="container">
@@ -235,10 +262,14 @@
       <contact></contact>
     </view>
     <view class="nav">
-        <view class="nav-item" :class="{'active': type == 0}" bindtap="chioceType(0)">即时</view>
-        <view class="nav-item" :class="{'active': type == 1}" bindtap="chioceType(1)">赛果</view>
-        <view class="nav-item" :class="{'active': type == 2}" bindtap="chioceType(2)">赛程</view>
-        <view class="nav-item focus" :class="{'active': type == 3}" bindtap="chioceType(3)">
+        <view class="{{type == 0 ? 'nav-item active': 'nav-item' }}" 
+        bindtap="chioceType(0)">即时</view>
+        <view class="{{type == 1 ? 'nav-item active': 'nav-item' }}" 
+        bindtap="chioceType(1)">赛果</view>
+        <view class="nav-item" :class="{'active': type == 2}" 
+        bindtap="chioceType(2)">赛程</view>
+        <view class="nav-item focus" :class="{'active': type == 3}" 
+        bindtap="chioceType(3)">
           关注
           <view class="num" wx:if="{{totalFocus}}">{{totalFocus}}</view>
         </view>
@@ -248,6 +279,20 @@
       <image class="loading-img" src="../images/footerball.png"></image> 
       <view>比赛刷新中</view>
     </view>
+    <picker wx:if="{{type == 1}}"  class="my-picker"  mode="date" start="{{saiguoList.start}}" end="{{saiguoList.end}}" bindchange="saiGuoDateChange">
+        <view class="picker-nav">
+          <image class="date-choice" src="../images/date.png"></image>
+            <view>{{saiguoList.date}} 共{{saiguoList.total}}场</view>
+            <image src="../images/arrow.png" class="arrow-right"></image>
+        </view>
+    </picker>
+    <picker wx:if="{{type == 2}}"  class="my-picker"  mode="date" start="{{saichengList.start}}" end="{{saichengList.end}}" bindchange="saiChengDateChange">
+        <view class="picker-nav">
+          <image class="date-choice" src="../images/date.png"></image>
+            <view>{{saichengList.date}} 共{{saichengList.total}}场</view>
+            <image src="../images/arrow.png" class="arrow-right"></image>
+        </view>
+    </picker>
     <!-- 没有数据时 -->
     <view class="no-data" wx:if="{{matchList.length <= 0}}">
         <image src="../images/noData.png"></image> 
@@ -361,19 +406,33 @@
       leaguelist:[],
       saiguoList:{
         page:1,
-        data:[]
+        data:[],
+        date:'',
+        start:'',
+        end:'',
+        total:'',
+        league:null
       },
       jishiList:{
         page:1,
-        data:[]
+        data:[],
+        date:'',
+        total:'',
+        league:null
       },
       saichengList:{
         page:1,
-        data:[]
+        data:[],
+        date:'',
+        start:'',
+        end:'',
+        total:'',
+        league:null
       },
       guanzhuList:{
         page:1,
-        data:[]
+        data:[],
+        total:''
       }
 
     }
@@ -383,9 +442,37 @@
     }
 
     methods = {
+        saiGuoDateChange(e){
+            this.saiguoList.date = e.detail.value;
+            this.saiguoList.page = 1;
+            this.saiguoList.data = [];
+            this.getClassList();
+            this.getLeaugeList();
+        },
+        saiChengDateChange(e){
+            this.saichengList.date = e.detail.value;
+            this.saichengList.page = 1;
+            this.saichengList.data = [];
+            this.getClassList();
+            this.getLeaugeList();
+        },
         chioceType( type ){
           this.type = type;
-        }
+          this.leagueFilte = null;  
+          /* 当当前列表为空的时候去请求 */
+          if( this.getCateObj(type).data.length <= 0 ){
+              wx.showLoading({
+                title: '加载中',
+              });
+              if( this.type == 3 ){
+                 this.getFocusList().then( res => {wx.hideLoading();});
+                 this.getLeaugeList();
+              }else{
+                this.getClassList().then( res => {wx.hideLoading();})
+              }
+          }
+          this.matchList = this.getCateObj(this.type).data;
+        },
         openLeague(){
            this.isShowLeague = true;
         },
@@ -486,10 +573,9 @@
           this.isShowLeague = false;
       },
       'league-emit': (...args) => {
-        console.log(args[0]);
         this.isShowLeague = false;
-        this.page = 1;
-        this.matchList = [];
+        this.getCateObj(this.type).page = 1;
+        this.getCateObj(this.type).data = [];
         this.leagueFilte = args[0];
         this.getClassList();
       },
@@ -498,27 +584,58 @@
         console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
       }
     }
-    // 收藏比赛
 
+    /**
+     * 通过当前的cate_id获得对应的类别中的数据
+     * @param {string} cate_id 对应的类别
+     * @return {object} 对应分类的数据对象
+     */
+    getCateObj(cate_id){
+      cate_id = cate_id + "";
+      let obj = {
+        "0": this.jishiList,
+        "1": this.saiguoList,
+        "2": this.saichengList,
+        "3": this.guanzhuList,
+      };
+      return obj[cate_id];
+    }
+
+    /* 获取关注列表 */
+    getFocusList(){
+       return wepy.request({url:apiPath.focusList,data:{page: this.getCateObj(this.type).page},
+           header: {
+              'Authorization': `${this.$parent.globalData.token}`
+           },})
+        .then( res => {
+            let list = res.data.data.list;
+            list.length &&  list.forEach( val => {
+              val.match_time_minute = val.match_time && val.match_time.slice(10,16);
+            } );
+            this.guanzhuList.data = this.guanzhuList.data.concat(list)
+            this.matchList = this.guanzhuList.data;
+            this.guanzhuList.page ++ ;
+            this.$apply();
+        })
+    }
 
     // 获取课程列表
     
     getClassList( ){
       let data = {};
        if( this.leagueFilte === null ){
-        data = {
-            type : 0,
-            page: this.page,
-            date: this.date
-          }
-           
+          data = {
+            type: this.type,
+            page: this.getCateObj(this.type).page,
+            date: this.getCateObj(this.type).date
+          }           
        }else{
-             data = {
-                    type : 0,
-                    page: this.page,
-                    date: this.date,
-                    league_id:this.leagueFilte.join(',')
-                  }
+        data = {
+            type: this.type,
+            page: this.getCateObj(this.type).page,
+            date: this.getCateObj(this.type).date,
+            league_id:this.leagueFilte.join(',')
+        }
        }
        return wepy.request({url:apiPath.matchList,
            data:data,
@@ -527,12 +644,19 @@
            },})
         .then( res => {
             let list = res.data.data.list;
-            list.length &&  list.forEach( val => {
-              val.match_time_minute = val.match_time && val.match_time.slice(10,16);
-            } )
-            this.matchList = this.matchList.concat( res.data.data.list );
-            this.page ++ ;
-            this.$apply();
+            
+            /* 内容赋值到对应的列表中去 */
+            if( list.length > 0 ){
+               list.forEach( val => {
+                val.match_time_minute = val.match_time && val.match_time.slice(10,16);
+                } );
+               this.getCateObj(this.type).data = this.getCateObj(this.type).data.concat(list);
+              this.getCateObj(this.type).total = res.data.data.meta.total;
+              this.getCateObj(this.type).page ++ ;
+              this.matchList = this.getCateObj(this.type).data;
+              this.$apply();
+            }
+            
         }).catch( e => {
           // this.getClassList();
           // this.getLeaugeList();
@@ -541,7 +665,7 @@
     }
 
     getLeaugeList(){
-       return wepy.request({url:apiPath.leagueList,data:{type : 0, date: this.getNowFormatDate()},
+       return wepy.request({url:apiPath.leagueList,data:{type : this.type, date: this.getNowFormatDate()},
            header: {
               'Authorization': `${this.$parent.globalData.token}`
            },})
@@ -570,7 +694,13 @@
 
     onLoad() {
       /*this.getBanners();*/
-      this.date = this.getNowFormatDate();
+      this.jishiList.date = this.getNowFormatDate();
+      this.saiguoList.date = this.getNowFormatDate();
+      this.saichengList.date = this.getNowFormatDate();
+      this.saiguoList.start = this.getNowFormatDate( new Date(new Date().getTime() - 604800000) );
+      this.saichengList.start = this.getNowFormatDate();
+      this.saiguoList.end = this.getNowFormatDate();
+      this.saichengList.end = this.getNowFormatDate( new Date(new Date().getTime() + 604800000) );
       this.getClassList();
       this.getLeaugeList();
       this.getFocusTotal();
@@ -581,25 +711,34 @@
     */
     onPullDownRefresh () {
       // 刷新完后停止刷新
-      this.page = 1;
-      this.matchList = [];
-      this.getClassList().then( res => {
-        wx.stopPullDownRefresh();
-      } );
-      // setTimeout( () => {
-          
-      // },2000 )
+      this.getCateObj(this.type).page = 1;
+      this.getCateObj(this.type).data = [];
+      if( this.type == 3 ){
+        this.getFocusList().then( res => {
+            wx.stopPullDownRefresh();
+        }) 
+      }else{
+        this.getClassList().then( res => {
+          wx.stopPullDownRefresh();
+        } );
+      }
     }
 
     
     /* 上拉触底 */
     onReachBottom(){
-      this.isUpFrash = true;
-      this.getClassList().then( res => {
-        this.isUpFrash = false;
-        this.$apply();
-      } )
-      console.log("上拉触底了")
+          this.isUpFrash = true;
+          if( this.type == 3 ){
+              this.getFocusList().then( res => {
+                this.isUpFrash = false;
+                this.$apply();
+              }) 
+          }else{
+              this.getClassList().then( res => {
+                this.isUpFrash = false;
+                this.$apply();
+              })
+          }
     }
 
     onShareAppMessage() {
