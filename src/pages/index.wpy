@@ -376,7 +376,7 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '即时比分',
+      navigationBarTitleText: '足球赛事比分',
       navigationBarBackgroundColor: '#ffffff',
       navigationBarTextStyle: 'black'      
     }
@@ -411,14 +411,12 @@
         start:'',
         end:'',
         total:'',
-        league:null
       },
       jishiList:{
         page:1,
         data:[],
         date:'',
         total:'',
-        league:null
       },
       saichengList:{
         page:1,
@@ -427,7 +425,6 @@
         start:'',
         end:'',
         total:'',
-        league:null
       },
       guanzhuList:{
         page:1,
@@ -465,10 +462,10 @@
                 title: '加载中',
               });
               if( this.type == 3 ){
-                 this.getFocusList().then( res => {wx.hideLoading();});
-                 this.getLeaugeList();
+                 this.getFocusList().then( res => {wx.hideLoading();});    
               }else{
-                this.getClassList().then( res => {wx.hideLoading();})
+                this.getClassList().then( res => {wx.hideLoading();});
+                this.getLeaugeList();
               }
           }
           this.matchList = this.getCateObj(this.type).data;
@@ -704,7 +701,22 @@
       this.getClassList();
       this.getLeaugeList();
       this.getFocusTotal();
+    } 
+
+    /* 页面重新打开 */
+    onShow(){ 
+      /* 数据初始化 */
+
+      // this.getClassList();
+      // this.getLeaugeList();
+      // this.getFocusTotal();
+      
+      wx.reLaunch({
+        url: 'pages/index'
+      })
+
     }
+
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作

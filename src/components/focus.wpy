@@ -1,28 +1,33 @@
 <style lang="less">
   @mainColor:#FF741F;
-  .contact{
+  .contact-container{
     position:fixed; 
     left:0;
-    z-index:1000;
-    line-height:68rpx;
-
     bottom:360rpx; 
-    font-size:30rpx;
-    border-radius:0;
-    color:#fff;
-    padding-right:8rpx;
-    padding-left:10rpx;
+    z-index:1000;
     border-bottom-right-radius:50rpx;
     border-top-right-radius:50rpx;
-    background:@mainColor;
-    box-shadow:0 2rpx 10rpx rgba(0,0,0,.5);    
-    border-right:0;
     image{
       margin-top:15rpx;
       width:40rpx;
       height:40rpx;
       vertical-align:top;
     }
+  }
+  .gz-contact{
+   
+    line-height:68rpx;
+
+    font-size:30rpx;
+    border-radius:0;
+    color:#fff;
+    padding-right:8rpx;
+    padding-left:10rpx;
+   
+    background:@mainColor;
+    box-shadow:0 2rpx 10rpx rgba(0,0,0,.5);    
+    border-right:0;
+    
     &.share{
      bottom:200rpx; 
     }
@@ -49,10 +54,13 @@
           <image  src="../images/share.png"/> 
           分享
     </button> -->
-    <button class="contact" open-type="contact">
-        关注
-          <image  src="../images/addFocus.png"/>   
-    </button> 
+    <view class="contact-container">
+        <button class="contact"  open-type="contact">
+            关注
+        </button> 
+        <image  src="../images/addFocus.png"/> 
+    </view>  
+    
 <!--     <view class="shaixuan">
         <image src="../images/sx.png"></image>
     </view> -->

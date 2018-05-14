@@ -6,10 +6,13 @@
           <image  src="../images/share.png"/> 
           分享
     </button> -->
-    <button class="contact" open-type="contact">
-        关注
-          <image src="../images/addFocus.png"/>   
-    </button> 
+    <view class="contact-container">
+        <button class="contact" open-type="contact">
+            关注
+        </button> 
+        <image src="../images/addFocus.png"/> 
+    </view>  
+    
 <!--     <view class="shaixuan">
         <image src="../images/sx.png"></image>
     </view> -->
