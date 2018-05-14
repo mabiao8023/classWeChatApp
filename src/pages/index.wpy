@@ -282,14 +282,14 @@
     <picker wx:if="{{type == 1}}"  class="my-picker"  mode="date" start="{{saiguoList.start}}" end="{{saiguoList.end}}" bindchange="saiGuoDateChange">
         <view class="picker-nav">
           <image class="date-choice" src="../images/date.png"></image>
-            <view>{{saiguoList.date}} 共{{saiguoList.total}}场</view>
+            <view>{{saiguoList.date}} 共{{saiguoList.total|| 0}}场</view>
             <image src="../images/arrow.png" class="arrow-right"></image>
         </view>
     </picker>
     <picker wx:if="{{type == 2}}"  class="my-picker"  mode="date" start="{{saichengList.start}}" end="{{saichengList.end}}" bindchange="saiChengDateChange">
         <view class="picker-nav">
           <image class="date-choice" src="../images/date.png"></image>
-            <view>{{saichengList.date}} 共{{saichengList.total}}场</view>
+            <view>{{saichengList.date}} 共{{saichengList.total||0}}场</view>
             <image src="../images/arrow.png" class="arrow-right"></image>
         </view>
     </picker>
@@ -468,6 +468,11 @@
                 this.getLeaugeList();
               }
           }
+          /* 每次去调联赛信息 */
+          if( this.type != 3 ){
+             this.getLeaugeList();
+          }
+         
           this.matchList = this.getCateObj(this.type).data;
         },
         openLeague(){
@@ -606,13 +611,16 @@
            },})
         .then( res => {
             let list = res.data.data.list;
-            list.length &&  list.forEach( val => {
-              val.match_time_minute = val.match_time && val.match_time.slice(10,16);
-            } );
-            this.guanzhuList.data = this.guanzhuList.data.concat(list)
-            this.matchList = this.guanzhuList.data;
-            this.guanzhuList.page ++ ;
-            this.$apply();
+            if( list.length >  0 ){
+                list.forEach( val => {
+                  val.match_time_minute = val.match_time && val.match_time.slice(10,16);
+                } );
+                this.guanzhuList.data = this.guanzhuList.data.concat(list)
+                this.matchList = this.guanzhuList.data;
+                this.guanzhuList.page ++ ;
+                this.$apply();
+            } 
+            
         })
     }
 
@@ -698,7 +706,12 @@
       this.saichengList.start = this.getNowFormatDate();
       this.saiguoList.end = this.getNowFormatDate();
       this.saichengList.end = this.getNowFormatDate( new Date(new Date().getTime() + 604800000) );
-      this.getClassList();
+      wx.showLoading({
+        title: '获取中',
+      });
+      this.getClassList().then( res => {
+        wx.hideLoading();
+      } );
       this.getLeaugeList();
       this.getFocusTotal();
     } 
@@ -706,15 +719,16 @@
     /* 页面重新打开 */
     onShow(){ 
       /* 数据初始化 */
-
+      // this.getCateObj(this.type).page = 1;
+      // this.getCateObj(this.type).data = [];
+      // this.matchList = [];
       // this.getClassList();
       // this.getLeaugeList();
       // this.getFocusTotal();
       
-      wx.reLaunch({
-        url: 'pages/index'
-      })
-
+      // wx.reLaunch({
+      //   url: '/pages/index'
+      // }
     }
 
 

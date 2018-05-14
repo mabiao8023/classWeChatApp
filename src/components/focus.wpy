@@ -2,49 +2,45 @@
   @mainColor:#FF741F;
   .contact-container{
     position:fixed; 
-    left:0;
-    bottom:360rpx; 
+    left: -90rpx;
+    height:68rpx;
+    bottom:160rpx; 
     z-index:1000;
     border-bottom-right-radius:50rpx;
     border-top-right-radius:50rpx;
+    background:@mainColor;
+    transition: left 0.1s linear;
+    &.left0{
+      left:0;
+    }
     image{
-      margin-top:15rpx;
+      margin-top:12rpx;
+      margin-right: 12rpx;
       width:40rpx;
       height:40rpx;
       vertical-align:top;
     }
   }
+  
   .gz-contact{
-   
-    line-height:68rpx;
 
+    display: inline-block;
+    width: 100rpx;
+    line-height:68rpx;
     font-size:30rpx;
-    border-radius:0;
     color:#fff;
     padding-right:8rpx;
     padding-left:10rpx;
-   
-    background:@mainColor;
-    box-shadow:0 2rpx 10rpx rgba(0,0,0,.5);    
-    border-right:0;
-    
-    &.share{
-     bottom:200rpx; 
+    background:transparent;
+    border: transparent;
+    outline: 0;
+    border-radius:0;
+    padding:0;
+    box-shadow: 0;
+    &::after{
+      content: "";
+      display:none;
     }
-  }
-  .shaixuan{
-      position: fixed;
-      bottom: 160rpx;
-      right: 20rpx;
-      width: 80rpx;
-      height: 80rpx;
-      border-radius: 50%;
-      background:#f6c151;
-      z-index: 1000;
-      image{
-        width: 80rpx;
-        height: 80rpx;
-      }
   }
 
 </style>
@@ -54,11 +50,14 @@
           <image  src="../images/share.png"/> 
           分享
     </button> -->
-    <view class="contact-container">
-        <button class="contact"  open-type="contact">
+    <view 
+      class="contact-container"
+      :class="{'left0':isShow}"
+    >
+        <button class="gz-contact"  open-type="contact">
             关注
         </button> 
-        <image  src="../images/addFocus.png"/> 
+        <image bindtap="showFocus" src="../images/addFocus.png"/> 
     </view>  
     
 <!--     <view class="shaixuan">
@@ -73,7 +72,7 @@
   export default class Contact extends wepy.component {
 
     data = {
-
+      isShow: false
     }
 
     events = {
@@ -85,6 +84,9 @@
          wx.navigateTo({
             url: `/pages/shaixuan`
           })
+      },
+      showFocus(){
+        this.isShow = !this.isShow;
       }
     }
   }

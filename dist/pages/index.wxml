@@ -6,11 +6,11 @@
           <image  src="../images/share.png"/> 
           分享
     </button> -->
-    <view class="contact-container">
-        <button class="contact" open-type="contact">
+    <view class="contact-container {{$Focus$isShow ? 'left0' : ''}}" >
+        <button class="gz-contact" open-type="contact">
             关注
         </button> 
-        <image src="../images/addFocus.png"/> 
+        <image bindtap="$Focus$showFocus" src="../images/addFocus.png"/> 
     </view>  
     
 <!--     <view class="shaixuan">
@@ -52,14 +52,14 @@
     <picker  wx:if="{{type == 1}}" class="my-picker" mode="date" start="{{saiguoList.start}}" end="{{saiguoList.end}}" bindchange="saiGuoDateChange">
         <view class="picker-nav">
           <image class="date-choice" src="../images/date.png"/>
-            <view>{{saiguoList.date}} 共{{saiguoList.total}}场</view>
+            <view>{{saiguoList.date}} 共{{saiguoList.total|| 0}}场</view>
             <image src="../images/arrow.png" class="arrow-right"/>
         </view>
     </picker>
     <picker wx:if="{{type == 2}}" class="my-picker" mode="date" start="{{saichengList.start}}" end="{{saichengList.end}}" bindchange="saiChengDateChange">
         <view class="picker-nav">
           <image class="date-choice" src="../images/date.png"/>
-            <view>{{saichengList.date}} 共{{saichengList.total}}场</view>
+            <view>{{saichengList.date}} 共{{saichengList.total||0}}场</view>
             <image src="../images/arrow.png" class="arrow-right"/>
         </view>
     </picker>

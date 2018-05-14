@@ -86,6 +86,12 @@ export default class extends wepy.app {
      
   }
 
+  onShow(){
+    wx.reLaunch({
+        url: '/pages/index'
+      }
+  }
+
   getUserInfo() {
     if (this.globalData.userInfo) {
       return this.globalData.userInfo
