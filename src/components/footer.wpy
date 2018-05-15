@@ -25,33 +25,25 @@
 
 </style>
 <template>
-  <view class="footer">
-        <view class="footer-item">
+  <view class="footer" wx:if="{{list.length > 0}}">
+        <view class="footer-item" wx:for="{{list}}">
            <image src="../images/footerball-icon.png"></image>
            <view>足球</view>
         </view>  
-        <view class="footer-item">
-           <image src="../images/basketball.png"></image>
-           <view>篮球</view>
-        </view>  
-         <view class="footer-item">
-           <image src="../images/basketball.png"></image>
-           <view>篮球</view>
-        </view>
     </view>
 </template>
 <script>
   import wepy from 'wepy'
   // import abc from 'abc'
-
+   import apiPath from '../config/config'
   export default class Contact extends wepy.component {
 
     data = {
-
+        list:[]
     }
 
     events = {
-  
+      
     }
 
     methods = {
@@ -59,7 +51,23 @@
          wx.navigateTo({
             url: `/pages/shaixuan`
           })
+      },
+    }
+
+    /* 获取页脚tab的数据 */
+      getFooterData(){
+          return wepy.request({url:apiPath.footerList,
+               header: {
+                  'Authorization': `${this.$parent.$parent.globalData.token}`
+               },})
+            .then( res => {
+                this.list = res.data.data.list;
+                this.$apply();
+            })
       }
+
+    onLoad(){
+      this.getFooterData();
     }
   }
 </script>

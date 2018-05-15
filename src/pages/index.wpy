@@ -259,7 +259,7 @@
   <view class="container">
     <Focus></Focus>
     <view bindtap="openLeague">
-      <contact></contact>
+      <contact wx:if="{{isShowLeagueBtn}}"></contact>
     </view>
     <view class="nav">
         <view class="{{type == 0 ? 'nav-item active': 'nav-item' }}" 
@@ -357,7 +357,7 @@
       <view>正在加载中</view>
     </view>
     <!-- <view class="upLoading" wx:else> 暂无更多数据 </view> -->
- <!--    <footer></footer> -->
+    <footer></footer>
     <view hidden="{{!isShowLeague}}" >
       <Leauge :list.sync="leaguelist"></Leauge>
     </view>
@@ -430,7 +430,8 @@
         page:1,
         data:[],
         total:''
-      }
+      },
+      isShowLeagueBtn:true
 
     }
 
@@ -458,21 +459,30 @@
           this.leagueFilte = null;  
           /* 当当前列表为空的时候去请求 */
           if( this.getCateObj(type).data.length <= 0 ){
-              wx.showLoading({
-                title: '加载中',
-              });
+              
               if( this.type == 3 ){
-                 this.getFocusList().then( res => {wx.hideLoading();});    
+                 // this.getFocusList().then( res => {wx.hideLoading();});    
               }else{
+                wx.showLoading({
+                  title: '加载中',
+                });
                 this.getClassList().then( res => {wx.hideLoading();});
                 this.getLeaugeList();
               }
           }
           /* 每次去调联赛信息 */
           if( this.type != 3 ){
-             this.getLeaugeList();
+            this.isShowLeagueBtn = true;
+            this.getLeaugeList();
+          }else{
+            /* 每次请求关注的数据 */
+            wx.showLoading({
+                  title: '加载中',
+            });
+            this.getFocusList().then( res => {wx.hideLoading()} );
+            this.isShowLeagueBtn = false;
           }
-         
+          
           this.matchList = this.getCateObj(this.type).data;
         },
         openLeague(){
@@ -697,6 +707,8 @@
         })
     }
 
+    
+
     onLoad() {
       /*this.getBanners();*/
       this.jishiList.date = this.getNowFormatDate();
@@ -719,16 +731,19 @@
     /* 页面重新打开 */
     onShow(){ 
       /* 数据初始化 */
-      // this.getCateObj(this.type).page = 1;
-      // this.getCateObj(this.type).data = [];
-      // this.matchList = [];
-      // this.getClassList();
-      // this.getLeaugeList();
-      // this.getFocusTotal();
-      
-      // wx.reLaunch({
-      //   url: '/pages/index'
-      // }
+      wx.showLoading({
+        title: '获取中',
+      });
+      this.getCateObj(this.type).page = 1;
+      this.getCateObj(this.type).data = [];
+      this.matchList = [];
+      if( this.type == 3 ){
+         this.getFocusList().then( res => {wx.hideLoading();});    
+      }else{
+        this.getClassList().then( res => {wx.hideLoading();});
+      }
+      this.getLeaugeList();
+      this.getFocusTotal();
     }
 
 

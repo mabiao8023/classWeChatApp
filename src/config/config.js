@@ -22,6 +22,7 @@ let apiPath = {
 	leagueList:`${Host}/match/league/list`,
 	matchCollect:`${Host}/match/collect`,
 	focusList:`${Host}/match_collect/list`,
+	footerList:`${Host}/wxapp/tab/list`,
 }
 
 export default apiPath

@@ -87,9 +87,10 @@ export default class extends wepy.app {
   }
 
   onShow(){
-    wx.reLaunch({
-        url: '/pages/index'
-      }
+    // console.log('从后台进来了');
+    // wx.reLaunch({
+    //     url: '/pages/index'
+    //   }
   }
 
   getUserInfo() {

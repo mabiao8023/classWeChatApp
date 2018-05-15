@@ -20,7 +20,7 @@
 
     <view bindtap="openLeague">
       
-  <view>
+  <view wx:if="{{isShowLeagueBtn}}">
     <!-- <button class="contact share" open-type="share">
           <image  src="../images/share.png"/> 
           分享
@@ -49,7 +49,7 @@
       <image class="loading-img" src="../images/footerball.png"/> 
       <view>比赛刷新中</view>
     </view>
-    <picker  wx:if="{{type == 1}}" class="my-picker" mode="date" start="{{saiguoList.start}}" end="{{saiguoList.end}}" bindchange="saiGuoDateChange">
+    <picker wx:if="{{type == 1}}" class="my-picker" mode="date" start="{{saiguoList.start}}" end="{{saiguoList.end}}" bindchange="saiGuoDateChange">
         <view class="picker-nav">
           <image class="date-choice" src="../images/date.png"/>
             <view>{{saiguoList.date}} 共{{saiguoList.total|| 0}}场</view>
@@ -127,7 +127,14 @@
       <view>正在加载中</view>
     </view>
     <!-- <view class="upLoading" wx:else> 暂无更多数据 </view> -->
- <!--    <footer></footer> -->
+    
+  <view class="footer"  wx:if="{{$footer$list.length > 0}}">
+        <view class="footer-item" wx:for="{{$footer$list}}">
+           <image src="../images/footerball-icon.png"/>
+           <view>足球</view>
+        </view>  
+    </view>
+
     <view hidden="{{!isShowLeague}}">
       
   <view class="shaixuan-container">
