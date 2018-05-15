@@ -1,1 +1,1 @@
-{"pages":["pages/index","pages/result","pages/feature","pages/shaixuan","pages/focus"],"window":{"backgroundTextStyle":"light","navigationBarBackgroundColor":"#FF741F","navigationBarTitleText":"赛事比分","navigationBarTextStyle":"","enablePullDownRefresh":true}}
+{"pages":["pages/index","pages/webview"],"window":{"backgroundTextStyle":"light","navigationBarBackgroundColor":"#FF741F","navigationBarTitleText":"赛事比分","navigationBarTextStyle":"","enablePullDownRefresh":true}}

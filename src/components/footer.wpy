@@ -26,9 +26,16 @@
 </style>
 <template>
   <view class="footer" wx:if="{{list.length > 0}}">
-        <view class="footer-item" wx:for="{{list}}">
+        <view class="footer-item">
            <image src="../images/footerball-icon.png"></image>
            <view>足球</view>
+        </view>  
+        <view class="footer-item" 
+              wx:for="{{list}}"
+              bindtap="gotoWxApp({{item}})"  
+              >
+           <image src="{{item.img_url}}"></image>
+           <view>{{item.title}}</view>
         </view>  
     </view>
 </template>
@@ -43,13 +50,33 @@
     }
 
     events = {
-      
+        
     }
 
     methods = {
+      gotoWxApp(item){
+        if( item.type == 0 ){
+           wx.navigateTo({
+              url: '/pages/webview?url=' + item.url
+           }) 
+        }else{
+           wx.navigateToMiniProgram({
+            appId: item.appid,
+            path: '',
+            extraData: {
+              foo: 'bar'
+            },
+            envVersion: 'release',
+            success(res) {
+              // 打开成功
+            }
+          })
+        }
+         
+      },
       gotosx(){
          wx.navigateTo({
-            url: `/pages/shaixuan`
+            url: `/pages/webview`
           })
       },
     }

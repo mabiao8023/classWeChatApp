@@ -6,6 +6,7 @@
   }
   .container{
     background: #fff;
+    padding-bottom: 120rpx;
   }
   .nav{
     position: fixed;
@@ -491,21 +492,6 @@
         gotoIndex(){
           wx.navigateTo({
             url: `/pages/index`
-          })
-        },
-        gotoResult(){
-          wx.navigateTo({
-            url: `/pages/result`
-          })
-        },
-        gotoFeture(){
-          wx.navigateTo({
-            url: `/pages/feature`
-          })
-        },
-        gotoFocus(){
-          wx.navigateTo({
-            url: `/pages/focus`
           })
         },
         formSubmit: function(e) {
