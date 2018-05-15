@@ -432,7 +432,8 @@
         data:[],
         total:''
       },
-      isShowLeagueBtn:true
+      isShowLeagueBtn:true,
+      token:''
 
     }
 
@@ -530,7 +531,7 @@
                 method:'DELETE',
                 data:{match_id : id},
                  header: {
-                    'Authorization': `${this.$parent.globalData.token}`,
+                    'Authorization': `${this.token}`,
                     'content-type': 'application/json'
                  },})
               .then( res => {
@@ -551,7 +552,7 @@
                   form_id:this.formId
                 },
                  header: {
-                    'Authorization': `${this.$parent.globalData.token}`,
+                    'Authorization': `${this.token}`,
                     'content-type': 'application/json'
                  },})
               .then( res => {
@@ -603,7 +604,7 @@
     getFocusList(){
        return wepy.request({url:apiPath.focusList,data:{page: this.getCateObj(this.type).page},
            header: {
-              'Authorization': `${this.$parent.globalData.token}`
+              'Authorization': `${this.token}`
            },})
         .then( res => {
             let list = res.data.data.list;
@@ -641,7 +642,7 @@
        return wepy.request({url:apiPath.matchList,
            data:data,
            header: {
-              'Authorization': `${this.$parent.globalData.token}`
+              'Authorization': `${this.token}`
            },})
         .then( res => {
             let list = res.data.data.list;
@@ -668,7 +669,7 @@
     getLeaugeList(){
        return wepy.request({url:apiPath.leagueList,data:{type : this.type, date: this.getNowFormatDate()},
            header: {
-              'Authorization': `${this.$parent.globalData.token}`
+              'Authorization': `${this.token}`
            },})
         .then( res => {
             let list = res.data.data.list;
@@ -684,7 +685,7 @@
     getFocusTotal(){
        return wepy.request({url:apiPath.focusList,data:{page: this.page},
            header: {
-              'Authorization': `${this.$parent.globalData.token}`
+              'Authorization': `${this.token}`
            },})
         .then( res => {
             let list = res.data.data.list;
@@ -695,8 +696,43 @@
 
     
 
+      // 登录
+    login(){
+      let self = this;
+      //登录态过期
+      wepy.login().then( res => {
+                if (res.code) {
+                    //发起网络请求
+                    wepy.request({
+                      url: apiPath.login,
+                      method:'GET',
+                      data: {
+                        login_type: 5,
+                        code: res.code
+                      }
+                    }).then( res => {
+                      this.token = res.data.data.token;
+                      wx.setStorageSync("token",res.data.data.token)
+                      
+                       wx.showLoading({
+                          title: '获取中',
+                        });
+                        this.getClassList().then( res => {
+                          wx.hideLoading();
+                        } );
+                        this.getLeaugeList();
+                        this.getFocusTotal();
+
+                    } )
+                  } else {
+                    console.log('获取用户登录态失败！' + res.errMsg)
+                  }
+              } );
+    }
+
+
     onLoad() {
-      /*this.getBanners();*/
+       /*this.getBanners();*/
       this.jishiList.date = this.getNowFormatDate();
       this.saiguoList.date = this.getNowFormatDate();
       this.saichengList.date = this.getNowFormatDate();
@@ -704,32 +740,47 @@
       this.saichengList.start = this.getNowFormatDate();
       this.saiguoList.end = this.getNowFormatDate();
       this.saichengList.end = this.getNowFormatDate( new Date(new Date().getTime() + 604800000) );
-      wx.showLoading({
-        title: '获取中',
-      });
-      this.getClassList().then( res => {
-        wx.hideLoading();
-      } );
-      this.getLeaugeList();
-      this.getFocusTotal();
+      try {
+        this.token = wx.getStorageSync('token')
+      } catch (e) {
+        // Do something when catch error
+        this.token = "";
+      }
+      if( !this.token ){
+        this.login(); 
+      }else{
+         wx.showLoading({
+          title: '获取中',
+        });
+        this.getClassList().then( res => {
+          wx.hideLoading();
+        } );
+        this.getLeaugeList();
+        this.getFocusTotal();
+
+      }
     } 
 
     /* 页面重新打开 */
     onShow(){ 
-      /* 数据初始化 */
-      wx.showLoading({
-        title: '获取中',
-      });
-      this.getCateObj(this.type).page = 1;
-      this.getCateObj(this.type).data = [];
-      this.matchList = [];
-      if( this.type == 3 ){
-         this.getFocusList().then( res => {wx.hideLoading();});    
-      }else{
-        this.getClassList().then( res => {wx.hideLoading();});
-      }
-      this.getLeaugeList();
-      this.getFocusTotal();
+      if( this.token ){
+        /* 数据初始化 */
+        wx.showLoading({
+          title: '获取中',
+        });
+        this.getCateObj(this.type).page = 1;
+        this.getCateObj(this.type).data = [];
+        this.matchList = [];
+        if( this.type == 3 ){
+           this.getFocusList().then( res => {wx.hideLoading();});    
+        }else{
+          this.getClassList().then( res => {wx.hideLoading();});
+        }
+        this.getLeaugeList();
+        this.getFocusTotal();
+
+        }
+      
     }
 
 

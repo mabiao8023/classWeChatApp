@@ -71,40 +71,16 @@ export default class extends wepy.app {
 
   onLaunch() {
 
-    try {
-      this.globalData.token = wx.getStorageSync('token')
-    } catch (e) {
-      // Do something when catch error
-      this.globalData.token = "";
-    }
-    if( !this.globalData.token ){
-      this.login(); 
-    }
+      // try {
+      //   this.globalData.token = wx.getStorageSync('token')
+      // } catch (e) {
+      //   // Do something when catch error
+      //   this.globalData.token = "";
+      // }
+      // if( !this.globalData.token ){
+      //   this.login(); 
+      // }
      
-  }
-
-  onShow(){
-    // console.log('从后台进来了');
-    // wx.reLaunch({
-    //     url: '/pages/index'
-    //   }
-  }
-
-  getUserInfo() {
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo().then( res => {
-        this.globalData.userInfo = res.userInfo
-        wepy.request({
-           url: apiPath.updateUserInfo,
-           method:'POST',
-           header: {
-              'Authorization': `${this.globalData.token}`
-           },
-           data:res.userInfo
-        }).then( res => { console.log(res) } )
-    } )
   }
 
   // 登录
@@ -118,7 +94,7 @@ export default class extends wepy.app {
                     url: apiPath.login,
                     method:'GET',
                     data: {
-                      login_type: 5,
+                      login_type: 4,
                       code: res.code
                     }
                   }).then( res => {
@@ -130,15 +106,6 @@ export default class extends wepy.app {
                   console.log('获取用户登录态失败！' + res.errMsg)
                 }
             } );
-
-    // wx.checkSession({
-    //     success: function(){
-    //       console.log('已登录')
-    //       //session 未过期，并且在本生命周期一直有效
-    //     },
-    //     fail: function(){
-
-    // })
   }
 }
 </script>
