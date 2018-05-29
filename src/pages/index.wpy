@@ -607,8 +607,8 @@
               'Authorization': `${this.token}`
            },})
         .then( res => {
-            let list = res.data.data.list;
-            if( list.length >  0 ){
+            let list =  res.data.data.list;
+            if( list && list.length >  0 ){
                 list.forEach( val => {
                   val.match_time_minute = val.match_time && val.match_time.slice(10,16);
                 } );
@@ -689,7 +689,7 @@
            },})
         .then( res => {
             let list = res.data.data.list;
-            this.totalFocus = res.data.data.meta.total;
+            this.totalFocus = res.data.data.meta ? res.data.data.meta.total : 0;
             this.$apply();
         })
     }
@@ -707,7 +707,7 @@
                       url: apiPath.login,
                       method:'GET',
                       data: {
-                        login_type: 4,
+                        login_type: 6,
                         code: res.code
                       }
                     }).then( res => {
