@@ -55,7 +55,7 @@
       :class="{'left0':isShow}"
     >
         <button class="gz-contact"  open-type="contact">
-            关注
+            红单
         </button> 
         <image bindtap="showFocus" src="../images/addFocus.png"/> 
     </view>  
@@ -78,7 +78,7 @@
     events = {
   
     }
-
+      
     methods = {
       gotosx(){
          wx.navigateTo({

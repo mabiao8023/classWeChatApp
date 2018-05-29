@@ -8,7 +8,7 @@
     </button> -->
     <view class="contact-container {{$Focus$isShow ? 'left0' : ''}}" >
         <button class="gz-contact" open-type="contact">
-            关注
+            红单
         </button> 
         <image bindtap="$Focus$showFocus" src="../images/addFocus.png"/> 
     </view>  
