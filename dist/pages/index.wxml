@@ -129,9 +129,13 @@
     <!-- <view class="upLoading" wx:else> 暂无更多数据 </view> -->
     
   <view class="footer"  wx:if="{{$footer$list.length > 0}}">
-        <view class="footer-item" wx:for="{{$footer$list}}">
+        <view class="footer-item">
            <image src="../images/footerball-icon.png"/>
            <view>足球</view>
+        </view>  
+        <view class="footer-item" wx:for="{{$footer$list}}" bindtap="$footer$gotoWxApp" data-wpygotowxapp-a="{{item}}">
+           <image src="{{item.img_url}}"/>
+           <view>{{item.title}}</view>
         </view>  
     </view>
 
