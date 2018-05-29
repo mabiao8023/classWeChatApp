@@ -707,7 +707,7 @@
                       url: apiPath.login,
                       method:'GET',
                       data: {
-                        login_type: 5,
+                        login_type: 4,
                         code: res.code
                       }
                     }).then( res => {
