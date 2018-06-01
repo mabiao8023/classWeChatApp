@@ -10,7 +10,8 @@
         <button class="gz-contact" open-type="contact">
             红单
         </button> 
-        <image bindtap="$Focus$showFocus" src="../images/addFocus.png"/> 
+        <!-- <image bindtap="showFocus" src="../images/addFocus.png"/>  -->
+        <image src="../images/addFocus.png"/> 
     </view>  
     
 <!--     <view class="shaixuan">

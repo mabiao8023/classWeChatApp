@@ -608,7 +608,7 @@
            },})
         .then( res => {
             let list = res.data.data.list;
-            if( list.length >  0 ){
+            if( list && list.length >  0 ){
                 list.forEach( val => {
                   val.match_time_minute = val.match_time && val.match_time.slice(10,16);
                 } );
