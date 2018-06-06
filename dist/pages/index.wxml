@@ -7,14 +7,15 @@
           分享
     </button> -->
     <view class="contact-container {{$Focus$isShow ? 'left0' : ''}}" >
+        
         <button class="gz-contact" open-type="contact">
-            红单
+            点击此处，回复任意消息，获取更多红单信息>>
         </button> 
         <!-- <image bindtap="showFocus" src="../images/addFocus.png"/>  -->
-        <image src="../images/addFocus.png"/> 
+        <!-- <image src="../images/addFocus.png"/>  -->
     </view>  
     
-<!--     <view class="shaixuan">
+    <!-- <view class="shaixuan">
         <image src="../images/sx.png"></image>
     </view> -->
   </view>
