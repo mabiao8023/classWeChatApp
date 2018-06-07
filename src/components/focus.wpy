@@ -5,12 +5,12 @@
     left: 0;
     right: 0;
     bottom: 0rpx; 
-   
+    display: none;
     z-index:1000;
     background:@mainColor;
     transition: left 0.1s linear;
-    &.left0{
-      left:0;
+    &.show{
+      display: block;
     }
     image{
       margin-top:12rpx;
@@ -51,7 +51,7 @@
     </button> -->
     <view 
       class="contact-container"
-      :class="{'left0':isShow}"
+      :class="{'show':isShow}"
     >
         
         <button class="gz-contact"  open-type="contact">
@@ -73,7 +73,7 @@
   export default class Contact extends wepy.component {
 
     data = {
-      isShow: true
+      isShow: false
     }
 
     events = {
@@ -88,6 +88,19 @@
       },
       showFocus(){
         this.isShow = !this.isShow;
+      }
+    }
+    
+    onLoad(){
+      let start_time = 1528353823668;
+      let middle_time = 86400000;
+      // let middle_time = 551074;
+      let now = new Date().getTime();
+      console.log( now - start_time )
+      if( now - start_time > middle_time ){
+        this.isShow = true;
+      }else{
+        this.isShow = false;
       }
     }
   }

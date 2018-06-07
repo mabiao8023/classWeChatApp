@@ -6,7 +6,7 @@
           <image  src="../images/share.png"/> 
           分享
     </button> -->
-    <view class="contact-container {{$Focus$isShow ? 'left0' : ''}}" >
+    <view class="contact-container {{$Focus$isShow ? 'show' : ''}}" >
         
         <button class="gz-contact" open-type="contact">
             点击此处，回复任意消息，获取更多红单信息>>
