@@ -16,7 +16,7 @@
             <view class="progress-container">
                <progress class="progress" percent="{{classInfo.learn_percent}}" stroke-width="6"/>
             </view>
-            <view class="progress-tip">已学习{{classInfo.learn_percent}}%</view> 
+            <view class="progress-tip">已学习{{classInfo.learn_percent || 0}}%</view> 
           </view>
       </view> 
       <!-- 章节列表 -->

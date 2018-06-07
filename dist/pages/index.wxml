@@ -35,20 +35,20 @@
                       {{item.title}}
                   </view>
                   <view class="class-money" wx:if="{{currentId}}">
-                      ￥{{item.price}}/{{item.expire_month}}
+                      {{item.price > 0 ? '￥' + item.price : '免费' }}/{{item.expire_month}}
                   </view>
               </view>  
           </view>  
       </view>
       <!-- 跳转小程序 -->
-    <!-- <view wx:if="{{currentId}}">
-       <view class="more">
-           更多咨询
-       </view>
-       <view class="gotoMini">
-           <button type="primary" bindtap="openMini1">比赛</button>
-           <button type="primary"  bindtap="openMini2">情报</button>
-       </view>
-     </view>  --> 
+      <!-- <view wx:if="{{currentId}}">
+         <view class="more">
+             更多咨询
+         </view>
+         <view class="gotoMini">
+             <button type="primary" bindtap="openMini1">比赛</button>
+             <button type="primary"  bindtap="openMini2">情报</button>
+         </view>
+       </view>  --> 
     
   </view>

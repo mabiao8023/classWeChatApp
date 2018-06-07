@@ -114,7 +114,7 @@
                       {{item.title}}
                   </view>
                   <view class="class-money" wx:if="{{currentId}}">
-                      ￥{{item.price}}/{{item.expire_month}}
+                      {{item.price > 0 ? '￥' + item.price : '免费' }}/{{item.expire_month}}
                   </view>
               </view>  
           </view>  

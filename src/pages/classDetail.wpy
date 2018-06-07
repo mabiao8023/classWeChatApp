@@ -264,8 +264,11 @@
           <view class="class-name">
               {{classInfo.title}}
           </view>
-          <view class="class-money">
+          <view class="class-money" wx:if="{{ !isFree }}">
               ￥{{classInfo.price}}/{{classInfo.expire_month}}
+          </view>
+          <view class="class-money" wx:else>
+              免费/{{classInfo.expire_month}}
           </view>
         </view>
         <view class="class-detail-list" wx:if="{{navType == 1}}">
@@ -340,7 +343,7 @@
                         <image src="../images/pay-icon.png" />
                     </view>
                     <view wx:if="{{ !isPayed }}" class="title">
-                        购买后可观看更多内容
+                        {{ isFree ? '限时免费观看课程内容' : '购买后可观看更多内容'}}
                     </view>
                     <view wx:if="{{ isPayed }}" class="title">
                         您已购买，请点击观看更多内容
@@ -421,7 +424,7 @@
               <view class="pay-nums">{{classInfo.sold}}人已学习</view>
               <view class="pay-btn"
                         @tap="gotoPay"
-                       wx:if="{{!isPayed}}">立即购买</view>
+                       wx:if="{{!isPayed}}">{{ isFree ? '免费观看' : '立即购买'}}</view>
                        <view class="pay-btn"
                         @tap="gotoClassIndex()"
                       wx:if="{{isPayed}}">学习课程</view>
@@ -456,7 +459,8 @@
         chapterList:[],
         video:{
           src:''
-        }
+        },
+        isFree: false,
     }
 
     computed = {
@@ -485,7 +489,7 @@
           })
       },
       paytip(){
-        if(this.isPayed){
+        if(this.isPayed || this.isFree){
           wx.navigateTo({
              url: `/pages/class?id=${this.classId}`
           })
@@ -515,11 +519,20 @@
          } ).then( res => {
             let jsApiConfig = {};
             let data = res.data.data; 
+            /* 免费的直接跳转不用支付 */
+            if( this.isFree ){
+              wx.navigateTo({
+                url: `/pages/class?id=${this.classId}`
+              });
+              return;
+            }
+
             try{
               jsApiConfig = JSON.parse(data.jsapiConfig);
             }catch (e){
               console.error(e)
             }
+            
             wx.hideLoading();
             wx.requestPayment({
                'timeStamp': jsApiConfig.timeStamp,
@@ -568,6 +581,11 @@
          } ).then(res => {
           wx.hideLoading();
           this.classInfo = res.data.data;
+          if( (+this.classInfo.price) <= 0 ){
+            this.isFree = true;
+          }else{
+            this.isFree = false;
+          }
           this.classInfo.price = this.formateMoney(this.classInfo.price);
           this.classInfo.expire_month = this.formateMonth(this.classInfo.expire_month);
           this.$apply();

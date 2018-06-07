@@ -20,11 +20,14 @@
           <view class="class-name">
               {{classInfo.title}}
           </view>
-          <view class="class-money">
+          <view class="class-money"  wx:if="{{ !isFree }}">
               ￥{{classInfo.price}}/{{classInfo.expire_month}}
           </view>
+          <view class="class-money" wx:else>
+              免费/{{classInfo.expire_month}}
+          </view>
         </view>
-        <view class="class-detail-list"  wx:if="{{navType == 1}}">
+        <view class="class-detail-list" wx:if="{{navType == 1}}">
             <view wx:for="{{classInfo.introduce}}" wx:key="{{index}}" class="class-detail-item">
                 <view class="c-title" wx-if="{{item.title}}">
                     {{ item.title }}
@@ -94,7 +97,7 @@
                         <image src="../images/pay-icon.png"/>
                     </view>
                     <view wx:if="{{ !isPayed }}" class="title">
-                        购买后可观看更多内容
+                        {{ isFree ? '限时免费观看课程内容' : '购买后可观看更多内容'}}
                     </view>
                     <view wx:if="{{ isPayed }}" class="title">
                         您已购买，请点击观看更多内容
@@ -166,7 +169,7 @@
         <view class="pay-footer">
             <view class="pay-footer-content">
               <view class="pay-nums">{{classInfo.sold}}人已学习</view>
-              <view class="pay-btn" bindtap="gotoPay" wx:if="{{!isPayed}}">立即购买</view>
+              <view class="pay-btn" bindtap="gotoPay" wx:if="{{!isPayed}}">{{ isFree ? '免费观看' : '立即购买'}}</view>
                        <view class="pay-btn" bindtap="gotoClassIndex" wx:if="{{isPayed}}" data-wpygotoclassindex-a="">学习课程</view>
               </view>
         </view>
