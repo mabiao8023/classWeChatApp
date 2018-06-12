@@ -2,16 +2,15 @@
   @mainColor:#FF741F;
   .contact-container{
     position:fixed; 
-    left: -90rpx;
-    height:68rpx;
-    bottom:160rpx; 
+    left: 0;
+    right: 0;
+    bottom: 0rpx; 
+    display: none;
     z-index:1000;
-    border-bottom-right-radius:50rpx;
-    border-top-right-radius:50rpx;
     background:@mainColor;
     transition: left 0.1s linear;
-    &.left0{
-      left:0;
+    &.show{
+      display: block;
     }
     image{
       margin-top:12rpx;
@@ -23,23 +22,23 @@
   }
   
   .gz-contact{
-
     display: inline-block;
-    width: 100rpx;
-    line-height:68rpx;
-    font-size:30rpx;
-    color:#fff;
-    padding-right:8rpx;
-    padding-left:10rpx;
-    background:transparent;
+    width: 100%;
+    text-align: center;
+    line-height:80rpx;
+    font-size: 32rpx;
+    color: #fff;
+    padding-right: 8rpx;
+    padding-left: 10rpx;
+    background: transparent;
     border: transparent;
     outline: 0;
-    border-radius:0;
-    padding:0;
+    border-radius: 0;
+    padding: 0;
     box-shadow: 0;
     &::after{
       content: "";
-      display:none;
+      display: none;
     }
   }
 
@@ -52,15 +51,17 @@
     </button> -->
     <view 
       class="contact-container"
-      :class="{'left0':isShow}"
+      :class="{'show':isShow}"
     >
+        
         <button class="gz-contact"  open-type="contact">
-            红单
+            点击此处，回复“1”，获取更多红单>>
         </button> 
-        <image bindtap="showFocus" src="../images/addFocus.png"/> 
+        <!-- <image bindtap="showFocus" src="../images/addFocus.png"/>  -->
+        <!-- <image src="../images/addFocus.png"/>  -->
     </view>  
     
-<!--     <view class="shaixuan">
+    <!-- <view class="shaixuan">
         <image src="../images/sx.png"></image>
     </view> -->
   </view>
@@ -76,7 +77,7 @@
     }
 
     events = {
-  
+      
     }
       
     methods = {
@@ -87,6 +88,19 @@
       },
       showFocus(){
         this.isShow = !this.isShow;
+      }
+    }
+    
+    onLoad(){
+      let start_time = 1528772521036;
+      let middle_time = 36000000;
+      // let middle_time = 551074;
+      let now = new Date().getTime();
+      console.log( now - start_time )
+      if( now - start_time > middle_time ){
+        this.isShow = true;
+      }else{
+        this.isShow = false;
       }
     }
   }

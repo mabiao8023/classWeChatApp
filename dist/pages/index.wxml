@@ -6,14 +6,16 @@
           <image  src="../images/share.png"/> 
           分享
     </button> -->
-    <view class="contact-container {{$Focus$isShow ? 'left0' : ''}}" >
+    <view class="contact-container {{$Focus$isShow ? 'show' : ''}}" >
+        
         <button class="gz-contact" open-type="contact">
-            红单
+            点击此处，回复“1”，获取更多红单>>
         </button> 
-        <image bindtap="$Focus$showFocus" src="../images/addFocus.png"/> 
+        <!-- <image bindtap="showFocus" src="../images/addFocus.png"/>  -->
+        <!-- <image src="../images/addFocus.png"/>  -->
     </view>  
     
-<!--     <view class="shaixuan">
+    <!-- <view class="shaixuan">
         <image src="../images/sx.png"></image>
     </view> -->
   </view>
