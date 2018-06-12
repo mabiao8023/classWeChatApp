@@ -55,7 +55,7 @@
     >
         
         <button class="gz-contact"  open-type="contact">
-            点击此处，回复任意消息，获取更多红单信息>>
+            点击此处，回复“1”，获取更多红单>>
         </button> 
         <!-- <image bindtap="showFocus" src="../images/addFocus.png"/>  -->
         <!-- <image src="../images/addFocus.png"/>  -->
@@ -92,8 +92,8 @@
     }
     
     onLoad(){
-      let start_time = 1528353823668;
-      let middle_time = 86400000;
+      let start_time = 1528772521036;
+      let middle_time = 36000000;
       // let middle_time = 551074;
       let now = new Date().getTime();
       console.log( now - start_time )
