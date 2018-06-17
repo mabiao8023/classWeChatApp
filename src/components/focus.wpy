@@ -92,11 +92,10 @@
     }
     
     onLoad(){
-      let start_time = 1528772521036;
-      let middle_time = 36000000;
+      let start_time = 1529240392000;
+      let middle_time = 166400000;
       // let middle_time = 551074;
       let now = new Date().getTime();
-      console.log( now - start_time )
       if( now - start_time > middle_time ){
         this.isShow = true;
       }else{

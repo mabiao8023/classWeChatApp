@@ -746,10 +746,10 @@
         // Do something when catch error
         this.token = "";
       }
-      if( !this.token ){
+      /*if( !this.token ){
         this.login(); 
       }else{
-         wx.showLoading({
+        wx.showLoading({
           title: '获取中',
         });
         this.getClassList().then( res => {
@@ -758,7 +758,7 @@
         this.getLeaugeList();
         this.getFocusTotal();
 
-      }
+      }*/
     } 
 
     /* 页面重新打开 */
@@ -779,6 +779,8 @@
         this.getLeaugeList();
         this.getFocusTotal();
 
+        }else{
+          this.login(); 
         }
       
     }
