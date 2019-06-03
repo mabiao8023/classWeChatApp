@@ -30,13 +30,13 @@ export default class extends wepy.app {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#2cbd6c',
       navigationBarTitleText: '夜猫足球',
-      navigationBarTextStyle: ''
+      navigationBarTextStyle: 'white'
     },
     tabBar:{
       color:'#333',
       selectedColor:'#2cbd6c',
       backgroundColor:'#fff',
-      borderStyle:'#e2e2e2',
+      borderStyle:'white',
       list:[
           {
              pagePath:'pages/index',
@@ -114,7 +114,7 @@ export default class extends wepy.app {
                   console.log('获取用户登录态失败！' + res.errMsg)
                 }
             } );
-
+    
     // wx.checkSession({
     //     success: function(){
     //       console.log('已登录')

@@ -1,0 +1,15 @@
+{
+	"description": "芙兰分销小程序",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "touristappid",
+	"projectname": "flanwxapp",
+	"miniprogramRoot": "dist/",
+	"condition": {}
+}

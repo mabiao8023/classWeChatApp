@@ -1,1 +1,17 @@
-.content{padding:30rpx;width:100%;font-size:36rpx;color:#666;text-indent:2em;text-align:justify;line-height:1.5}.banner{width:100%;border-bottom:1rpx solid #e2e2e2}.banner image{width:100%;max-height:800rpx}
+.content {
+  padding: 30rpx;
+  width: 100%;
+  font-size: 36rpx;
+  color: #666;
+  text-indent: 2em;
+  text-align: justify;
+  line-height: 1.5;
+}
+.banner {
+  width: 100%;
+  border-bottom: 1rpx solid #e2e2e2;
+}
+.banner image {
+  width: 100%;
+  max-height: 800rpx;
+}
