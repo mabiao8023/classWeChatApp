@@ -6,4 +6,16 @@
       <view class="content">
           {{article.content}}
       </view>
+      
+  <view>
+    <button class="contact share" open-type="share">
+          <image src="../images/share.png"/> 
+          分享
+    </button>
+    <button class="contact" open-type="contact">
+          <image src="../images/addFocus.png"/> 
+          关注
+    </button>
+  </view>
+
   </view>

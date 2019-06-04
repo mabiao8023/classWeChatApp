@@ -98,7 +98,6 @@
             border-top:1rpx solid #e2e2e2;
             font-size:36rpx;
             .pay-footer-content{
-                position: relative;
                 display:flex;
                 text-align:center;
                 justify-content:space-between;
@@ -108,14 +107,6 @@
                   color:#fff;
                   background: @mainColor;
                   font-size:36rpx;
-                }
-                .get-phone-number{
-                  position: absolute;
-                  right: 0;
-                  left: 0;
-                  top: 0;
-                  bottom: 0;
-                  opacity: 0;
                 }
                 .zixun{
                   padding:0 40rpx;
@@ -252,7 +243,7 @@
                 <view class="text">课程特色</view>
             </view>
             <view class="{{ navType == 2 ? 'nav-list active' : 'nav-list' }}" @tap="navtag(2)">
-                <view class="text">课程试看</view>
+                <view class="text">课程详情</view>
             </view>
       </view>
       <!-- 视频和图片展示区域 -->
@@ -273,11 +264,8 @@
           <view class="class-name">
               {{classInfo.title}}
           </view>
-          <!-- <view class="class-money" wx:if="{{ !isFree }}">
+          <!-- <view class="class-money">
               ￥{{classInfo.price}}/{{classInfo.expire_month}}
-          </view>
-          <view class="class-money" wx:else>
-              免费/{{classInfo.expire_month}}
           </view> -->
         </view>
         <view class="class-detail-list" wx:if="{{navType == 1}}">
@@ -301,7 +289,7 @@
                         <image src="../images/free-icon.png" />
                     </view>
                     <view class="title">
-                        试看列表
+                        课程视频
                     </view>
                 </view>
             </view>
@@ -344,104 +332,8 @@
                     </view>
                 </view>
             </view>
-            <!-- 章节列表 -->
-            <view class="class-chapter">
-                <view class="try-container">
-                <view class="try-title">
-                    <view class="icon">
-                        <image src="../images/pay-icon.png" />
-                    </view>
-                    <view wx:if="{{ !isPayed }}" class="title">
-                        {{ isFree ? '限时免费观看课程内容' : '立即学习更多内容'}}
-                    </view>
-                    <view wx:if="{{ isPayed }}" class="title">
-                        点击观看更多内容
-                    </view>
-                </view>
-            </view>
-            <!-- 章节列表 -->
-            <block wx:for="{{chapterList}}" wx:key="{{index}}" >
-                 <view class="try-container" @tap="paytip()">
-                  <view class="try-title">
-                      <view class="icon">
-                          <image src="../images/class-list-icon.png" />
-                      </view>
-                      <view class="title">
-                          {{ item.title }}
-                      </view>
-                     <!--  <view class="desc">
-                         {{ item.desc }}
-                      </view> -->
-                      <!--    <view class="arrow">
-                          <image wx:if="{{item.slide}}" src="../images/arrow-right.png"/>
-                          <image wx:else src="../images/arrow-down.png"/>
-                      </view> -->
-                  </view>
-              </view>
-            
-            <view class="try-list" 
-             wx:if="{{item.lesson.length > 0}}" 
-             wx:for="{{item.lesson}}"
-             wx:for-index="idx"
-             wx:for-item="lesson"
-             wx:key="{{idx}}"
-             @tap="paytip()"
-             >
-                <view class="try-item" wx:if="{{ lesson.resource_type == 1 }}"> 
-                   <view class="try-item-img">
-                       <image src="{{lesson.img_url || classInfo.img_url}}">
-                       <view class="try-tag">阅读课程</view>
-                   </view>
-                   <view class="try-item-content">
-                       <view class="try-item-title">
-                           {{ lesson.title }}
-                       </view>
-                      <!-- <view class="try-item-desc">
-                           {{ lesson.desc }}
-                       </view> -->
-                   </view>
-               </view>
-           
-               <view class="try-item" wx:if="{{ lesson.resource_type == 0 }}"> 
-                   <view class="try-item-img">
-                       <image src="{{ lesson.img_url || classInfo.img_url }}">
-                       <view class="try-tag" wx:if="{{lesson.resource.playing}}" >正在播放</view>
-                       <view class="mask-box">
-                           <image src="../images/play.png" />
-                       </view>
-                   </view>
-                   <view class="try-item-content">
-                       <view class="try-item-title">
-                           {{ lesson.title }}
-                       </view>
-                     <!--  <view class="try-item-desc">
-                           {{ lesson.desc }}
-                       </view> -->
-                       <view class="try-item-time" wx:if="{{lesson.resource.media_time}}">
-                           <icon type="waiting" size="12" color="#999"/>{{lesson.resource.media_time}}
-                       </view>
-                   </view>
-               </view>
-           </view>
-            </block>  
-           
             </view>
         </view>
-
-        <view class="pay-footer">
-            <view class="pay-footer-content">
-              <view class="pay-nums">{{classInfo.sold}}人已学习</view>
-              <view class="pay-btn"
-                        @tap="gotoPay"
-                       wx:if="{{!isPayed}}">{{ isFree ? '免费观看' : '立即学习'}}</view>
-                       <view class="pay-btn"
-                        @tap="gotoClassIndex()"
-                      wx:if="{{isPayed}}">学习课程</view>
-              <button class="get-phone-number" open-type="getPhoneNumber" bindgetphonenumber="getPhone">获取手机号</button>
-              </view>
-              
-        </view>
-        <contact></contact>
   </view>
 </template>
 
@@ -470,8 +362,7 @@
         chapterList:[],
         video:{
           src:''
-        },
-        isFree: false,
+        }
     }
 
     computed = {
@@ -479,9 +370,6 @@
     }
 
     methods = {
-      getPhone(e) {
-        console.log(e)
-      },
       navtag(type){
         this.navType = type;
       },
@@ -503,7 +391,7 @@
           })
       },
       paytip(){
-        if(this.isPayed || this.isFree){
+        if(this.isPayed){
           wx.navigateTo({
              url: `/pages/class?id=${this.classId}`
           })
@@ -533,20 +421,11 @@
          } ).then( res => {
             let jsApiConfig = {};
             let data = res.data.data; 
-            /* 免费的直接跳转不用支付 */
-            if( this.isFree ){
-              wx.navigateTo({
-                url: `/pages/class?id=${this.classId}`
-              });
-              return;
-            }
-
             try{
               jsApiConfig = JSON.parse(data.jsapiConfig);
             }catch (e){
               console.error(e)
             }
-            
             wx.hideLoading();
             wx.requestPayment({
                'timeStamp': jsApiConfig.timeStamp,
@@ -595,11 +474,6 @@
          } ).then(res => {
           wx.hideLoading();
           this.classInfo = res.data.data;
-          if( (+this.classInfo.price) <= 0 ){
-            this.isFree = true;
-          }else{
-            this.isFree = false;
-          }
           this.classInfo.price = this.formateMoney(this.classInfo.price);
           this.classInfo.expire_month = this.formateMonth(this.classInfo.expire_month);
           this.$apply();
@@ -691,7 +565,6 @@
       this.getClassInfo();
       this.getTryList();
       this.getChapterList();
-      this.getIsPayed();
     }
 
     onShareAppMessage() {

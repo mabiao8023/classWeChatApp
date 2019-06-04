@@ -78,38 +78,41 @@
     background:#fff;
     border-bottom:1rpx solid #e2e2e2;
     .c-info-img{
-      width:250rpx;
-      height:180rpx;
+      width:236rpx;
+      height:140rpx;
       overflow: hidden;
       position:relative;
       image{
-        width:250rpx;
-        height:180rpx;
+        width:236rpx;
+        height:140rpx;
       }
-      
-    }
-    .c-info-content{
-      flex:1;
-      margin-left:20rpx;
-      position:relative;
       .c-info-tag{
-        position:absolute;
-        right:10rpx;
-        top:0px;
+        position: absolute;
+        left: 10rpx;
         max-width:140rpx;
         overflow:hidden;
         padding:10rpx;
         color:#fff;
-        background:@mainColor;
+        background:red;
         font-size:30rpx;
         border-radius:8rpx;
       }
+    }
+    .c-info-content{
+      height:140rpx;
+      flex:1;
+      display: flex;
+      align-content:space-between;
+      flex-wrap:wrap;
+      margin-left:20rpx;
+      
       .m-desc{
         width:100%;
         text-align:justify;
         margin:20rpx 0;
       }
       .progress-container{
+         width:100%;
         display:flex;
         align-items:center;
         .progress-show{
@@ -135,14 +138,15 @@
            wx:for="{{classList}}"
            @tap="gotoClassIndex({{item.id}})">
             <view class="c-info-img">
+              <view class="c-info-tag" wx:if="{{item.tag}}">{{item.tag}}</view>
               <image src="{{item.img_url}}">
             </view>
             <view class="c-info-content">
-              <view class="c-info-tag" wx:if="{{item.tag}}">{{item.tag}}</view>
+              
               <view class="m-title">{{ item.title }}</view>
-              <view class="m-desc">
-                {{ item.desc }}
-              </view>
+            <!--   <view class="m-desc">
+              {{ item.desc }}
+            </view> -->
               <view class="progress-container">
                   <progress class="progress" percent="{{item.learn_percent}}" stroke-width="8" />
                   <view class="progress-show">已学习{{item.learn_percent}}%</view>
@@ -153,7 +157,7 @@
       <view wx:else class="empty-list">
         <image src="../images/empty.png" alt="">
       </view>
-      <contact></contact>
+      <!-- <contact></contact> -->
   </view>
 </template>
 <script>
@@ -216,5 +220,19 @@
     onLoad() {
         this.getMeClassList();
     } 
+
+    onShareAppMessage() {
+      return {
+      title: '夜猫足彩课程',
+      path: '/pages/index',
+      imageUrl:'/images/share_img.jpg',
+      success:function(res) {
+        // 转发成功
+      },
+      fail: function(res) {
+        // 转发失败
+      }
+    }
+    }
   }
 </script>

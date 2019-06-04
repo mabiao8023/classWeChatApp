@@ -69,3 +69,16 @@
 .class-list .class-item .class-info-text .class-money {
   color: red;
 }
+.gotoMini {
+  padding: 20rpx 0;
+  width: 100%;
+  display: flex;
+  align-items: space-between;
+}
+.more {
+  width: 100%;
+  padding: 24rpx;
+  font-size: 36rpx;
+  color: #999;
+  text-align: center;
+}

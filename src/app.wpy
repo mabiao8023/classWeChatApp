@@ -13,6 +13,7 @@ view{
 </style>
 
 <script>
+import aldstat from './config/ald-stat.js'
 import wepy from 'wepy'
 import 'wepy-async-function'
 import apiPath from './config/config'
@@ -22,6 +23,7 @@ export default class extends wepy.app {
       'pages/index',
       'pages/class',
       'pages/classDetail',
+      'pages/classPlay',
       'pages/airticle',
       'pages/me',
       'pages/meClass'
@@ -114,7 +116,7 @@ export default class extends wepy.app {
                   console.log('获取用户登录态失败！' + res.errMsg)
                 }
             } );
-    
+
     // wx.checkSession({
     //     success: function(){
     //       console.log('已登录')

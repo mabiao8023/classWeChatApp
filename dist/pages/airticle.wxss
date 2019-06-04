@@ -1,3 +1,4 @@
+@import "./../components/contact.wxss";
 .content {
   padding: 30rpx;
   width: 100%;

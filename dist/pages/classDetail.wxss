@@ -93,6 +93,7 @@
   font-size: 36rpx;
 }
 .pay-footer .pay-footer-content {
+  position: relative;
   display: flex;
   text-align: center;
   justify-content: space-between;
@@ -103,6 +104,14 @@
   color: #fff;
   background: #2cbd6c;
   font-size: 36rpx;
+}
+.pay-footer .pay-footer-content .get-phone-number {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
 }
 .pay-footer .pay-footer-content .zixun {
   padding: 0 40rpx;
@@ -205,17 +214,22 @@
 }
 .try-list .try-item .try-item-content {
   font-size: 34rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
 }
 .try-list .try-item .try-item-content .try-item-desc {
+  width: 100%;
   color: #666;
   font-size: 34rpx;
 }
 .try-list .try-item .try-item-content .try-item-time {
+  width: 100%;
   display: flex;
   color: #666;
   font-size: 32rpx;
   align-items: center;
 }
 .try-list .try-item .try-item-content .try-item-time icon {
-  margin-right: 20rpx;
+  margin-right: 16rpx;
 }
