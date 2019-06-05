@@ -480,7 +480,20 @@
 
     methods = {
       getPhone(e) {
-        console.log(e)
+        console.log(e);
+        wepy.request({
+            url:apiPath.decryptData,
+            method:"POST",
+            data:{
+              encryptedData: e.detail.encryptedData,
+              iv: e.detail.iv
+            },
+            header: {
+              'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
+            }
+         } ).then( res => {
+            console.log(res)
+        });
       },
       navtag(type){
         this.navType = type;
