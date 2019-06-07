@@ -435,9 +435,8 @@
                         @tap="gotoPay"
                        wx:if="{{!isPayed}}">{{ isFree ? '免费观看' : '立即学习'}}</view>
                        <view class="pay-btn"
-                        @tap="gotoClassIndex()"
                       wx:if="{{isPayed}}">学习课程</view>
-              <button class="get-phone-number" open-type="getPhoneNumber" bindgetphonenumber="getPhone">获取手机号</button>
+              <button v-if="!isPhone" class="get-phone-number" open-type="getPhoneNumber" bindgetphonenumber="getPhone">获取手机号</button>
               </view>
               
         </view>
@@ -472,6 +471,7 @@
           src:''
         },
         isFree: false,
+        isPhone: wx.getStorageSync('phone') ? true : false
     }
 
     computed = {
@@ -480,6 +480,7 @@
 
     methods = {
       getPhone(e) {
+        let that = this;
         console.log(e);
         wepy.request({
             url:apiPath.decryptData,
@@ -492,7 +493,25 @@
               'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
-            console.log(res)
+            let phone = res.data.data.phoneNumber;
+            wx.setStorageSync('phone', res.data.data.phoneNumber);
+            wepy.request({
+              url:apiPath.classPay,
+              method:"POST",
+              data:{
+                class_id:Number(this.classId),
+                paysource:1,
+                phone: phone
+              },
+              header: {
+                'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
+              }
+          } ).then( res => {
+              wx.navigateTo({
+                  url: `/pages/class?id=${this.classId}`
+              });
+              wx.hideLoading();
+          } );
         });
       },
       navtag(type){
@@ -507,12 +526,11 @@
             val.resource.playing = false;
           }
         } );
-        
         this.video.src = item.resource.media_url;
       },
       gotoClassIndex(){
-         wx.navigateTo({
-             url: `/pages/class?id=${this.classId}`
+          wx.navigateTo({
+            url: `/pages/class?id=${this.classId}`
           })
       },
       paytip(){
@@ -529,54 +547,58 @@
         })
       },
 
-      gotoPay(){
+      gotoPay(phone){
         wx.showLoading({
-          title: '支付中...',
+          title: '解锁中',
         })
         wepy.request({
             url:apiPath.classPay,
             method:"POST",
             data:{
               class_id:Number(this.classId),
-              paysource:1
+              paysource:1,
+              phone: wx.getStorageSync('phone')
             },
             header: {
               'cookie': `PHPSESSID=${this.$parent.globalData.sessionID}`
             }
          } ).then( res => {
-            let jsApiConfig = {};
-            let data = res.data.data; 
-            /* 免费的直接跳转不用支付 */
-            if( this.isFree ){
-              wx.navigateTo({
+            wx.navigateTo({
                 url: `/pages/class?id=${this.classId}`
-              });
-              return;
-            }
+            });
+            // let jsApiConfig = {};
+            // let data = res.data.data; 
+            // /* 免费的直接跳转不用支付 */
+            // if( this.isFree ){
+            //   wx.navigateTo({
+            //     url: `/pages/class?id=${this.classId}`
+            //   });
+            //   return;
+            // }
 
-            try{
-              jsApiConfig = JSON.parse(data.jsapiConfig);
-            }catch (e){
-              console.error(e)
-            }
+            // try{
+            //   jsApiConfig = JSON.parse(data.jsapiConfig);
+            // }catch (e){
+            //   console.error(e)
+            // }
             
             wx.hideLoading();
-            wx.requestPayment({
-               'timeStamp': jsApiConfig.timeStamp,
-               'nonceStr': jsApiConfig.nonceStr,
-               'package': jsApiConfig.package,
-               'signType': 'MD5',
-               'paySign': jsApiConfig.paySign,
-               'success':function(res){
-                  // 支付成功
-                  wx.navigateTo({
-                     url: `/pages/class?id=${this.classId}`
-                  })
-               },
-               'fail':function(res){
-                  // 支付失败
-               }
-            })
+            // wx.requestPayment({
+            //    'timeStamp': jsApiConfig.timeStamp,
+            //    'nonceStr': jsApiConfig.nonceStr,
+            //    'package': jsApiConfig.package,
+            //    'signType': 'MD5',
+            //    'paySign': jsApiConfig.paySign,
+            //    'success':function(res){
+            //       // 支付成功
+            //       wx.navigateTo({
+            //          url: `/pages/class?id=${this.classId}`
+            //       })
+            //    },
+            //    'fail':function(res){
+            //       // 支付失败
+            //    }
+            // })
         } );
        
       },
@@ -676,7 +698,7 @@
         })
     }
 
-    // 获取是否已经购买过该课程
+    // getIsPayed
     getIsPayed(){
         wepy.request({
             url:apiPath.classPay,
@@ -704,7 +726,7 @@
       this.getClassInfo();
       this.getTryList();
       this.getChapterList();
-      this.getIsPayed();
+      // this.getIsPayed();
     }
 
     onShareAppMessage() {
